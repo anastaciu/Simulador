@@ -72,3 +72,13 @@ bool Carro::energyLimitsInbound() const
 	return energy < capacity;
 }
 
+Piloto& Carro::getPiloto()
+{
+	return *condutor;
+}
+
+void Carro::setPiloto(Piloto &condutor)
+{
+	this->condutor = &condutor;
+}
+

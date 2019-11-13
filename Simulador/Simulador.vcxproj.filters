@@ -36,6 +36,12 @@
     <ClCompile Include="Garagem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Consola.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DGV.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Carro.h">
@@ -54,6 +60,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Garagem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Consola.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DGV.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

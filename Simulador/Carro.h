@@ -1,10 +1,12 @@
 #pragma once
 #include <string>
+#include "Piloto.h"
 
 using namespace std;
 
 class Carro
 {
+private:
 	static const string modelo_base;
 	static char id_global;
 	char id;
@@ -13,7 +15,9 @@ class Carro
 	double energy;
 	double capacity;
 	bool isMoving;
-
+	int positionX;
+	int positionY;
+	Piloto *condutor;
 
 public:
 	Carro(double energy, double capacity, string marca, string modelo);
@@ -25,6 +29,9 @@ public:
 	double getEnergy() const;
 	double getMaxEnergy() const;
 	bool energyLimitsInbound() const;
+	Piloto &getPiloto();
+	void setPiloto(Piloto &condutor);
+		
 	
 };
 
