@@ -2,11 +2,31 @@
 //
 
 #include <iostream>
+#include "Carro.h"
+
+using namespace std;
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    cout << "Hello World!\n";
+	Carro *carro1 = new Carro(20, 10, "opel");
+	Carro *carro2 = new Carro(10, 10, "bmw", "m3");
+	Carro* carro3 = new Carro(20, 30, "toyota");
+	//Carro* carro4 = new Carro();
+	//Carro* carro5 = new Carro();
+	//Carro* carro6 = new Carro();
+	//Carro* carro7 = new Carro();
+	//Carro* carro8 = new Carro();
+	cout << carro1->getId() << carro1->getBrand() << carro1->getModel() << carro1->getMaxEnergy() << carro1->getEnergy() << endl;
+	cout << carro2->getId() << carro2->getBrand() << carro2->getModel() << carro2->getMaxEnergy() << carro2->getEnergy() << endl;
+	cout << carro3->getId() << carro3->getBrand() << carro3->getModel() << carro3->getMaxEnergy() << carro3->getEnergy() << endl;
+	//cout << carro4->getId();
+	//cout << carro5->getId();
+	//cout << carro6->getId();
+	//cout << carro7->getId();
+	//cout << carro8->getId();
 }
+
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
