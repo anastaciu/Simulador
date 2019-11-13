@@ -18,5 +18,13 @@
     <ClCompile Include="Simulador.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Carro.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Carro.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
