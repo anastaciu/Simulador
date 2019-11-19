@@ -3,13 +3,22 @@
 
 using namespace std;
 
+class Carro;
+
 class Piloto
 {
 private:
-	string name;
+	string name;	
+	Carro* carro;
 
-public:
+public:	
 	Piloto(string name);
+	virtual ~Piloto();
 	string getName() const;
+	void setName(string name);
+	Carro& getCarro();
+	void setCarro(Carro &carro);
+	//bool operator == (Piloto& piloto);
+	bool operator== (Piloto* piloto);
 };
 

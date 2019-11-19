@@ -1,27 +1,26 @@
 #pragma once
 #include <string>
 #include "Piloto.h"
+#include "Pedals.h"
 
 using namespace std;
 
 class Carro
 {
 private:
-	static const string modelo_base;
+	static const string MODELO_BASE;
 	static char id_global;
 	char id;
-	string marca;
-	string modelo;
-	double energy;
-	double capacity;
-	bool isMoving;
-	int positionX;
-	int positionY;
+	string marca, modelo;
+	double energy, capacity;
+	Pedals pedals;
+	bool is_moving, emergency, is_damaged;
+	int speed, max_speed, positionX, positionY;
 	Piloto *condutor;
 
 public:
-	Carro(double energy, double capacity, string marca, string modelo);
-	Carro(double energy, double capacity, string marca);
+	Carro(int v_max, double energy, double capacity, string marca, string modelo);
+	Carro(int v_max, double energy, double capacity, string marca);
 	~Carro();
 	char getId() const;
 	string getBrand() const;
@@ -30,7 +29,8 @@ public:
 	double getMaxEnergy() const;
 	bool energyLimitsInbound() const;
 	Piloto &getPiloto();
-	void setPiloto(Piloto &condutor);
+	void setPiloto(Piloto& condutor);
+	void manivela(int n);
 		
 	
 };

@@ -155,21 +155,33 @@
     <ClCompile Include="Carro.cpp" />
     <ClCompile Include="Consola.cpp" />
     <ClCompile Include="Corrida.cpp" />
+    <ClCompile Include="Crazy.cpp" />
     <ClCompile Include="DGV.cpp" />
+    <ClCompile Include="Fast.cpp" />
     <ClCompile Include="Garagem.cpp" />
+    <ClCompile Include="MessageLog.cpp" />
+    <ClCompile Include="Pedals.cpp" />
     <ClCompile Include="Piloto.cpp" />
     <ClCompile Include="Pista.cpp" />
     <ClCompile Include="Simulador.cpp" />
+    <ClCompile Include="Slow.cpp" />
+    <ClCompile Include="UserConsole.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Autodromo.h" />
     <ClInclude Include="Carro.h" />
     <ClInclude Include="Consola.h" />
     <ClInclude Include="Corrida.h" />
+    <ClInclude Include="Crazy.h" />
     <ClInclude Include="DGV.h" />
+    <ClInclude Include="Fast.h" />
     <ClInclude Include="Garagem.h" />
+    <ClInclude Include="MessageLog.h" />
+    <ClInclude Include="Pedals.h" />
     <ClInclude Include="Piloto.h" />
     <ClInclude Include="Pista.h" />
+    <ClInclude Include="Slow.h" />
+    <ClInclude Include="UserConsole.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

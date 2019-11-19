@@ -3,35 +3,20 @@
 
 
 char Carro::id_global = 'a';
-const string Carro::modelo_base = "modelo base";
+const string Carro::MODELO_BASE = "modelo base";
 
-Carro::Carro(double energy, double capacity, string marca, string modelo)
+Carro::Carro(int v_max, double energy, double capacity, string marca, string modelo) : marca(marca), modelo(modelo), max_speed(v_max), capacity(capacity)
 {
-	if (id_global > 'z') {
-		id = '?';
-	} else {
-		id = id_global++;
-	}
-	this->marca = marca;
-	this->modelo = modelo;
-	this->capacity = capacity;
+	id = id_global > 'z' ? '?' : id_global++;
 	this->energy = energy;
 	if (!energyLimitsInbound()) {
 		this->energy = this->capacity;
 	}
 }
 
-Carro::Carro(double energy, double capacity, string marca)
+Carro::Carro(int v_max, double energy, double capacity, string marca) : marca(marca), max_speed(v_max), capacity(capacity), modelo(MODELO_BASE)
 {
-	if (id_global > 'z') {
-		id = '?';
-	}
-	else {
-		id = id_global++;
-	}
-	this->marca = marca;
-	this->modelo = modelo_base;
-	this->capacity = capacity;
+	id = id_global > 'z' ? '?' : id_global++;
 	this->energy = energy;
 	if (!energyLimitsInbound()) {
 		this->energy = this->capacity;
@@ -77,8 +62,18 @@ Piloto& Carro::getPiloto()
 	return *condutor;
 }
 
-void Carro::setPiloto(Piloto &condutor)
+void Carro::setPiloto(Piloto& condutor)
 {
 	this->condutor = &condutor;
+}
+
+void Carro::manivela(int n)
+{
+	if (energyLimitsInbound() && n > 0) {
+		this->energy += n;
+	}
+	if (!energyLimitsInbound()) {
+		this->energy = this->capacity;
+	}
 }
 
