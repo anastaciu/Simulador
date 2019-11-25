@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Simulador.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Carro.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -58,6 +55,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Slow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Campeonato.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -102,6 +105,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Slow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Campeonato.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -22,30 +22,39 @@ int UserConsole::findCommand(const string& command) const {
 int UserConsole::executionCicle() {
 	int comandTreshold = 11;
 	string word, command;
-	vector<string> arguments;
+	vector<string>* arguments = new vector<string>();
 	int command_position;
 
 	stringstream ss(readCommandLine());
-	arguments.clear();
+	arguments->clear();
 	while (ss >> word)
-		arguments.push_back(word);
+		arguments->push_back(word);
 	try {
-		command_position = findCommand(arguments.at(0));
-		command = arguments.at(0);
+		command_position = findCommand(arguments->at(0));
+		command = arguments->at(0);
 		if (command_position > comandTreshold && getFase() == 1) {
 			throw log.getFase1Error();
 		}
-		arguments.erase(arguments.begin());
+		arguments->erase(arguments->begin());
 		if (command_position != -1) {
-			if (arguments.size() < COMMANDS_ARGS[command_position]) {
+			if (arguments->size() < COMMANDS_ARGS[command_position]) {
 				throw log.getArgumentError();
 			}
 			if (command_position != 0 && command_position != 11)
-				while (arguments.size() > COMMANDS_ARGS[command_position]) {
-					arguments.pop_back();
+				while (arguments->size() > COMMANDS_ARGS[command_position]) {
+					arguments->pop_back();
 				}
 			switch (command_position) {
-			case 0:
+			case 0: 
+				try {			
+					if (campeonato.adicionaObjecto(arguments))
+						throw log.getElememtCreatedMsg();
+					else
+						throw log.getArgumentError();
+				} catch (exception e) {
+					throw log.getBadArgumentError();
+				}
+			    break;
 			case 1:
 			case 2:
 			case 3:
@@ -70,10 +79,10 @@ int UserConsole::executionCicle() {
 			case 19:
 			case 20:
 			case 21:
-				cout << "comando lido, argumentos:";
-				for (string x : arguments)
-					cout << " " << x;
-				cout << endl;
+				wcout << "comando lido, argumentos:";
+				for (string x : *arguments)
+					wcout << " " << x.c_str();
+				wcout << endl;
 				break;
 			default:
 				break;
@@ -84,11 +93,12 @@ int UserConsole::executionCicle() {
 			throw log.getNoCommandError();
 	}
 	catch (out_of_range exception) {
+		//throw log.getArgumentError();
 	}
 	return command_position;
 }
 
-int UserConsole::getMaxArgs()
+int UserConsole::getMaxArgs() const
 {
 	return MAX_ARGS;
 }
@@ -102,3 +112,28 @@ void UserConsole::setFase(int fase)
 {
 	this->fase = fase;
 }
+
+
+vector<string> *UserConsole::getFile(string file_name) const{
+	ifstream file(file_name);
+	string temp;
+	vector<string> *lines = new vector<string>();
+	string word;
+	int params;
+	
+	if (file.is_open()) {
+		while (getline(file, temp)) {
+			stringstream ss(temp);
+			params = 0;
+			while (ss >> word) { 
+				++params; 
+			}
+			if(params == 5)
+				lines->push_back(temp);
+		}
+	}
+	file.close();
+	return lines;
+}
+
+

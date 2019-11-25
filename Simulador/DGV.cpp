@@ -1,5 +1,10 @@
 #include "DGV.h"
 
+DGV::DGV()
+{
+
+}
+
 vector<Carro*> &DGV::getCars()
 {
 	return carros;
@@ -40,6 +45,11 @@ bool DGV::isNameValid(Piloto &piloto)
 		}
 	}
 	return true;
+}
+
+DGV* DGV::getDGV()
+{
+	return this;
 }
 
 void DGV::addPiloto(Piloto* piloto)

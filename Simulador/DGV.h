@@ -12,6 +12,7 @@ private:
 	vector<Piloto*> pilotos;
 	vector<Carro*> carros;
 public:
+	DGV();
 	vector<Carro*> &getCars();
 	vector<Piloto*> &getPilotos();
 	void addPiloto(Piloto* piloto);
@@ -19,5 +20,6 @@ public:
 	void operator += (Carro& carro);
 	string random_string(size_t length);
 	bool isNameValid(Piloto& piloto);
+	DGV *getDGV();
 };
 

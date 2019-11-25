@@ -18,7 +18,6 @@ public:
 	void setName(string name);
 	Carro& getCarro();
 	void setCarro(Carro &carro);
-	//bool operator == (Piloto& piloto);
 	bool operator== (Piloto* piloto);
 };
 

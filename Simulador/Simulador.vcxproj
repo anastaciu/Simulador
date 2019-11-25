@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Autodromo.cpp" />
+    <ClCompile Include="Campeonato.cpp" />
     <ClCompile Include="Carro.cpp" />
     <ClCompile Include="Consola.cpp" />
     <ClCompile Include="Corrida.cpp" />
@@ -159,16 +160,17 @@
     <ClCompile Include="DGV.cpp" />
     <ClCompile Include="Fast.cpp" />
     <ClCompile Include="Garagem.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="MessageLog.cpp" />
     <ClCompile Include="Pedals.cpp" />
     <ClCompile Include="Piloto.cpp" />
     <ClCompile Include="Pista.cpp" />
-    <ClCompile Include="Simulador.cpp" />
     <ClCompile Include="Slow.cpp" />
     <ClCompile Include="UserConsole.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Autodromo.h" />
+    <ClInclude Include="Campeonato.h" />
     <ClInclude Include="Carro.h" />
     <ClInclude Include="Consola.h" />
     <ClInclude Include="Corrida.h" />

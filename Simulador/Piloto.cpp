@@ -4,10 +4,10 @@
 
 
 
-Piloto::Piloto(string name) : name(name), carro(nullptr)
+Piloto::Piloto(string name) : name(name)
 {
 	this->name = name;
-	cout << "ctor piloto with name" << endl;
+
 }
 
 Piloto::~Piloto()
