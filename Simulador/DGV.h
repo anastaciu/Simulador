@@ -11,6 +11,7 @@ class DGV
 private:
 	vector<Piloto*> pilotos;
 	vector<Carro*> carros;
+
 public:
 	DGV();
 	vector<Carro*> &getCars();

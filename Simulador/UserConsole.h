@@ -11,7 +11,7 @@ using namespace std;
 
 class UserConsole
 {
-public:
+private:
 	int fase = 1;
 	const int MAX_ARGS = 100;
 	const vector<string> COMMANDS = {"cria", "apaga", "carregaP", "carregaC", "carregaA", "entranocarro", "saidocarro", "lista", "savedgv", "loaddgv", "deldgv", "campeonato", "listacarros", "carregabat", "carregatudo", "corrida", "acidente", "stop", "destroi", "passatempo", "log", "sair",};
@@ -19,14 +19,18 @@ public:
 	const MessageLog log;
 	Campeonato campeonato;
 
-
+public:
+	Campeonato &getCampeonato();
 	string readCommandLine() const;
 	int findCommand(const string& command) const;
 	int executionCicle();
 	int getMaxArgs()const;
 	int getFase() const;
 	void setFase(int fase);
-	vector<string> *getFile(string file_name) const;
+	vector<string> getFile(string file_name);
+	bool getFileArgs(vector<Autodromo>& autodromos, string file_name);
+	bool getFileArgs(vector<Piloto*>& pilotos, string file_name, DGV& dgv);
+	bool getFileArgs(vector<Carro*>& carros, string file_name);
 
 };
 

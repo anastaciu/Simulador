@@ -1,4 +1,5 @@
 #include "MessageLog.h"
+#include "Consola.h"
 
 
 MessageLog::MessageLog() {
@@ -8,18 +9,6 @@ MessageLog::MessageLog(const MessageLog& orig) {
 }
 
 MessageLog::~MessageLog() {
-}
-
-void MessageLog::printLogError(string log) const {
-	cout << ERRO << log << endl;
-}
-
-void MessageLog::printLog(string log) const {
-	cout << log << endl;
-}
-
-void MessageLog::printLogNoReturn(string log) const {
-	cout << log;
 }
 
 string MessageLog::getNoCommandError() const {
@@ -36,7 +25,7 @@ string MessageLog::getArgumentError() const {
 
 string MessageLog::getBadArgumentError() const
 {
-	return ERROR_BAD_ARGUMENTS;
+	return ERRO_BAD_ARGUMENTS;
 }
 
 string MessageLog::getFileError() const {
@@ -51,5 +40,23 @@ string MessageLog::getElememtCreatedMsg() const
 {
 	return ELEM_CRIADO;
 }
+
+string MessageLog::getFileRead() const
+{
+	return FICHEIRO_LIDO;
+}
+
+string MessageLog::getError() const
+{
+	Consola::setBackgroundColor(Consola::VERMELHO);
+	return ERRO;
+}
+
+string MessageLog::getTitle() const
+{
+	Consola::setBackgroundColor(Consola::AZUL_CLARO);
+	return TITLE;
+}
+
 
 

@@ -1,7 +1,5 @@
 #pragma once
 #include <string>
-#include <iostream>
-#include <sstream>
 
 using namespace std;
 
@@ -11,26 +9,27 @@ public:
 	MessageLog();
 	MessageLog(const MessageLog& orig);
 	virtual ~MessageLog();
-	void printLogError(string log) const;
 	string getNoCommandError() const;
 	string getCommandToken() const;
 	string getArgumentError() const;
 	string getBadArgumentError() const;
 	string getFileError() const;
-	void printLogNoReturn(string log) const;
-	void printLog(string log) const;
 	string getFase1Error() const;
 	string getElememtCreatedMsg() const;
+	string getFileRead() const;
+	string getError() const;
+	string getTitle() const;
 
 private:
-
+	const string TITLE = "           **RACE SIMULATOR**           ";
 	const string ERRO = "ERRO: ";
 	const string COMMANDTOKEN = "Comando: ";
 	const string ERROR_NO_COMMAND = "Comando nao encontrado";
-	const string ERROR_ARGUMENTS = "Número insuficiente de argumentos";
-	const string ERROR_BAD_ARGUMENTS = "Argumentos inválidos";
+	const string ERROR_ARGUMENTS = "Numero insuficiente de argumentos";
+	const string ERRO_BAD_ARGUMENTS = "Argumentos invalidos";
 	const string ERROR_FILE = "Impossivel abrir ficheiro";
-	const string ERROR_FASE1 = "Comando não disponível nesta fase";
+	const string ERROR_FASE1 = "Comando não disponivel nesta fase";
 	const string ELEM_CRIADO = "Elemento criado";
+	const string FICHEIRO_LIDO = "Ficheiro lido: ";
 };
 

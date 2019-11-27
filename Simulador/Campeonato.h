@@ -1,6 +1,9 @@
 #pragma once
 #include "Autodromo.h"
 #include "DGV.h"
+#include "Crazy.h"
+#include "Slow.h"
+#include "Fast.h"
 #include <vector>
 #include <sstream>
 #include <algorithm>
@@ -11,7 +14,6 @@ using namespace std;
 
 class Campeonato
 {
-public:
 private:
 	vector<Autodromo> autodromos;
 	DGV dgv;
@@ -22,7 +24,7 @@ public:
 	bool isNameValid(Autodromo& autodromo);
 	string random_string(size_t length);
 	void operator +=(Autodromo autodromo);
-	vector<Autodromo> getAutodromos();
+	vector<Autodromo> &getAutodromos();
 	bool adicionaObjecto(vector<string> *arguments);
 	bool criaObjecto(vector<Carro*> &carros, vector<string>* arguments);
 	bool criaObjecto(vector<string>* arguments);

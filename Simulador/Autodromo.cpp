@@ -2,7 +2,7 @@
 #include <locale.h>
 
 
-Autodromo::Autodromo(string name): name(name)
+Autodromo::Autodromo(string name, int pistas, int comprimento) : name(name), pistas(pistas), comprimento(comprimento)
 {
 }
 
