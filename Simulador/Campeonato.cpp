@@ -6,6 +6,11 @@ Campeonato::Campeonato()
 
 }
 
+DGV& Campeonato::getDGV()
+{
+	return dgv;
+}
+
 void Campeonato::addAutodromo(Autodromo autodromo)
 {
 	size_t str_length = 10;
@@ -47,7 +52,7 @@ void Campeonato::operator+= (Autodromo autodromo)
 	autodromos.push_back(autodromo);
 }
 
-vector<Autodromo> &Campeonato::getAutodromos()
+vector<Autodromo>& Campeonato::getAutodromos()
 {
 	return autodromos;
 }
@@ -59,7 +64,7 @@ bool Campeonato::adicionaObjecto(vector<string>* arguments)
 	if (!arguments->at(0).compare("c")) {
 		if (criaObjecto(this->dgv.getCars(), arguments))
 			return true;
-		else 
+		else
 			return false;
 	}
 	else if (!arguments->at(0).compare("a")) {
@@ -69,7 +74,7 @@ bool Campeonato::adicionaObjecto(vector<string>* arguments)
 			return false;
 	}
 	else if (!arguments->at(0).compare("p")) {
-		if (criaObjecto(dgv.getPilotos(), arguments))
+		if (criaObjecto(dgv, arguments))
 			return true;
 		else
 			return false;
@@ -79,7 +84,7 @@ bool Campeonato::adicionaObjecto(vector<string>* arguments)
 
 }
 
-bool Campeonato::criaObjecto(vector<Carro*> &carros, vector<string>* arguments)
+bool Campeonato::criaObjecto(vector<Carro*>& carros, vector<string>* arguments)
 {
 	int v_max;
 	double energy, capacity;
@@ -91,13 +96,11 @@ bool Campeonato::criaObjecto(vector<Carro*> &carros, vector<string>* arguments)
 	stringstream arg3(arguments->at(3));
 	arg3 >> capacity;
 	if (arguments->size() == 6) {
-		Carro* carro = new Carro(v_max, energy, capacity, arguments->at(4), arguments->at(5));
-		carros.push_back(carro);
+		carros.push_back(new Carro(v_max, energy, capacity, arguments->at(4), arguments->at(5)));
 		return true;
 	}
 	else if (arguments->size() == 5) {
-		Carro* carro = new Carro(v_max, energy, capacity, arguments->at(4));
-		carros.push_back(carro);
+		carros.push_back(new Carro(v_max, energy, capacity, arguments->at(4)));
 		return true;
 	}
 	return false;
@@ -115,10 +118,10 @@ bool Campeonato::criaObjecto(vector<string>* arguments)
 		addAutodromo(autodromo);
 		return true;
 	}
-	return false;	
+	return false;
 }
 
-bool Campeonato::criaObjecto(vector<Piloto*>& pilotos, vector<string>* arguments) 
+bool Campeonato::criaObjecto(DGV& dgv, vector<string>* arguments)
 {
 	ostringstream str;
 	if (arguments->size() > 2)
@@ -142,10 +145,108 @@ bool Campeonato::criaObjecto(vector<Piloto*>& pilotos, vector<string>* arguments
 	return false;
 }
 
-DGV &Campeonato::getDGV()
+bool Campeonato::apagaObjeto(vector<Piloto*>& pilotos, vector<string>* arguments)
 {
-	return dgv;
+	vector<Piloto*>::iterator it;
+	it = pilotos.begin();
+	ostringstream str;
+	copy(arguments->begin() + 1, arguments->end() - 1, ostream_iterator<string>(str, " "));
+	str << arguments->back();
+	cout << str.str();
+	while (it != pilotos.end()) {
+		if (str.str() == (*it)->getName()) {
+			it = pilotos.erase(it);
+			return true;
+		}
+		else {
+			it++;
+		}
+	}
+	return false;
 }
+
+bool Campeonato::apagaObjeto(vector<Carro*>& carros, vector<string>* arguments)
+{
+	vector<Carro*>::iterator it;
+	it = carros.begin();
+	while (it != carros.end()) {
+		if (arguments->at(1) == (*it)->getId()) {
+			it = carros.erase(it);
+			return true;
+		}
+		else {
+			it++;
+		}
+	}
+	return false;
+}
+
+bool Campeonato::apagaObjeto(vector<string>* arguments)
+{
+	vector<Autodromo>::iterator it;
+	it = autodromos.begin();
+	while (it != autodromos.end()) {
+		if (arguments->at(1) == (*it).getName()) {
+			it = autodromos.erase(it);
+			return true;
+		}
+		else {
+			it++;
+		}
+	}
+	return false;
+}
+
+bool Campeonato::removeObjecto(vector<string>* arguments)
+{
+	exception e;
+
+	if (!arguments->at(0).compare("c")) {
+		if (apagaObjeto(this->dgv.getCars(), arguments))
+			return true;
+		else
+			return false;
+	}
+	else if (!arguments->at(0).compare("a")) {
+		if (apagaObjeto(arguments))
+			return true;
+		else
+			return false;
+	}
+	else if (!arguments->at(0).compare("p")) {
+		if (apagaObjeto(dgv.getPilotos(), arguments))
+			return true;
+		else
+			return false;
+	}
+	else throw e;
+	return false;
+
+}
+
+
+bool Campeonato::entraNoCarro(vector<Piloto*> pilotos, vector<Carro*> carros, vector<string>* arguments)
+{
+	if (arguments->size() > 1) {
+		ostringstream str;
+		copy(arguments->begin() + 1, arguments->end() - 1, ostream_iterator<string>(str, " "));
+		str << arguments->back();
+		for (Piloto* p : pilotos) {
+			if (str.str() == p->getName() && !(p->getCarro() != nullptr)) {
+				for (Carro* c : carros) {
+					if (c->getId() == arguments->at(0) && !(c->getPiloto() != nullptr)) {
+						c->setPiloto(*p);
+						p->setCarro(*c);
+						return true;
+					}
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
 
 
 

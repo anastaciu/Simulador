@@ -12,7 +12,6 @@ Piloto::Piloto(string name) : name(name)
 
 Piloto::~Piloto()
 {
-
 }
 
 string Piloto::getName() const
@@ -38,4 +37,9 @@ void Piloto::setCarro(Carro& carro)
 bool Piloto::operator== (Piloto *piloto)
 {
 	return this->name == piloto->name;
+}
+
+bool Piloto::operator!=(Piloto* piloto)
+{
+	return piloto != nullptr;
 }

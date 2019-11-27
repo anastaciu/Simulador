@@ -19,9 +19,12 @@ public:
 	string getFileRead() const;
 	string getError() const;
 	string getTitle() const;
+	string getDeletedMessage() const;
+	string notFound() const;
+	string listaErros() const;
 
 private:
-	const string TITLE = "           **RACE SIMULATOR**           ";
+	const string TITLE = "                **RACE SIMULATOR**                ";
 	const string ERRO = "ERRO: ";
 	const string COMMANDTOKEN = "Comando: ";
 	const string ERROR_NO_COMMAND = "Comando nao encontrado";
@@ -31,5 +34,8 @@ private:
 	const string ERROR_FASE1 = "Comando não disponivel nesta fase";
 	const string ELEM_CRIADO = "Elemento criado";
 	const string FICHEIRO_LIDO = "Ficheiro lido: ";
+	const string ELIMINADO = "Elemento apagado";
+	const string NAO_ENCONTRADO = "Elemento nao encontrado";
+	const string ERRO_LISTA = "Pelo menos uma lista de elementos esta vazia";
 };
 

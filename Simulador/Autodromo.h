@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <sstream>
 
 
 using namespace std;
@@ -14,5 +15,6 @@ public:
 	bool operator == (Autodromo& autodromo);
 	void setName(string name);
 	string getName();
+	string getAsString() const;
 };
 

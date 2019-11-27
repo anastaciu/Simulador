@@ -20,6 +20,7 @@ private:
 
 public:
 	Campeonato();
+	DGV& getDGV();
 	void addAutodromo(Autodromo autodromo);
 	bool isNameValid(Autodromo& autodromo);
 	string random_string(size_t length);
@@ -28,7 +29,11 @@ public:
 	bool adicionaObjecto(vector<string> *arguments);
 	bool criaObjecto(vector<Carro*> &carros, vector<string>* arguments);
 	bool criaObjecto(vector<string>* arguments);
-	bool criaObjecto(vector<Piloto*>& pilotos, vector<string>* arguments);
-	DGV &getDGV();
+	bool criaObjecto(DGV& dgv, vector<string>* arguments);
+	bool removeObjecto(vector<string>* arguments);
+	bool apagaObjeto(vector<Carro*>& carros, vector<string>* arguments);
+	bool apagaObjeto(vector<string>* arguments);
+	bool apagaObjeto(vector<Piloto*>& pilotos, vector<string>* arguments);
+	bool entraNoCarro(vector<Piloto*> pilotos, vector<Carro*> carros, vector<string>* arguments);
 };
 

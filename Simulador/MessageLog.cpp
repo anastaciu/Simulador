@@ -48,7 +48,7 @@ string MessageLog::getFileRead() const
 
 string MessageLog::getError() const
 {
-	Consola::setBackgroundColor(Consola::VERMELHO);
+	Consola::setTextColor(Consola::VERMELHO);
 	return ERRO;
 }
 
@@ -56,6 +56,21 @@ string MessageLog::getTitle() const
 {
 	Consola::setBackgroundColor(Consola::AZUL_CLARO);
 	return TITLE;
+}
+
+string MessageLog::getDeletedMessage() const
+{
+	return ELIMINADO;
+}
+
+string MessageLog::notFound() const
+{
+	return NAO_ENCONTRADO;
+}
+
+string MessageLog::listaErros() const
+{
+	return ERRO_LISTA;
 }
 
 

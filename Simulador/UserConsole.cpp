@@ -1,6 +1,7 @@
 #include "UserConsole.h"
 
 
+
 Campeonato& UserConsole::getCampeonato()
 {
 	return campeonato;
@@ -33,83 +34,111 @@ int UserConsole::executionCicle() {
 	while (ss >> word)
 		arguments.push_back(word);
 	try {
-		command_position = findCommand(arguments.at(0));
-		command = arguments.at(0);
-		if ((command_position > comandTreshold&& getFase() == 1) && command_position != 21) {
-			throw log.getFase1Error();
-		}
-		arguments.erase(arguments.begin());
-		if (command_position != -1) {
-			if (arguments.size() < COMMANDS_ARGS[command_position]) {
-				throw log.getError() + log.getArgumentError();
+		if (!arguments.empty()) {
+			command_position = findCommand(arguments.at(0));
+			if ((command_position > comandTreshold&& getFase() == 1) && command_position != 21) {
+				throw log.getFase1Error();
 			}
-			if (command_position != 0 && command_position != 11)
-				while (arguments.size() > COMMANDS_ARGS[command_position]) {
-					arguments.pop_back();
+			arguments.erase(arguments.begin());
+			if (command_position != -1) {
+				if (arguments.size() < COMMANDS_ARGS[command_position]) {
+					throw log.getError() + log.getArgumentError();
 				}
-			switch (command_position) {
-			case 0:
-				try {
-					if (campeonato.adicionaObjecto(&arguments))
-						throw log.getElememtCreatedMsg();
-					else
+				if (command_position != 0 && command_position != 1 && command_position != 5 && command_position != 11)
+					while (arguments.size() > COMMANDS_ARGS[command_position]) {
+						arguments.pop_back();
+					}
+				switch (command_position) {
+				case 0:
+					try {
+						if (campeonato.adicionaObjecto(&arguments))
+							throw log.getElememtCreatedMsg();
+						else
+							throw log.getError() + log.getBadArgumentError();
+					}
+					catch (exception e) {
 						throw log.getError() + log.getBadArgumentError();
+					}
+					break;
+				case 1:
+					try {
+						if (campeonato.removeObjecto(&arguments)) {
+							throw log.getDeletedMessage();
+						}
+						else
+							throw log.getError() + log.notFound();
+					}
+					catch (exception e) {
+						throw log.getError() + log.getArgumentError();
+					}
+					break;
+				case 2:
+					if (getFileArgs(arguments.at(0), campeonato.getDGV())) {
+						throw log.getFileRead() + arguments.at(0);
+					}
+					else
+						throw log.getError() + log.getFileError();
+					break;
+				case 3:
+					if (getFileArgs(campeonato.getDGV().getCars(), arguments.at(0))) {
+						throw log.getFileRead() + arguments.at(0);
+					}
+					else
+						throw log.getError() + log.getFileError();
+					break;
+				case 4:
+					if (getFileArgs(campeonato.getAutodromos(), arguments.at(0))) {
+						throw log.getFileRead() + arguments.at(0);
+					}
+					else
+						throw log.getError() + log.getFileError();
+					break;
+				case 5:
+					try {
+						if (campeonato.entraNoCarro(campeonato.getDGV().getPilotos(), campeonato.getDGV().getCars(), &arguments)) {
+
+						}
+						else {
+							throw log.getError() + log.getBadArgumentError();
+						}
+					}
+					catch (exception e) {
+						throw log.getArgumentError();
+					}
+					break;
+				case 6:
+				case 7:
+					if (!listaElementos()) {
+						throw log.getError() + log.listaErros();
+					}
+				case 8:
+				case 9:
+				case 10:
+				case 11:
+					setFase(2);
+					break;
+				case 12:
+				case 13:
+				case 14:
+				case 15:
+				case 16:
+				case 17:
+				case 18:
+				case 19:
+				case 20:
+				case 21:
+				default:
+					break;
 				}
-				catch (exception e) {
-					throw log.getError() + log.getBadArgumentError();
-				}
-				break;
-			case 1:
-			case 2:
-				if (getFileArgs(campeonato.getDGV().getPilotos(), arguments.at(0), campeonato.getDGV())) {
-					throw  log.getFileRead() + arguments.at(0);
-				}
-				else
-					throw log.getError() + log.getFileError();
-				break;
-			case 3:
-				if (getFileArgs(campeonato.getDGV().getCars(), arguments.at(0))) {
-					throw log.getFileRead() + arguments.at(0);
-				}
-				else
-					throw log.getError() + log.getFileError();
-				break;
-			case 4:
-				if (getFileArgs(campeonato.getAutodromos(), arguments.at(0))) {
-					throw log.getFileRead() + arguments.at(0);
-				}
-				else
-					throw log.getError() + log.getFileError();
-				break;
-			case 5:
-			case 6:
-			case 7:
-			case 8:
-			case 9:
-			case 10:
-			case 11:
-				setFase(2);
-				break;
-			case 12:
-			case 13:
-			case 14:
-			case 15:
-			case 16:
-			case 17:
-			case 18:
-			case 19:
-			case 20:
-			case 21:
-			default:
-				break;
+				return command_position;
 			}
-			return command_position;
+			else
+				throw log.getError() + log.getNoCommandError();
+
 		}
-		else
-			throw log.getError() + log.getNoCommandError();
 	}
 	catch (exception e) {
-		
+
 	}
 	return command_position;
 }
@@ -169,7 +198,7 @@ bool UserConsole::getFileArgs(vector<Autodromo>& autodromos, string file_name)
 	return true;
 }
 
-bool UserConsole::getFileArgs(vector<Piloto*>& pilotos, string file_name, DGV& dgv)
+bool UserConsole::getFileArgs(string file_name, DGV& dgv)
 {
 	vector<string> args = getFile(file_name);
 	if (args.empty()) {
@@ -224,14 +253,27 @@ bool UserConsole::getFileArgs(vector<Carro*>& carros, string file_name)
 		stringstream arg3(argmts.at(2));
 		arg3 >> capacity;
 		if (argmts.size() == 5) {
-			Carro* carro = new Carro(v_max, energy, capacity, argmts.at(3), argmts.at(4));
-			carros.push_back(carro);
+			carros.push_back(new Carro(v_max, energy, capacity, argmts.at(3), argmts.at(4)));
 		}
 		else if (argmts.size() == 4) {
-			Carro* carro = new Carro(v_max, energy, capacity, argmts.at(4));
-			carros.push_back(carro);
+			carros.push_back(new Carro(v_max, energy, capacity, argmts.at(4)));
 		}
 		cout << argmts.at(4) << endl;
+	}
+	return true;
+}
+
+bool UserConsole::listaElementos()
+{
+	Consola::clrscr();
+	for (Carro* c : campeonato.getDGV().getCars()) {
+		cout << c->getAsString();
+	}
+	for (Piloto* p : campeonato.getDGV().getPilotos()) {
+		cout << p->getAsString();
+	}
+	for (Autodromo a : campeonato.getAutodromos()) {
+		cout << a.getAsString();
 	}
 	return true;
 }

@@ -10,5 +10,7 @@ Fast::~Fast()
 
 string Fast::getAsString() const
 {
-	return string();
+	ostringstream os;
+	os << "Piloto: " << this->getName() << " (rapido)" << endl;
+	return os.str();
 }

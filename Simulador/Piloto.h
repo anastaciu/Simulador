@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <sstream>
 
 using namespace std;
 
@@ -9,9 +10,10 @@ class Piloto
 {
 private:
 	string name;	
-	Carro* carro;
+	Carro* carro = nullptr;
 
 public:	
+	
 	Piloto(string name);
 	virtual ~Piloto();
 	string getName() const;
@@ -20,5 +22,6 @@ public:
 	void setCarro(Carro &carro);
 	bool operator== (Piloto* piloto);
 	virtual string getAsString() const = 0;
+	bool operator!=(Piloto* piloto);
 };
 

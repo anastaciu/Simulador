@@ -6,7 +6,9 @@ Crazy::Crazy(string name) : Piloto(name)
 
 string Crazy::getAsString() const
 {
-	return string();
+	ostringstream os;
+	os << "Piloto: " << this->getName() << " (crazy)" << endl;
+	return os.str();
 }
 
 

@@ -20,3 +20,10 @@ string Autodromo::getName()
 {
 	return this->name;
 }
+
+string Autodromo::getAsString() const
+{
+	ostringstream os;
+	os << "Autodromo: " << name << " Pistas: " << pistas << " Comprimento: " << comprimento << endl;
+	return os.str();
+}

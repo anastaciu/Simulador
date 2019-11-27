@@ -1,5 +1,13 @@
 #include "Pedals.h"
 
+Pedals::Pedals() : accelerator(false), brake(false)
+{
+}
+
+Pedals::~Pedals()
+{
+}
+
 bool Pedals::getAcceleratorState() const
 {
 	return accelerator;

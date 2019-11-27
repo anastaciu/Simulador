@@ -10,5 +10,7 @@ Slow::~Slow()
 
 string Slow::getAsString() const
 {
-	return string();
+	ostringstream os;
+	os << "Piloto: " << this->getName() << " (surpresa)" << endl;
+	return os.str();
 }

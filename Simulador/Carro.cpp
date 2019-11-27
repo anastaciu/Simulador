@@ -5,7 +5,8 @@
 char Carro::id_global = 'a';
 const string Carro::MODELO_BASE = "modelo base";
 
-Carro::Carro(int v_max, double energy, double capacity, string marca, string modelo) : marca(marca), modelo(modelo), max_speed(v_max), capacity(capacity)
+Carro::Carro(int v_max, double energy, double capacity, string marca, string modelo) : marca(marca), modelo(modelo), max_speed(v_max), capacity(capacity), pedals(), is_moving(false),
+emergency(false), is_damaged(false), speed(0), positionX(0), positionY(0)
 {
 	id = id_global > 'z' ? '?' : id_global++;
 	this->energy = energy;
@@ -14,7 +15,8 @@ Carro::Carro(int v_max, double energy, double capacity, string marca, string mod
 	}
 }
 
-Carro::Carro(int v_max, double energy, double capacity, string marca) : marca(marca), max_speed(v_max), capacity(capacity), modelo(MODELO_BASE)
+Carro::Carro(int v_max, double energy, double capacity, string marca) : marca(marca), max_speed(v_max), capacity(capacity), modelo(MODELO_BASE), pedals(), is_moving(false),
+emergency(false), is_damaged(false), speed(0), positionX(0), positionY(0)
 {
 	id = id_global > 'z' ? '?' : id_global++;
 	this->energy = energy;
@@ -27,7 +29,7 @@ Carro::~Carro()
 {
 }
 
-char Carro::getId() const
+string Carro::getId() const
 {
 	return id;
 }
@@ -75,5 +77,17 @@ void Carro::manivela(int n)
 	if (!energyLimitsInbound()) {
 		this->energy = this->capacity;
 	}
+}
+
+string Carro::getAsString() const
+{
+	ostringstream os;
+	os << "Carro: " << id << " Marca: " << marca << " Modelo: " << modelo << " Velocidade Maxima: " << max_speed << " Capacidade Maxima: " << capacity << " Energy: " << energy << " Piloto: " << (condutor ? condutor->getAsString() : "vazio")<< endl;
+	return os.str();
+}
+
+bool Carro::operator!=(Piloto* piloto)
+{
+		return piloto != nullptr;
 }
 
