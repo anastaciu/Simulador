@@ -19,5 +19,6 @@ public:
 	Carro& getCarro();
 	void setCarro(Carro &carro);
 	bool operator== (Piloto* piloto);
+	virtual string getAsString() const = 0;
 };
 

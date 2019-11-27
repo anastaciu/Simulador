@@ -6,5 +6,6 @@ class Fast : public Piloto
 public:
 	Fast(string name);
 	~Fast();
+	string getAsString() const override;
 };
 
