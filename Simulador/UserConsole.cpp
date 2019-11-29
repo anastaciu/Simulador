@@ -2,6 +2,11 @@
 
 
 
+UserConsole::UserConsole()
+{
+}
+
+
 Campeonato& UserConsole::getCampeonato()
 {
 	return campeonato;
@@ -44,7 +49,7 @@ int UserConsole::executionCicle() {
 				if (arguments.size() < COMMANDS_ARGS[command_position]) {
 					throw log.getError() + log.getArgumentError();
 				}
-				if (command_position != 0 && command_position != 1 && command_position != 5 && command_position != 11)
+				if (command_position != 0 && command_position != 1 && command_position != 5 && command_position != 6 && command_position != 11)
 					while (arguments.size() > COMMANDS_ARGS[command_position]) {
 						arguments.pop_back();
 					}
@@ -94,19 +99,19 @@ int UserConsole::executionCicle() {
 						throw log.getError() + log.getFileError();
 					break;
 				case 5:
-					try {
-						if (campeonato.entraNoCarro(campeonato.getDGV().getPilotos(), campeonato.getDGV().getCars(), &arguments)) {
-
-						}
-						else {
-							throw log.getError() + log.getBadArgumentError();
-						}
+					if (campeonato.entraNoCarro(campeonato.getDGV().getPilotos(), campeonato.getDGV().getCars(), &arguments)) {
+						throw log.entrou();
 					}
-					catch (exception e) {
-						throw log.getArgumentError();
-					}
+					else 
+						throw log.getError() + log.getBadArgumentError();
 					break;
 				case 6:
+					if (campeonato.saiDoCarro(campeonato.getDGV().getPilotos(), campeonato.getDGV().getCars(), &arguments)) {
+						throw log.saiu();
+					}
+					else
+						throw log.getError() + log.getBadArgumentError();
+						break;
 				case 7:
 					if (!listaElementos()) {
 						throw log.getError() + log.listaErros();
@@ -193,7 +198,6 @@ bool UserConsole::getFileArgs(vector<Autodromo>& autodromos, string file_name)
 		arg2 >> comprimento;
 		Autodromo autodromo(argmts.at(2), pistas, comprimento);
 		campeonato.addAutodromo(autodromo);
-		cout << argmts.at(2);
 	}
 	return true;
 }
@@ -215,7 +219,6 @@ bool UserConsole::getFileArgs(string file_name, DGV& dgv)
 		ostringstream str;
 		copy(argmts.begin() + 1, argmts.end() - 1, ostream_iterator<string>(str, " "));
 		str << argmts.back();
-		cout << str.str() << endl;
 		if (!argmts.at(0).compare("crazy")) {
 			dgv.addPiloto(new Crazy(str.str()));
 		}
@@ -258,24 +261,26 @@ bool UserConsole::getFileArgs(vector<Carro*>& carros, string file_name)
 		else if (argmts.size() == 4) {
 			carros.push_back(new Carro(v_max, energy, capacity, argmts.at(4)));
 		}
-		cout << argmts.at(4) << endl;
 	}
 	return true;
 }
 
 bool UserConsole::listaElementos()
-{
-	Consola::clrscr();
-	for (Carro* c : campeonato.getDGV().getCars()) {
-		cout << c->getAsString();
+{	
+	if (!campeonato.getDGV().getPilotos().empty() || !campeonato.getDGV().getCars().empty() || !campeonato.getAutodromos().empty()) {
+		for (Carro* c : campeonato.getDGV().getCars()) {
+			cout << c->getAsString();
+		}
+		for (Piloto* p : campeonato.getDGV().getPilotos()) {
+			cout << p->getAsString();
+		}
+		for (Autodromo a : campeonato.getAutodromos()) {
+			cout << a.getAsString();
+		}
+		return true;
 	}
-	for (Piloto* p : campeonato.getDGV().getPilotos()) {
-		cout << p->getAsString();
-	}
-	for (Autodromo a : campeonato.getAutodromos()) {
-		cout << a.getAsString();
-	}
-	return true;
+	else 
+		return false;
 }
 
 

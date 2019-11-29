@@ -14,7 +14,7 @@ private:
 	string marca, modelo;
 	double energy, capacity;
 	Pedals pedals;
-	bool is_moving, emergency, is_damaged;
+	bool is_moving, emergency, is_damaged, isOccupied;
 	int speed, max_speed, positionX, positionY;
 	Piloto *condutor = nullptr;
 
@@ -22,17 +22,18 @@ public:
 	Carro(int v_max, double energy, double capacity, string marca, string modelo);
 	Carro(int v_max, double energy, double capacity, string marca);
 	~Carro();
-	string getId() const;
+	string getId();
+	void setId(char id);
 	string getBrand() const;
 	string getModel() const;
 	double getEnergy() const;
 	double getMaxEnergy() const;
 	bool energyLimitsInbound() const;
 	Piloto &getPiloto();
-	void setPiloto(Piloto& condutor);
+	void setPiloto(Piloto* condutor);
 	void manivela(int n);
 	string getAsString() const;
-	bool operator != (Piloto* piloto);
+
 	
 };
 

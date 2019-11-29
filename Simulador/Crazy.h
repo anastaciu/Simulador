@@ -8,5 +8,6 @@ class Crazy : public Piloto
 public:
 	Crazy(string name);
 	string getAsString() const override;
+	string getPilotDetais() const override;
 };
 

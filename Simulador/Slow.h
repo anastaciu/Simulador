@@ -8,5 +8,6 @@ public:
 	Slow(string name);
 	~Slow();
 	string getAsString() const override;
+	string getPilotDetais() const override;
 };
 

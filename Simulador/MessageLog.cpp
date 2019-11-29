@@ -1,7 +1,6 @@
 #include "MessageLog.h"
 #include "Consola.h"
 
-
 MessageLog::MessageLog() {
 }
 
@@ -54,7 +53,6 @@ string MessageLog::getError() const
 
 string MessageLog::getTitle() const
 {
-	Consola::setBackgroundColor(Consola::AZUL_CLARO);
 	return TITLE;
 }
 
@@ -71,6 +69,26 @@ string MessageLog::notFound() const
 string MessageLog::listaErros() const
 {
 	return ERRO_LISTA;
+}
+
+string MessageLog::entrou() const
+{
+	return ENTROU;
+}
+
+string MessageLog::saiu() const
+{
+	return SAIU;
+}
+
+string MessageLog::continuar() const
+{
+	return CONTINUAR;
+}
+
+string MessageLog::getFase1() const
+{
+	return FASE1;
 }
 
 

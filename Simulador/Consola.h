@@ -54,6 +54,20 @@ public:
 	const static char ENTER = 13;
 	const static char ESCAPE = 27;
 
+
+	//maximiza janela
+	//testada no visual studio 2019, windows 10 home
+	static void maximizeWindow();
+
+	//redimensiona em pixeis janela e move para nova posição pos_x, pos_y
+	//testada no visual studio 2019, windows 10 home
+	static void resizeWindowPx(int largura_px, int altura_px, int pos_x, int pos_y);
+
+	//redimensiona janela em pixeis na posiçao onde está
+	//testada no visual studio 2019, windows 10 home
+	static void resizeWindowDefaultPositionPx(int largura_px, int altura_px);
+
+
 	Consola() = delete;  // Nao quero objectos disto a proliferarem por ai.
 	                     // As funcçõe são estáticas por alguma razão.
 	                     // ----------> C++ 2011 ou posterior

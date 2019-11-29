@@ -25,16 +25,31 @@ HANDLE Consola::hconsola = GetStdHandle(STD_OUTPUT_HANDLE);
 HANDLE Consola::hStdin = GetStdHandle(STD_INPUT_HANDLE);;
 HWND Consola::hwnd = GetConsoleWindow();
 
-/*
-Consola::Consola() {
-	hconsola = GetStdHandle(STD_OUTPUT_HANDLE);
-	hStdin = GetStdHandle(STD_INPUT_HANDLE);
-	hwnd = GetConsoleWindow();
-	// NT "upwards" apenas
-	// O suporte para w95 e w98 é demasiado retorcido
-	// e já ninguém usa esses "sistemas"
+
+//maximizar janela 
+void Consola::maximizeWindow()
+{
+	COORD NewSBSize = GetLargestConsoleWindowSize(hconsola);
+	//SMALL_RECT DisplayArea = { 0, 0, 0, 0 };
+	//SetConsoleScreenBufferSize(hconsola, NewSBSize);
+	//DisplayArea.Right = NewSBSize.X - 1;
+	//DisplayArea.Bottom = NewSBSize.Y - 1;
+	//SetConsoleWindowInfo(hconsola, TRUE, &DisplayArea);
+	ShowWindow(hwnd, SW_MAXIMIZE);
 }
-*/
+
+void Consola::resizeWindowPx(int largura_px, int altura_px, int pos_x, int pos_y)
+{
+	MoveWindow(hwnd, pos_x, pos_y, largura_px, altura_px, TRUE);
+}
+
+void Consola::resizeWindowDefaultPositionPx(int x_size, int y_size)
+{
+	RECT consoleRect;
+	GetWindowRect(hwnd, &consoleRect);
+	MoveWindow(hwnd, consoleRect.left, consoleRect.top, x_size, y_size, TRUE);
+}
+
 
 void Consola::gotoxy(int x, int y) {
 	COORD coord;
@@ -83,10 +98,11 @@ void Consola::setBackgroundColor(WORD color) {
 	SetConsoleTextAttribute(hconsola, cor);
 }
 
+
+
 void Consola::setScreenSize(int nLinhas, int nCols) {
 	COORD tam;
 	SMALL_RECT DisplayArea;
-
 	tam.X = nCols;
 	tam.Y = nLinhas;
 	SetConsoleScreenBufferSize(hconsola, tam);
@@ -113,6 +129,7 @@ void Consola::setTextSize(int x, int y) {
 	SetCurrentConsoleFontEx(hconsola, false, &cfont);
 #endif
 }
+
 
 
 char Consola::getch(void) {

@@ -2,6 +2,7 @@
 #include <string>
 #include <sstream>
 
+
 using namespace std;
 
 class Carro;
@@ -18,10 +19,11 @@ public:
 	virtual ~Piloto();
 	string getName() const;
 	void setName(string name);
-	Carro& getCarro();
-	void setCarro(Carro &carro);
+	Carro& getCarro() const;
+	void setCarro(Carro *carro);
 	bool operator== (Piloto* piloto);
 	virtual string getAsString() const = 0;
-	bool operator!=(Piloto* piloto);
+	virtual string getPilotDetais() const = 0;
+
 };
 

@@ -6,7 +6,7 @@ char Carro::id_global = 'a';
 const string Carro::MODELO_BASE = "modelo base";
 
 Carro::Carro(int v_max, double energy, double capacity, string marca, string modelo) : marca(marca), modelo(modelo), max_speed(v_max), capacity(capacity), pedals(), is_moving(false),
-emergency(false), is_damaged(false), speed(0), positionX(0), positionY(0)
+emergency(false), is_damaged(false), speed(0), positionX(0), positionY(0), isOccupied(0)
 {
 	id = id_global > 'z' ? '?' : id_global++;
 	this->energy = energy;
@@ -16,7 +16,7 @@ emergency(false), is_damaged(false), speed(0), positionX(0), positionY(0)
 }
 
 Carro::Carro(int v_max, double energy, double capacity, string marca) : marca(marca), max_speed(v_max), capacity(capacity), modelo(MODELO_BASE), pedals(), is_moving(false),
-emergency(false), is_damaged(false), speed(0), positionX(0), positionY(0)
+emergency(false), is_damaged(false), speed(0), positionX(0), positionY(0), isOccupied(0)
 {
 	id = id_global > 'z' ? '?' : id_global++;
 	this->energy = energy;
@@ -29,9 +29,14 @@ Carro::~Carro()
 {
 }
 
-string Carro::getId() const
+string Carro::getId()
 {
 	return id;
+}
+
+void Carro::setId(char id)
+{
+	this->id = id;
 }
 
 string Carro::getBrand() const
@@ -64,9 +69,9 @@ Piloto& Carro::getPiloto()
 	return *condutor;
 }
 
-void Carro::setPiloto(Piloto& condutor)
+void Carro::setPiloto(Piloto* condutor)
 {
-	this->condutor = &condutor;
+	this->condutor = condutor;
 }
 
 void Carro::manivela(int n)
@@ -82,12 +87,10 @@ void Carro::manivela(int n)
 string Carro::getAsString() const
 {
 	ostringstream os;
-	os << "Carro: " << id << " Marca: " << marca << " Modelo: " << modelo << " Velocidade Maxima: " << max_speed << " Capacidade Maxima: " << capacity << " Energy: " << energy << " Piloto: " << (condutor ? condutor->getAsString() : "vazio")<< endl;
+	os << "Carro: " << id << ", " << marca << " " << modelo << ", Velocidade Maxima: " << max_speed << ", Capacidade Maxima: " 
+		<< capacity << ", Energia: " << energy << (condutor ? ", " + condutor->getPilotDetais() : "\n");
 	return os.str();
 }
 
-bool Carro::operator!=(Piloto* piloto)
-{
-		return piloto != nullptr;
-}
+
 

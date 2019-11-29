@@ -1,6 +1,5 @@
 #include "Campeonato.h"
 
-
 Campeonato::Campeonato()
 {
 
@@ -229,21 +228,64 @@ bool Campeonato::entraNoCarro(vector<Piloto*> pilotos, vector<Carro*> carros, ve
 {
 	if (arguments->size() > 1) {
 		ostringstream str;
+		locale loc;
 		copy(arguments->begin() + 1, arguments->end() - 1, ostream_iterator<string>(str, " "));
 		str << arguments->back();
 		for (Piloto* p : pilotos) {
-			if (str.str() == p->getName() && !(p->getCarro() != nullptr)) {
+			if (str.str() == p->getName() && &p->getCarro() == nullptr) {
 				for (Carro* c : carros) {
-					if (c->getId() == arguments->at(0) && !(c->getPiloto() != nullptr)) {
-						c->setPiloto(*p);
-						p->setCarro(*c);
+					if (c->getId() == arguments->at(0) && &c->getPiloto() == nullptr) {
+						c->setPiloto(p);
+						p->setCarro(c);
+						c->setId(toupper(c->getId().at(0)));
 						return true;
 					}
 				}
 			}
 		}
 	}
+	return false;
+}
 
+bool Campeonato::saiDoCarro(vector<Piloto*> pilotos, vector<Carro*> carros, vector<string>* arguments)
+{
+	if (!arguments->empty()) {
+		if (arguments->size() == 1 && arguments->at(0).length() == 1) {
+			for (Carro* c : carros) {
+				if (arguments->at(0) == c->getId() && &c->getPiloto() != nullptr && &c->getPiloto().getCarro() != nullptr) {
+					c->setId(tolower(c->getId().at(0)));
+					c->getPiloto().setCarro(nullptr);
+					c->setPiloto(nullptr);
+					return true;
+				}
+			}
+		}		
+		ostringstream str;
+		copy(arguments->begin(), arguments->end() - 1, ostream_iterator<string>(str, " "));
+		str << arguments->back();
+		for (Piloto* p : pilotos) {
+			if (str.str() == p->getName() && &p->getCarro() != nullptr && &p->getCarro().getPiloto() != nullptr) {
+				p->getCarro().setPiloto(nullptr);
+				p->setCarro(nullptr);
+				return true;
+			}
+		}
+		
+	}
+	return false;
+}
+
+bool Campeonato::saiDoCarro(vector<Carro*> carros, vector<string>* arguments)
+{
+	if (arguments->size() == 1) {
+		for (Carro* c : carros) {
+			if (arguments->at(0) == c->getId() && &c->getPiloto() != nullptr && &c->getPiloto().getCarro() != nullptr) {
+				c->getPiloto().setCarro(nullptr);
+				c->setPiloto(nullptr);
+				return true;
+			}
+		}
+	}
 	return false;
 }
 

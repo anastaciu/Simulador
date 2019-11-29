@@ -1,4 +1,5 @@
 #include "Piloto.h"
+#include "Carro.h"
 #include <iostream>
 
 
@@ -24,14 +25,14 @@ void Piloto::setName(string name)
 	this->name = name;
 }
 
-Carro& Piloto::getCarro()
+Carro& Piloto::getCarro() const
 {
 	return *carro;
 }
 
-void Piloto::setCarro(Carro& carro)
+void Piloto::setCarro(Carro* carro)
 {
-	this->carro = &carro;
+	this->carro = carro;
 }
 
 bool Piloto::operator== (Piloto *piloto)
@@ -39,7 +40,6 @@ bool Piloto::operator== (Piloto *piloto)
 	return this->name == piloto->name;
 }
 
-bool Piloto::operator!=(Piloto* piloto)
-{
-	return piloto != nullptr;
-}
+
+
+

@@ -159,6 +159,7 @@
     <ClCompile Include="Crazy.cpp" />
     <ClCompile Include="DGV.cpp" />
     <ClCompile Include="Fast.cpp" />
+    <ClCompile Include="GameGraphics.cpp" />
     <ClCompile Include="Garagem.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MessageLog.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="Crazy.h" />
     <ClInclude Include="DGV.h" />
     <ClInclude Include="Fast.h" />
+    <ClInclude Include="GameGraphics.h" />
     <ClInclude Include="Garagem.h" />
     <ClInclude Include="MessageLog.h" />
     <ClInclude Include="Pedals.h" />

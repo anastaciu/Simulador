@@ -1,9 +1,9 @@
 #include "Autodromo.h"
-#include <locale.h>
 
 
-Autodromo::Autodromo(string name, int pistas, int comprimento) : name(name), pistas(pistas), comprimento(comprimento)
+Autodromo::Autodromo(string name, int pistas, int comprimento) : name(name), garagem(), pista(pistas, comprimento)
 {
+	
 }
 
 bool Autodromo::operator==(Autodromo& autodromo)
@@ -24,6 +24,6 @@ string Autodromo::getName()
 string Autodromo::getAsString() const
 {
 	ostringstream os;
-	os << "Autodromo: " << name << " Pistas: " << pistas << " Comprimento: " << comprimento << endl;
+	os << "Autodromo: " << name << " Pistas: " << pista.getPistas() << " Comprimento: " << pista.getComprimento() << endl;
 	return os.str();
 }
