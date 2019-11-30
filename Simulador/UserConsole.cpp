@@ -11,37 +11,27 @@ void UserConsole::start()
 	int i = 0;
 	const int EXIT_POSITION = 21;
 	do {
-		if (campeonato.getSimFase() == 2) {
-			i++;
-			Consola::gotoxy(100, campeonato.getAutodromos().at(0).getPista().getPistas() + 5 + i);
-			graphics.commandLineFase2();
-		}
-		else
-			graphics.commandLine();
-
+		graphics.printCommandLine(i, campeonato);
 		try {
 			sair = executionCicle();
 		}
-		catch (const string & log) {
-			if (campeonato.getSimFase() == 2) {
-				Consola::gotoxy(100, campeonato.getAutodromos().at(0).getPista().getPistas() + 6 + i);
-				i++;
-			}
-			cout << log << endl;
+		catch (string & log) {
+			graphics.printLog(log, campeonato, i);
 		}
 		catch (exception e) {
-			//cout << e.what() << endl;
-
+			//cout << e.what();
 		}
+
 	} while (sair != EXIT_POSITION);
 }
 
 int UserConsole::executionCicle() {
 	string word, command;
+	exception e;
 	vector<string> arguments;
 	int command_position = -1;
 	if ((command = readCommandLine()).empty()) {
-		return command_position;
+		throw e;
 	}
 	stringstream ss(command);
 	arguments.clear();
@@ -128,7 +118,7 @@ int UserConsole::executionCicle() {
 				break;
 			case 11:
 				try {
-					startCampeonato();
+					startCampeonato(&arguments);
 				}
 				catch (exception e) {
 					abortStart();
@@ -238,15 +228,15 @@ void UserConsole::deleteExcessArgs(int command_position, vector<string>& argumen
 		}
 }
 
-void UserConsole::startCampeonato()
+void UserConsole::startCampeonato(vector<string>* arguments)
 {
-	campeonato.setFase(2);
+	campeonato.setFase(2, arguments);
 	graphics.printAll(campeonato.getAutodromos().at(0).getPista(), campeonato.getDGV().getCars());
 }
 
 void UserConsole::abortStart()
 {
-	campeonato.setFase(1);
+	campeonato.setFaseAbort(1);
 	throw log.getError() + log.erroCamp();
 }
 

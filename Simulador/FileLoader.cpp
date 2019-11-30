@@ -1,7 +1,7 @@
 #include "FileLoader.h"
 
 
-vector<string> FileLoader::getFile(string file_name) {
+vector<string> FileLoader::getFileLines(string file_name) {
 	vector<string> lines;
 	ifstream file(file_name);
 	string temp;
@@ -17,7 +17,7 @@ vector<string> FileLoader::getFile(string file_name) {
 bool FileLoader::getFileArgs(Campeonato& campeonato, string file_name)
 {
 	string word;
-	vector<string> args = getFile(file_name);
+	vector<string> args = getFileLines(file_name);
 	if (args.empty()) {
 		return false;
 	}
@@ -41,7 +41,7 @@ bool FileLoader::getFileArgs(Campeonato& campeonato, string file_name)
 
 bool FileLoader::getFileArgs(string file_name, DGV& dgv)
 {
-	vector<string> args = getFile(file_name);
+	vector<string> args = getFileLines(file_name);
 	if (args.empty()) {
 		return false;
 	}
@@ -54,6 +54,8 @@ bool FileLoader::getFileArgs(string file_name, DGV& dgv)
 			argmts.push_back(word);
 		}
 		ostringstream str;
+		if (argmts.empty())
+			return false;
 		copy(argmts.begin() + 1, argmts.end() - 1, ostream_iterator<string>(str, " "));
 		str << argmts.back();
 		if (!argmts.at(0).compare("crazy")) {
@@ -71,7 +73,7 @@ bool FileLoader::getFileArgs(string file_name, DGV& dgv)
 
 bool FileLoader::getFileArgs(vector<Carro*>& carros, string file_name)
 {
-	vector<string> args = getFile(file_name);
+	vector<string> args = getFileLines(file_name);
 	if (args.empty()) {
 		return false;
 	}

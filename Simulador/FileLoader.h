@@ -15,7 +15,7 @@ using namespace std;
 class FileLoader
 {
 public:
-	vector<string> getFile(string file_name);
+	vector<string> getFileLines(string file_name);
 	bool getFileArgs(Campeonato& campeonato, string file_name);
 	bool getFileArgs(string file_name, DGV& dgv);
 	bool getFileArgs(vector<Carro*>& carros, string file_name);

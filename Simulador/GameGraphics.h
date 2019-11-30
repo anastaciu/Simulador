@@ -22,5 +22,7 @@ public:
 	void printGarage(Pista& pista, vector<Carro*>& carros);
 	void printAll(Pista& pista, vector<Carro*>& carros);
 	int endRace();
+	void printCommandLine(int& i, Campeonato& campeonato);
+	void printLog(string& log, Campeonato &campeonato, int& i);
 };
 

@@ -25,9 +25,16 @@ void Campeonato::addAutodromo(Autodromo autodromo)
 
 }
 
-void Campeonato::setFase(int fase)
+void Campeonato::setFase(int fase, vector<string>* arguments)
 {
 	this->fase = fase;
+}
+
+void Campeonato::setFaseAbort(int fase)
+{
+	this->fase = fase;
+	if(autodromos_campeonato.size() > 0)
+		this->autodromos_campeonato.clear();
 }
 
 int Campeonato::getSimFase() const

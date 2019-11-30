@@ -30,7 +30,7 @@ public:
 	bool checkCommandFase1(int position);
 	bool checkCommandFase2(int position);
 	void deleteExcessArgs(int command_position, vector<string>& arguments);
-	void startCampeonato();
+	void startCampeonato(vector<string>* arguments);
 	void abortStart();
 
 };

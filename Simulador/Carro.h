@@ -71,5 +71,7 @@ public:
 	//estabelece a posição do carro;
 	void setPosition(int x, int y);
 	
+	void setGarage(bool);
+	bool getGarage() const;
 };
 

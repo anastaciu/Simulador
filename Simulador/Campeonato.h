@@ -16,6 +16,7 @@ class Campeonato
 {
 private:
 	vector<Autodromo> autodromos;
+	vector<Autodromo*> autodromos_campeonato;
 	DGV dgv;
 	int fase;
 
@@ -25,7 +26,9 @@ public:
 
 
 	//define a fase do simulador
-	void setFase(int fase);
+	void setFase(int fase, vector<string>* arguments);
+
+	void setFaseAbort(int fase);
 
 	//ve fase do simulador
 	int getSimFase() const;
