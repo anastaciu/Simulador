@@ -172,6 +172,11 @@ int UserConsole::executionCicle() {
 			case 18:
 				break;
 			case 19:
+				if (campeonato.passaTempo(&arguments)) {
+					graphics.printAll(campeonato.getAutodromos().at(0).getPista(), campeonato.getDGV().getCars());
+				}
+				else
+					return graphics.endRace();				
 				break;
 			case 20:
 				break;

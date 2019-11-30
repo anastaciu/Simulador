@@ -15,7 +15,7 @@ private:
 	string marca, modelo;
 	double energy, capacity;
 	Pedals pedals;
-	bool is_moving, emergency, is_damaged;
+	bool is_moving, emergency, in_garage, is_damaged;
 	int speed, max_speed, positionX, positionY;
 	Piloto *condutor = nullptr;
 

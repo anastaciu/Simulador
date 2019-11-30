@@ -68,7 +68,7 @@ void GameGraphics::printPista(Pista& pista)
 	Consola::maximizeWindow();
 	Consola::setScreenSize(9999, pista.getComprimento() + 2);
 	for (int i = 2; i < pista.getPistas() + 2; i++) {
-		for (int j = 4; j < pista.getComprimento(); j++) {
+		for (int j = 4; j < pista.getComprimento() + 5; j++) {
 			Consola::gotoxy(j, i);
 			cout << "_";
 		}
@@ -84,7 +84,7 @@ void GameGraphics::printCarros(Pista& pista, vector<Carro*>& carros)
 	for (int i = 0, j = 0, z = 0, y = 0; i < carros.size(); i++) {
 		if ((&carros.at(i)->getPiloto() != nullptr)) {
 			if (j < pista.getPistas()) {
-				Consola::gotoxy(4, j + 2);
+				Consola::gotoxy(carros.at(i)->getXPosition(), j + 2);
 				cout << carros.at(i)->getId();
 				carros.at(i)->setPosition(carros.at(i)->getXPosition(), j + 2);
 				j++;
@@ -124,6 +124,17 @@ void GameGraphics::printAll(Pista& pista, vector<Carro*>& carros) {
 	printCarros(pista, carros);
 }
 
+int GameGraphics::endRace()
+{
+	int sair = 21;
+	Consola::clrscr();
+	Consola::gotoxy(100, 20);
+	Consola::setBackgroundColor(Consola::AMARELO);
+	Consola::setTextColor(Consola::VERMELHO);
+	cout << "Fim da corrida, toda a gente ganhou!";
+	Consola::getch();
+	return sair;
+}
 
 
 

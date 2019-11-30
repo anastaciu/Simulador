@@ -82,5 +82,8 @@ public:
 	//sai do carro, apenas por ID de carro, devolve true em caso de sucesso
 	bool saiDoCarro(vector<Carro*> carros, vector<string>* arguments);
 	
+	//comando passatempo
+	bool passaTempo(vector<string>* arguments);
+	
 };
 

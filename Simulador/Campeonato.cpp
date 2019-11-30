@@ -1,5 +1,6 @@
 #include "Campeonato.h"
 
+
 Campeonato::Campeonato() : fase(1)
 {
 
@@ -69,15 +70,15 @@ vector<Autodromo>& Campeonato::getAutodromos()
 
 bool Campeonato::adicionaObjecto(vector<string>* arguments)
 {
-	
+
 	if (!arguments->at(0).compare("c") && criaObjecto(this->dgv.getCars(), arguments)) {
-			return true;
+		return true;
 	}
 	else if (!arguments->at(0).compare("a") && criaObjecto(arguments)) {
-			return true;
+		return true;
 	}
 	else if (!arguments->at(0).compare("p") && criaObjecto(dgv, arguments)) {
-			return true;
+		return true;
 	}
 	return false;
 
@@ -260,7 +261,7 @@ bool Campeonato::saiDoCarro(vector<Piloto*> pilotos, vector<Carro*> carros, vect
 					return true;
 				}
 			}
-		}		
+		}
 		ostringstream str;
 		copy(arguments->begin(), arguments->end() - 1, ostream_iterator<string>(str, " "));
 		str << arguments->back();
@@ -272,7 +273,7 @@ bool Campeonato::saiDoCarro(vector<Piloto*> pilotos, vector<Carro*> carros, vect
 				return true;
 			}
 		}
-		
+
 	}
 	return false;
 }
@@ -289,6 +290,22 @@ bool Campeonato::saiDoCarro(vector<Carro*> carros, vector<string>* arguments)
 		}
 	}
 	return false;
+}
+
+bool Campeonato::passaTempo(vector<string>* arguments)
+{
+	int tempo;
+	stringstream ss(arguments->at(0));
+	ss >> tempo;
+	for (Carro* c : this->getDGV().getCars()) {
+		if (&c->getPiloto() != nullptr) {
+			c->setPosition(c->getXPosition() + 1 * tempo, c->getYPosition());
+			if (c->getXPosition() > this->autodromos.at(0).getPista().getComprimento() + 4) {
+				return false;
+			}
+		}
+	}
+	return true;
 }
 
 

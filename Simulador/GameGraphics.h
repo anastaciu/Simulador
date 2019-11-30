@@ -21,6 +21,6 @@ public:
 	void printCarros(Pista& pista, vector<Carro*>& carros);
 	void printGarage(Pista& pista, vector<Carro*>& carros);
 	void printAll(Pista& pista, vector<Carro*>& carros);
-
+	int endRace();
 };
 
