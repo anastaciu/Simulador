@@ -91,5 +91,10 @@ string MessageLog::getFase1() const
 	return FASE1;
 }
 
+string MessageLog::erroCamp() const
+{
+	return ERRO_CAMPEONATO;
+}
+
 
 

@@ -21,7 +21,7 @@ public:
 	//compara Autódromos por nome
 	bool operator == (Autodromo& autodromo);
 
-	//Estabelece o nome do autodrómos
+	//Estabelece o nome dos autodrómos
 	void setName(string name);
 
 	//Devolve o nome do autódromo
@@ -29,5 +29,7 @@ public:
 
 	//devolve uma string com os detalhes do autódromo
 	string getAsString() const;
+
+	Pista& getPista();
 };
 

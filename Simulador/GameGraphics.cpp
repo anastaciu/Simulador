@@ -2,8 +2,9 @@
 
 void GameGraphics::gameInit()
 {
-	Consola::setScreenSize(9000, 140);
+
 	Consola::resizeWindowPx(1200, 600, 320, 180);
+	Consola::setScreenSize(9000, 145);
 	Consola::gotoxy(44, 2);
 	Consola::setBackgroundColor(Consola::AZUL_CLARO);
 	cout << log.getTitle() << endl << endl;
@@ -20,6 +21,15 @@ void GameGraphics::commandLine()
 	Consola::setTextColor(Consola::BRANCO);
 	cout << log.getCommandToken();
 }
+
+void GameGraphics::commandLineFase2()
+{
+	Consola::setBackgroundColor(Consola::VERDE);
+	Consola::setTextColor(Consola::PRETO);
+	cout << log.getCommandToken();
+}
+
+
 
 bool GameGraphics::listaElementos(Campeonato& campeonato) const
 {
@@ -41,52 +51,76 @@ bool GameGraphics::listaElementos(Campeonato& campeonato) const
 	}
 	else
 		Consola::setTextColor(Consola::BRANCO);
-		return false;
+	return false;
 }
 
 void GameGraphics::printPista(Pista& pista)
 {
-	Consola::maximizeWindow();
-	Consola::setBackgroundColor(Consola::VERDE_CLARO);
+	Consola::setBackgroundColor(Consola::VERDE);
 	Consola::clrscr();
 	Consola::setBackgroundColor(Consola::PRETO);
+	Consola::maximizeWindow();
 	Consola::setScreenSize(9999, pista.getComprimento() + 2);
 	for (int i = 2; i < pista.getPistas() + 2; i++) {
-		for (int j = 4; j < pista.getComprimento() ; j++) {
+		for (int j = 4; j < pista.getComprimento(); j++) {
 			Consola::gotoxy(j, i);
 			cout << "_";
-		}		
+		}
 	}
-	Consola::setBackgroundColor(Consola::VERDE_CLARO);
+	Consola::setBackgroundColor(Consola::VERDE);
 	cout << endl;
 }
 
 void GameGraphics::printCarros(Pista& pista, vector<Carro*>& carros)
 {
-	Consola::setBackgroundColor(Consola::AZUL_CLARO);
-	Consola::setScreenSize(9000, pista.getComprimento() + 4);
+	Consola::setBackgroundColor(Consola::AMARELO);
+	Consola::setTextColor(Consola::PRETO);
 	Consola::gotoxy(4, 2);
-	for (auto i = 0; i < pista.getPistas(); i++) {
-		try {
-			cout << carros.at(i)->getId();
-			Consola::gotoxy(4, i + 3);
-			carros.at(i)->setPosition(4, i + 3);
+	for (int i = 0, j = 0, z = 0, y = 0; i < carros.size(); i++) {
+		if ((&carros.at(i)->getPiloto() != nullptr)) {
+			if (j < pista.getPistas()) {
+				Consola::gotoxy(4, j + 2);
+				cout << carros.at(i)->getId();
+				carros.at(i)->setPosition(4, j + 2);
+				j++;
+			}
+			else {
+				Consola::gotoxy(4 + z, pista.getPistas() + 6 + y);
+				cout << carros.at(i)->getId();
+				z++;
+			}
+			
 		}
-		catch (exception e) {
 
+		else {
+			Consola::gotoxy(4 + z, pista.getPistas() + 6 + y);
+			cout << carros.at(i)->getId();
+			z++;
+		}
+
+		if (z > 75) {
+			y++;
+			z = 0;
 		}
 	}
 }
 
 void GameGraphics::printGarage(Pista& pista, vector<Carro*>& carros)
-{	
-	if (carros.size() > pista.getPistas()) {
-		Consola::gotoxy(4, 2);
-	}
+{
+	//if (carros.size() > pista.getPistas()) {
+	Consola::setBackgroundColor(Consola::AZUL_CLARO);
+	for (int i = 4; i < 80; i++)
+		for (int j = pista.getPistas() + 6; j < 40; j++) {
+			Consola::gotoxy(i, j);
+			cout << " ";
+		}
+	//}
 }
 
-void printGarage(Pista& pista, vector<Carro*>& carros) 
-{
+void GameGraphics::printAll(Pista& pista, vector<Carro*>& carros) {
+	printPista(pista);
+	printGarage(pista, carros);
+	printCarros(pista, carros);
 }
 
 

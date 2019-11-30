@@ -14,12 +14,12 @@ private:
 public:
 	void gameInit();
 	void commandLine();
+	void commandLineFase2();
 	bool listaElementos(Campeonato& campeonato) const;
 	void printPista(Pista& pista);
 	void printCarros(Pista& pista, vector<Carro*>& carros);
 	void printGarage(Pista& pista, vector<Carro*>& carros);
-
-
+	void printAll(Pista& pista, vector<Carro*>& carros);
 
 };
 

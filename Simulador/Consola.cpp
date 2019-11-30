@@ -30,16 +30,17 @@ HWND Consola::hwnd = GetConsoleWindow();
 void Consola::maximizeWindow()
 {
 	COORD NewSBSize = GetLargestConsoleWindowSize(hconsola);
-	SMALL_RECT DisplayArea = { 0, 0, 0, 0 };
-	SetConsoleScreenBufferSize(hconsola, NewSBSize);
-	DisplayArea.Right = NewSBSize.X - 1;
-	DisplayArea.Bottom = NewSBSize.Y - 1;
-	SetConsoleWindowInfo(hconsola, TRUE, &DisplayArea);
+	//SMALL_RECT DisplayArea = { 0, 0, 0, 0 };
+	//SetConsoleScreenBufferSize(hconsola, NewSBSize);
+	//DisplayArea.Right = NewSBSize.X - 1;
+	//DisplayArea.Bottom = NewSBSize.Y - 1;
+	//SetConsoleWindowInfo(hconsola, TRUE, &DisplayArea);
 	ShowWindow(hwnd, SW_MAXIMIZE);
 }
 
 void Consola::resizeWindowPx(int largura_px, int altura_px, int pos_x, int pos_y)
 {
+
 	MoveWindow(hwnd, pos_x, pos_y, largura_px, altura_px, TRUE);
 }
 

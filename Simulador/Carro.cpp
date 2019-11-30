@@ -6,7 +6,7 @@ char Carro::id_global = 'a';
 const string Carro::MODELO_BASE = "modelo base";
 
 Carro::Carro(int v_max, double energy, double capacity, string marca, string modelo) : marca(marca), modelo(modelo), max_speed(v_max), capacity(capacity), pedals(), is_moving(false),
-emergency(false), is_damaged(false), speed(0), positionX(0), positionY(0), isOccupied(0)
+emergency(false), is_damaged(false), speed(0), positionX(0), positionY(0)
 {
 	id = id_global > 'z' ? '?' : id_global++;
 	this->energy = energy;
@@ -16,7 +16,7 @@ emergency(false), is_damaged(false), speed(0), positionX(0), positionY(0), isOcc
 }
 
 Carro::Carro(int v_max, double energy, double capacity, string marca) : marca(marca), max_speed(v_max), capacity(capacity), modelo(MODELO_BASE), pedals(), is_moving(false),
-emergency(false), is_damaged(false), speed(0), positionX(0), positionY(0), isOccupied(0)
+emergency(false), is_damaged(false), speed(0), positionX(0), positionY(0)
 {
 	id = id_global > 'z' ? '?' : id_global++;
 	this->energy = energy;

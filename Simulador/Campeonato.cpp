@@ -129,15 +129,15 @@ bool Campeonato::criaObjecto(DGV& dgv, vector<string>* arguments)
 		str << arguments->back();
 
 		if (!arguments->at(1).compare("crazy")) {
-			dgv.addPiloto(new Crazy(str.str()));
+			dgv.addPiloto(&Crazy(str.str()));
 			return true;
 		}
 		else if (!arguments->at(1).compare("rapido")) {
-			dgv.addPiloto(new Fast(str.str()));
+			dgv.addPiloto(&Fast(str.str()));
 			return true;
 		}
 		else if (!arguments->at(1).compare("surpresa")) {
-			dgv.addPiloto(new Slow(str.str()));
+			dgv.addPiloto(&Slow(str.str()));
 			return true;
 		}
 	}

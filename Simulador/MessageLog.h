@@ -23,6 +23,7 @@ private:
 	const string ENTROU = "Piloto entrou no carro";
 	const string SAIU = "Piloto saiu do carro";
 	const string CONTINUAR = "Prima qualquer tecla para continuar...";
+	const string ERRO_CAMPEONATO = "Nao e possivel iniciar campeonato, itens em falta...";
 
 
 public:
@@ -46,5 +47,6 @@ public:
 	string saiu() const;
 	string continuar() const;
 	string getFase1() const;
+	string erroCamp() const;
 };
 

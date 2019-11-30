@@ -27,3 +27,8 @@ string Autodromo::getAsString() const
 	os << "Autodromo: " << name << " Pistas: " << pista.getPistas() << " Comprimento: " << pista.getComprimento() << endl;
 	return os.str();
 }
+
+Pista& Autodromo::getPista()
+{
+	return pista;
+}

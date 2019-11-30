@@ -8,18 +8,30 @@ void UserConsole::start()
 {
 	graphics.gameInit();
 	int sair = -1;
+	int i = 0;
 	const int EXIT_POSITION = 21;
 	do {
+		if (campeonato.getSimFase() == 2) {
+			i++;
+			Consola::gotoxy(100, campeonato.getAutodromos().at(0).getPista().getPistas() + 5 + i);
+			graphics.commandLineFase2();
+		}
+		else
 		graphics.commandLine();
+
 		try {
 			sair = executionCicle();
 		}
 		catch (const string & log) {
+			if (campeonato.getSimFase() == 2) {
+				Consola::gotoxy(100, campeonato.getAutodromos().at(0).getPista().getPistas() + 6 + i);
+				i++;
+			}
 			cout << log << endl;
 		}
 		catch (exception e) {
-			//Consola::setTextColor(Consola::VERMELHO);
 			//cout << e.what() << endl;
+
 		}
 	} while (sair != EXIT_POSITION);
 }
@@ -115,7 +127,17 @@ int UserConsole::executionCicle() {
 			case 10:
 				break;
 			case 11:
-				campeonato.setFase(2);
+				try  {
+					campeonato.setFase(2);
+				 	graphics.printAll(campeonato.getAutodromos().at(0).getPista(), campeonato.getDGV().getCars());
+
+				}		
+				catch(exception e) {
+					campeonato.setFase(1);
+					throw log.getError() + log.erroCamp();
+
+				}
+
 				break;
 			}
 			return command_position;

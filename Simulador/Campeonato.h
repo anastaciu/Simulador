@@ -23,6 +23,7 @@ public:
 	//construtor
 	Campeonato();
 
+
 	//define a fase do simulador
 	void setFase(int fase);
 
