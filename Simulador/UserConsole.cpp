@@ -17,7 +17,7 @@ void UserConsole::start()
 			graphics.commandLineFase2();
 		}
 		else
-		graphics.commandLine();
+			graphics.commandLine();
 
 		try {
 			sair = executionCicle();
@@ -127,23 +127,36 @@ int UserConsole::executionCicle() {
 			case 10:
 				break;
 			case 11:
-				try  {
-					campeonato.setFase(2);
-				 	graphics.printAll(campeonato.getAutodromos().at(0).getPista(), campeonato.getDGV().getCars());
-
-				}		
-				catch(exception e) {
-					campeonato.setFase(1);
-					throw log.getError() + log.erroCamp();
-
+				try {
+					startCampeonato();
 				}
-
+				catch (exception e) {
+					abortStart();
+				}
 				break;
 			}
 			return command_position;
 		}
 		else if (checkCommandFase2(command_position)) {
 			switch (command_position) {
+			case 5:
+				if (campeonato.entraNoCarro(campeonato.getDGV().getPilotos(), campeonato.getDGV().getCars(), &arguments)) {
+					throw log.entrou();
+				}
+				else
+					throw log.getError() + log.getBadArgumentError();
+				break;
+			case 6:
+				if (campeonato.saiDoCarro(campeonato.getDGV().getPilotos(), campeonato.getDGV().getCars(), &arguments)) {
+					throw log.saiu();
+				}
+				else
+					throw log.getError() + log.getBadArgumentError();
+				break;
+			case 7:
+				if (!graphics.listaElementosFase2(campeonato)) {
+					throw log.getError() + log.listaErros();
+				}
 			case 12:
 				break;
 			case 13:
@@ -206,7 +219,7 @@ bool UserConsole::checkCommandFase1(int position)
 bool UserConsole::checkCommandFase2(int position)
 {
 	int comandTreshold = 11;
-	if (position > comandTreshold&& campeonato.getSimFase() == 2 || position == 21) {
+	if (position > comandTreshold&& campeonato.getSimFase() == 2 || position == 5 || position == 6 || position == 7 || position == 21) {
 		return true;
 	}
 	return false;
@@ -218,6 +231,18 @@ void UserConsole::deleteExcessArgs(int command_position, vector<string>& argumen
 		while (arguments.size() > COMMANDS_ARGS[command_position]) {
 			arguments.pop_back();
 		}
+}
+
+void UserConsole::startCampeonato()
+{
+	campeonato.setFase(2);
+	graphics.printAll(campeonato.getAutodromos().at(0).getPista(), campeonato.getDGV().getCars());
+}
+
+void UserConsole::abortStart()
+{
+	campeonato.setFase(1);
+	throw log.getError() + log.erroCamp();
 }
 
 

@@ -16,6 +16,7 @@ public:
 	void commandLine();
 	void commandLineFase2();
 	bool listaElementos(Campeonato& campeonato) const;
+	bool listaElementosFase2(Campeonato& campeonato) const;
 	void printPista(Pista& pista);
 	void printCarros(Pista& pista, vector<Carro*>& carros);
 	void printGarage(Pista& pista, vector<Carro*>& carros);
