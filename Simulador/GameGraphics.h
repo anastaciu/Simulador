@@ -1,18 +1,25 @@
 #pragma once
-#include "UserConsole.h"
 #include "MessageLog.h"
+#include "Consola.h"
+#include "Campeonato.h"
+#include <iostream>
 
 using namespace std;
 
 class GameGraphics
 {
 private:
-	UserConsole userConsole;
 	MessageLog log;
-
+	
 public:
-	GameGraphics();
-	void start();
+	void gameInit();
+	void commandLine();
+	bool listaElementos(Campeonato& campeonato) const;
+	void printPista(Pista& pista);
+	void printCarros(Pista& pista, vector<Carro*>& carros);
+	void printGarage(Pista& pista, vector<Carro*>& carros);
+
+
 
 };
 

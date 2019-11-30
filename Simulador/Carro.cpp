@@ -92,5 +92,21 @@ string Carro::getAsString() const
 	return os.str();
 }
 
+int Carro::getXPosition() const
+{
+	return positionX;
+}
+
+int Carro::getYPosition() const
+{
+	return positionY;
+}
+
+void Carro::setPosition(int x, int y)
+{
+	this->positionX = x;
+	this->positionY = y;
+}
+
 
 

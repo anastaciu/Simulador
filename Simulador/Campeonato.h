@@ -17,10 +17,17 @@ class Campeonato
 private:
 	vector<Autodromo> autodromos;
 	DGV dgv;
+	int fase;
 
 public:
 	//construtor
 	Campeonato();
+
+	//define a fase do simulador
+	void setFase(int fase);
+
+	//ve fase do simulador
+	int getSimFase() const;
 
 	//Devolve referência para a DGV
 	DGV& getDGV();
@@ -68,10 +75,11 @@ public:
 	//Devolve true em caso de sucesso
 	bool entraNoCarro(vector<Piloto*> pilotos, vector<Carro*> carros, vector<string>* arguments);
 
-	//Sai do carro por Id de carro e por nome de piloto, devolve true em caso de sucesso
+	//Sai do carro por Id de carro ou por nome de piloto, devolve true em caso de sucesso
 	bool saiDoCarro(vector<Piloto*> pilotos, vector<Carro*> carros, vector<string>* arguments);
 
 	//sai do carro, apenas por ID de carro, devolve true em caso de sucesso
 	bool saiDoCarro(vector<Carro*> carros, vector<string>* arguments);
+	
 };
 

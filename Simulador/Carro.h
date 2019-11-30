@@ -33,7 +33,9 @@ public:
 	void setPiloto(Piloto* condutor);
 	void manivela(int n);
 	string getAsString() const;
-
+	int getXPosition() const;
+	int getYPosition() const;
+	void setPosition(int x, int y);
 	
 };
 

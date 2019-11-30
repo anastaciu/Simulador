@@ -1,6 +1,6 @@
 #include "Campeonato.h"
 
-Campeonato::Campeonato()
+Campeonato::Campeonato() : fase(1)
 {
 
 }
@@ -23,6 +23,17 @@ void Campeonato::addAutodromo(Autodromo autodromo)
 	}
 
 }
+
+void Campeonato::setFase(int fase)
+{
+	this->fase = fase;
+}
+
+int Campeonato::getSimFase() const
+{
+	return this->fase;
+}
+
 
 bool Campeonato::isNameValid(Autodromo& autodromo)
 {
@@ -58,27 +69,16 @@ vector<Autodromo>& Campeonato::getAutodromos()
 
 bool Campeonato::adicionaObjecto(vector<string>* arguments)
 {
-	exception e;
-
-	if (!arguments->at(0).compare("c")) {
-		if (criaObjecto(this->dgv.getCars(), arguments))
+	
+	if (!arguments->at(0).compare("c") && criaObjecto(this->dgv.getCars(), arguments)) {
 			return true;
-		else
-			return false;
 	}
-	else if (!arguments->at(0).compare("a")) {
-		if (criaObjecto(arguments))
+	else if (!arguments->at(0).compare("a") && criaObjecto(arguments)) {
 			return true;
-		else
-			return false;
 	}
-	else if (!arguments->at(0).compare("p")) {
-		if (criaObjecto(dgv, arguments))
+	else if (!arguments->at(0).compare("p") && criaObjecto(dgv, arguments)) {
 			return true;
-		else
-			return false;
 	}
-	else throw e;
 	return false;
 
 }
@@ -228,7 +228,6 @@ bool Campeonato::entraNoCarro(vector<Piloto*> pilotos, vector<Carro*> carros, ve
 {
 	if (arguments->size() > 1) {
 		ostringstream str;
-		locale loc;
 		copy(arguments->begin() + 1, arguments->end() - 1, ostream_iterator<string>(str, " "));
 		str << arguments->back();
 		for (Piloto* p : pilotos) {
@@ -252,7 +251,9 @@ bool Campeonato::saiDoCarro(vector<Piloto*> pilotos, vector<Carro*> carros, vect
 	if (!arguments->empty()) {
 		if (arguments->size() == 1 && arguments->at(0).length() == 1) {
 			for (Carro* c : carros) {
-				if (arguments->at(0) == c->getId() && &c->getPiloto() != nullptr && &c->getPiloto().getCarro() != nullptr) {
+				int id = arguments->at(0).at(0);
+				if ((id == tolower(c->getId().at(0)) || id == c->getId().at(0)) && &c->getPiloto() != nullptr && &c->getPiloto().getCarro() != nullptr) {
+					cout << c->getId().at(0);
 					c->setId(tolower(c->getId().at(0)));
 					c->getPiloto().setCarro(nullptr);
 					c->setPiloto(nullptr);
@@ -265,6 +266,7 @@ bool Campeonato::saiDoCarro(vector<Piloto*> pilotos, vector<Carro*> carros, vect
 		str << arguments->back();
 		for (Piloto* p : pilotos) {
 			if (str.str() == p->getName() && &p->getCarro() != nullptr && &p->getCarro().getPiloto() != nullptr) {
+				p->getCarro().setId(tolower(p->getCarro().getId().at(0)));
 				p->getCarro().setPiloto(nullptr);
 				p->setCarro(nullptr);
 				return true;
