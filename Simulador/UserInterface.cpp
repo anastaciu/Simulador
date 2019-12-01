@@ -165,7 +165,7 @@ int UserInterface::executionCicle() {
 				break;
 			case 19:
 				if (Simulador.passaTempo(&arguments)) {
-					graphics.printAll(Simulador.getAutodromosSimulador().at(0).getPista(), Simulador.getDGV().getCars());
+					graphics.printAll(Simulador.getCampeonato().getAutodromosCampeonato().at(0).getPista(), Simulador.getDGV().getCars());
 				}
 				else
 					return graphics.endRace();				
@@ -234,7 +234,7 @@ bool UserInterface::startSimulador(vector<string>* arguments)
 {	
 	if (Simulador.setFase(2, arguments)) {
 
-		graphics.printAll(Simulador.getAutodromosSimulador().at(0).getPista(), Simulador.getDGV().getCars());
+		graphics.printAll(Simulador.getCampeonato().getAutodromosCampeonato().at(0).getPista(), Simulador.getDGV().getCars());
 		return true;
 	}
 	return false;

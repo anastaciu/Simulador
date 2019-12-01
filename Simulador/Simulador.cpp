@@ -6,9 +6,19 @@ Simulador::Simulador() : fase(1)
 
 }
 
+Simulador::~Simulador()
+{
+	autodromos.clear();
+}
+
 DGV& Simulador::getDGV()
 {
 	return dgv;
+}
+
+Campeonato& Simulador::getCampeonato()
+{
+	return campeonato;
 }
 
 void Simulador::addAutodromo(Autodromo autodromo)
@@ -31,8 +41,8 @@ bool Simulador::setFase(int fase, vector<string>* arguments)
 		return false;
 	for (Autodromo a : autodromos) {
 		if (arguments->at(0) == a.getName()) {
-			autodromos_campeonat.push_back(a);
-			//cout << autodromos_Simulador.at(0)->getName();
+			campeonato.getAutodromosCampeonato().push_back(a);
+			cout << campeonato.getAutodromosCampeonato().at(0).getName();
 			system("pause");
 			this->fase = fase;
 			return true;
@@ -44,8 +54,8 @@ bool Simulador::setFase(int fase, vector<string>* arguments)
 void Simulador::setFaseAbort(int fase)
 {
 	this->fase = fase;
-	if(autodromos_campeonat.size() > 0)
-		this->autodromos_campeonat.clear();
+	if(campeonato.getAutodromosCampeonato().size() > 0)
+		this->campeonato.getAutodromosCampeonato().clear();
 }
 
 int Simulador::getSimFase() const
@@ -318,7 +328,7 @@ bool Simulador::passaTempo(vector<string>* arguments)
 	for (Carro* c : this->getDGV().getCars()) {
 		if (&c->getPiloto() != nullptr) {
 			c->setPosition(c->getXPosition() + 1 * tempo, c->getYPosition());
-			if (c->getXPosition() > this->autodromos.at(0).getPista().getComprimento() + 4) {
+			if (c->getXPosition() > campeonato.getAutodromosCampeonato().at(0).getPista().getComprimento() + 4) {
 				return false;
 			}
 		}
@@ -326,10 +336,8 @@ bool Simulador::passaTempo(vector<string>* arguments)
 	return true;
 }
 
-vector<Autodromo>& Simulador::getAutodromosSimulador()
-{
-	return autodromos_campeonat;
-}
+
+
 
 
 

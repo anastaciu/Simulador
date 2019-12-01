@@ -8,7 +8,6 @@
 Piloto::Piloto(string name) : name(name)
 {
 	this->name = name;
-
 }
 
 Piloto::~Piloto()

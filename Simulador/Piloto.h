@@ -12,9 +12,7 @@ class Piloto
 private:
 	string name;	
 	Carro* carro = nullptr;
-
 public:	
-	
 	Piloto(string name);
 	virtual ~Piloto();
 	string getName() const;
@@ -24,6 +22,5 @@ public:
 	bool operator== (Piloto* piloto);
 	virtual string getAsString() const = 0;
 	virtual string getPilotDetais() const = 0;
-
 };
 

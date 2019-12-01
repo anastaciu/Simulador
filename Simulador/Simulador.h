@@ -1,4 +1,5 @@
 #pragma once
+#include "Campeonato.h"
 #include "Autodromo.h"
 #include "DGV.h"
 #include "Crazy.h"
@@ -10,20 +11,21 @@
 #include <iostream>
 #include <iterator>
 
+
 using namespace std;
 
 class Simulador
 {
 private:
 	vector<Autodromo> autodromos;
-	vector<Autodromo> autodromos_campeonat;
 	DGV dgv;
 	int fase;
+	Campeonato campeonato;
 
 public:
 	//construtor
 	Simulador();
-
+	~Simulador();
 
 	//define a fase do simulador
 	bool setFase(int fase, vector<string>* arguments);
@@ -35,6 +37,8 @@ public:
 
 	//Devolve referência para a DGV
 	DGV& getDGV();
+
+	Campeonato& getCampeonato();
 
 	//Adiciona autódromo com verificação de nome
 	void addAutodromo(Autodromo autodromo);
@@ -88,6 +92,5 @@ public:
 	//comando passatempo
 	bool passaTempo(vector<string>* arguments);
 	
-	vector<Autodromo>& getAutodromosSimulador();
 };
 

@@ -3,6 +3,7 @@
 #include <sstream>
 #include "Pista.h"
 #include "Garagem.h"
+#include "Corrida.h"
 
 
 using namespace std;
@@ -13,6 +14,7 @@ private:
 	string name;
 	Garagem garagem;
 	Pista pista;
+	Corrida corrida;
 
 public:
 	//construtor

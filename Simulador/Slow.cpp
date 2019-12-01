@@ -9,6 +9,7 @@ Slow::~Slow()
 {
 }
 
+
 string Slow::getAsString() const
 {
 	ostringstream os;

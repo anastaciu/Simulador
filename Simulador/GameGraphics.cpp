@@ -56,7 +56,7 @@ bool GameGraphics::listaElementos(Simulador& Simulador) const
 
 bool GameGraphics::listaElementosFase2(Simulador& Simulador) const
 {
-	Consola::gotoxy(0, Simulador.getAutodromosSimulador().at(0).getPista().getPistas() + 25);
+	Consola::gotoxy(0, Simulador.getCampeonato().getAutodromosCampeonato().at(0).getPista().getPistas() + 25);
 	return listaElementos(Simulador);
 }
 
@@ -141,7 +141,7 @@ int GameGraphics::endRace()
 void GameGraphics::printCommandLine(int& i, Simulador& Simulador)
 {
 	if (Simulador.getSimFase() == 2) {
-		Consola::gotoxy(90, Simulador.getAutodromosSimulador().at(0).getPista().getPistas() + 6 + i);
+		Consola::gotoxy(90, Simulador.getCampeonato().getAutodromosCampeonato().at(0).getPista().getPistas() + 6 + i);
 		i++;
 		commandLineFase2();
 	}
@@ -153,7 +153,7 @@ void GameGraphics::printCommandLine(int& i, Simulador& Simulador)
 void GameGraphics::printLog(string& log, Simulador &Simulador, int& i)
 {
 	if (Simulador.getSimFase() == 2) {
-		Consola::gotoxy(90, Simulador.getAutodromosSimulador().at(0).getPista().getPistas() + 6 + i);
+		Consola::gotoxy(90, Simulador.getCampeonato().getAutodromosCampeonato().at(0).getPista().getPistas() + 6 + i);
 		i++;
 	}
 	cout << log << endl;
