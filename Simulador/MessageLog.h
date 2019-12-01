@@ -23,7 +23,7 @@ private:
 	const string ENTROU = "Piloto entrou no carro";
 	const string SAIU = "Piloto saiu do carro";
 	const string CONTINUAR = "Prima qualquer tecla para continuar...";
-	const string ERRO_CAMPEONATO = "Nao e possivel iniciar campeonato, itens em falta...";
+	const string ERRO_Simulador = "Nao e possivel iniciar Simulador, itens em falta...";
 
 
 public:

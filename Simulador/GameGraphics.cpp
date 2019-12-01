@@ -31,19 +31,19 @@ void GameGraphics::commandLineFase2()
 
 
 
-bool GameGraphics::listaElementos(Campeonato& campeonato) const
+bool GameGraphics::listaElementos(Simulador& Simulador) const
 {
-	if (!campeonato.getDGV().getPilotos().empty() || !campeonato.getDGV().getCars().empty() || !campeonato.getAutodromos().empty()) {
+	if (!Simulador.getDGV().getPilotos().empty() || !Simulador.getDGV().getCars().empty() || !Simulador.getAutodromos().empty()) {
 		Consola::setTextColor(Consola::AMARELO);
-		for (Carro* c : campeonato.getDGV().getCars()) {
+		for (Carro* c : Simulador.getDGV().getCars()) {
 			cout << c->getAsString();
 		}
 		Consola::setTextColor(Consola::AZUL_CLARO);
-		for (Piloto* p : campeonato.getDGV().getPilotos()) {
+		for (Piloto* p : Simulador.getDGV().getPilotos()) {
 			cout << p->getAsString();
 		}
 		Consola::setTextColor(Consola::VERDE);
-		for (Autodromo a : campeonato.getAutodromos()) {
+		for (Autodromo a : Simulador.getAutodromos()) {
 			cout << a.getAsString();
 		}
 		Consola::setTextColor(Consola::BRANCO);
@@ -54,10 +54,10 @@ bool GameGraphics::listaElementos(Campeonato& campeonato) const
 	return false;
 }
 
-bool GameGraphics::listaElementosFase2(Campeonato& campeonato) const
+bool GameGraphics::listaElementosFase2(Simulador& Simulador) const
 {
-	Consola::gotoxy(0, campeonato.getAutodromosCampeonato().at(0).getPista().getPistas() + 25);
-	return listaElementos(campeonato);
+	Consola::gotoxy(0, Simulador.getAutodromosSimulador().at(0).getPista().getPistas() + 25);
+	return listaElementos(Simulador);
 }
 
 void GameGraphics::printPista(Pista& pista)
@@ -138,10 +138,10 @@ int GameGraphics::endRace()
 	return sair;
 }
 
-void GameGraphics::printCommandLine(int& i, Campeonato& campeonato)
+void GameGraphics::printCommandLine(int& i, Simulador& Simulador)
 {
-	if (campeonato.getSimFase() == 2) {
-		Consola::gotoxy(90, campeonato.getAutodromosCampeonato().at(0).getPista().getPistas() + 6 + i);
+	if (Simulador.getSimFase() == 2) {
+		Consola::gotoxy(90, Simulador.getAutodromosSimulador().at(0).getPista().getPistas() + 6 + i);
 		i++;
 		commandLineFase2();
 	}
@@ -150,10 +150,10 @@ void GameGraphics::printCommandLine(int& i, Campeonato& campeonato)
 
 }
 
-void GameGraphics::printLog(string& log, Campeonato &campeonato, int& i)
+void GameGraphics::printLog(string& log, Simulador &Simulador, int& i)
 {
-	if (campeonato.getSimFase() == 2) {
-		Consola::gotoxy(90, campeonato.getAutodromosCampeonato().at(0).getPista().getPistas() + 6 + i);
+	if (Simulador.getSimFase() == 2) {
+		Consola::gotoxy(90, Simulador.getAutodromosSimulador().at(0).getPista().getPistas() + 6 + i);
 		i++;
 	}
 	cout << log << endl;

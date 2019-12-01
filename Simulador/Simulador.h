@@ -12,7 +12,7 @@
 
 using namespace std;
 
-class Campeonato
+class Simulador
 {
 private:
 	vector<Autodromo> autodromos;
@@ -22,7 +22,7 @@ private:
 
 public:
 	//construtor
-	Campeonato();
+	Simulador();
 
 
 	//define a fase do simulador
@@ -88,6 +88,6 @@ public:
 	//comando passatempo
 	bool passaTempo(vector<string>* arguments);
 	
-	vector<Autodromo>& getAutodromosCampeonato();
+	vector<Autodromo>& getAutodromosSimulador();
 };
 

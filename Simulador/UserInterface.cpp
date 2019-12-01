@@ -11,12 +11,12 @@ void UserInterface::start()
 	int i = 0;
 	const int EXIT_POSITION = 21;
 	do {
-		graphics.printCommandLine(i, campeonato);
+		graphics.printCommandLine(i, Simulador);
 		try {
 			sair = executionCicle();
 		}
 		catch (string & log) {
-			graphics.printLog(log, campeonato, i);
+			graphics.printLog(log, Simulador, i);
 		}
 		catch (exception e) {
 			//cout << e.what();
@@ -49,7 +49,7 @@ int UserInterface::executionCicle() {
 			switch (command_position) {
 			case 0:
 				try {
-					if (campeonato.adicionaObjecto(&arguments))
+					if (Simulador.adicionaObjecto(&arguments))
 						throw log.getElememtCreatedMsg();
 					else
 						throw log.getError() + log.getBadArgumentError();
@@ -60,7 +60,7 @@ int UserInterface::executionCicle() {
 				break;
 			case 1:
 				try {
-					if (campeonato.removeObjecto(&arguments)) {
+					if (Simulador.removeObjecto(&arguments)) {
 						throw log.getDeletedMessage();
 					}
 					else
@@ -71,42 +71,42 @@ int UserInterface::executionCicle() {
 				}
 				break;
 			case 2:
-				if (fileLoader.getFileArgs(arguments.at(0), campeonato.getDGV())) {
+				if (fileLoader.getFileArgs(arguments.at(0), Simulador.getDGV())) {
 					throw log.getFileRead() + arguments.at(0);
 				}
 				else
 					throw log.getError() + log.getFileError();
 				break;
 			case 3:
-				if (fileLoader.getFileArgs(campeonato.getDGV().getCars(), arguments.at(0))) {
+				if (fileLoader.getFileArgs(Simulador.getDGV().getCars(), arguments.at(0))) {
 					throw log.getFileRead() + arguments.at(0);
 				}
 				else
 					throw log.getError() + log.getFileError();
 				break;
 			case 4:
-				if (fileLoader.getFileArgs(campeonato, arguments.at(0))) {
+				if (fileLoader.getFileArgs(Simulador, arguments.at(0))) {
 					throw log.getFileRead() + arguments.at(0);
 				}
 				else
 					throw log.getError() + log.getFileError();
 				break;
 			case 5:
-				if (campeonato.entraNoCarro(campeonato.getDGV().getPilotos(), campeonato.getDGV().getCars(), &arguments)) {
+				if (Simulador.entraNoCarro(Simulador.getDGV().getPilotos(), Simulador.getDGV().getCars(), &arguments)) {
 					throw log.entrou();
 				}
 				else
 					throw log.getError() + log.getBadArgumentError();
 				break;
 			case 6:
-				if (campeonato.saiDoCarro(campeonato.getDGV().getPilotos(), campeonato.getDGV().getCars(), &arguments)) {
+				if (Simulador.saiDoCarro(Simulador.getDGV().getPilotos(), Simulador.getDGV().getCars(), &arguments)) {
 					throw log.saiu();
 				}
 				else
 					throw log.getError() + log.getBadArgumentError();
 				break;
 			case 7:
-				if (!graphics.listaElementos(campeonato)) {
+				if (!graphics.listaElementos(Simulador)) {
 					throw log.getError() + log.listaErros();
 				}
 				break;
@@ -118,7 +118,7 @@ int UserInterface::executionCicle() {
 				break;
 			case 11:
 				try {
-					if (!startCampeonato(&arguments)) {
+					if (!startSimulador(&arguments)) {
 						throw log.getError() + log.getBadArgumentError();
 					}
 				}
@@ -132,21 +132,21 @@ int UserInterface::executionCicle() {
 		else if (checkCommandFase2(command_position)) {
 			switch (command_position) {
 			case 5:
-				if (campeonato.entraNoCarro(campeonato.getDGV().getPilotos(), campeonato.getDGV().getCars(), &arguments)) {
+				if (Simulador.entraNoCarro(Simulador.getDGV().getPilotos(), Simulador.getDGV().getCars(), &arguments)) {
 					throw log.entrou();
 				}
 				else
 					throw log.getError() + log.getBadArgumentError();
 				break;
 			case 6:
-				if (campeonato.saiDoCarro(campeonato.getDGV().getPilotos(), campeonato.getDGV().getCars(), &arguments)) {
+				if (Simulador.saiDoCarro(Simulador.getDGV().getPilotos(), Simulador.getDGV().getCars(), &arguments)) {
 					throw log.saiu();
 				}
 				else
 					throw log.getError() + log.getBadArgumentError();
 				break;
 			case 7:
-				if (!graphics.listaElementosFase2(campeonato)) {
+				if (!graphics.listaElementosFase2(Simulador)) {
 					throw log.getError() + log.listaErros();
 				}
 			case 12:
@@ -164,8 +164,8 @@ int UserInterface::executionCicle() {
 			case 18:
 				break;
 			case 19:
-				if (campeonato.passaTempo(&arguments)) {
-					graphics.printAll(campeonato.getAutodromosCampeonato().at(0).getPista(), campeonato.getDGV().getCars());
+				if (Simulador.passaTempo(&arguments)) {
+					graphics.printAll(Simulador.getAutodromosSimulador().at(0).getPista(), Simulador.getDGV().getCars());
 				}
 				else
 					return graphics.endRace();				
@@ -207,7 +207,7 @@ int UserInterface::findCommand(const string& command) const {
 bool UserInterface::checkCommandFase1(int position)
 {
 	int comandTreshold = 11;
-	if ((position <= comandTreshold && campeonato.getSimFase() == 1) && position != 21) {
+	if ((position <= comandTreshold && Simulador.getSimFase() == 1) && position != 21) {
 		return true;
 	}
 	return false;
@@ -216,7 +216,7 @@ bool UserInterface::checkCommandFase1(int position)
 bool UserInterface::checkCommandFase2(int position)
 {
 	int comandTreshold = 11;
-	if (position > comandTreshold&& campeonato.getSimFase() == 2 || position == 5 || position == 6 || position == 7 || position == 21) {
+	if (position > comandTreshold&& Simulador.getSimFase() == 2 || position == 5 || position == 6 || position == 7 || position == 21) {
 		return true;
 	}
 	return false;
@@ -230,11 +230,11 @@ void UserInterface::deleteExcessArgs(int command_position, vector<string>& argum
 		}
 }
 
-bool UserInterface::startCampeonato(vector<string>* arguments)
+bool UserInterface::startSimulador(vector<string>* arguments)
 {	
-	if (campeonato.setFase(2, arguments)) {
+	if (Simulador.setFase(2, arguments)) {
 
-		graphics.printAll(campeonato.getAutodromosCampeonato().at(0).getPista(), campeonato.getDGV().getCars());
+		graphics.printAll(Simulador.getAutodromosSimulador().at(0).getPista(), Simulador.getDGV().getCars());
 		return true;
 	}
 	return false;
@@ -242,7 +242,7 @@ bool UserInterface::startCampeonato(vector<string>* arguments)
 
 void UserInterface::abortStart()
 {
-	campeonato.setFaseAbort(1);
+	Simulador.setFaseAbort(1);
 	throw log.getError() + log.erroCamp();
 }
 

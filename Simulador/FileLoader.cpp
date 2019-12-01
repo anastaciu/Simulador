@@ -14,7 +14,7 @@ vector<string> FileLoader::getFileLines(string file_name) {
 	return lines;
 }
 
-bool FileLoader::getFileArgs(Campeonato& campeonato, string file_name)
+bool FileLoader::getFileArgs(Simulador& Simulador, string file_name)
 {
 	string word;
 	vector<string> args = getFileLines(file_name);
@@ -34,7 +34,7 @@ bool FileLoader::getFileArgs(Campeonato& campeonato, string file_name)
 		stringstream arg2(argmts.at(1));
 		arg2 >> comprimento;
 		Autodromo autodromo(argmts.at(2), pistas, comprimento);
-		campeonato.addAutodromo(autodromo);
+		Simulador.addAutodromo(autodromo);
 	}
 	return true;
 }

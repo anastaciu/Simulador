@@ -93,7 +93,7 @@ string MessageLog::getFase1() const
 
 string MessageLog::erroCamp() const
 {
-	return ERRO_CAMPEONATO;
+	return ERRO_Simulador;
 }
 
 

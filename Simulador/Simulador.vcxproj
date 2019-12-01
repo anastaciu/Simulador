@@ -152,7 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Autodromo.cpp" />
-    <ClCompile Include="Campeonato.cpp" />
+    <ClCompile Include="Simulador.cpp" />
     <ClCompile Include="Carro.cpp" />
     <ClCompile Include="Consola.cpp" />
     <ClCompile Include="Corrida.cpp" />
@@ -172,7 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Autodromo.h" />
-    <ClInclude Include="Campeonato.h" />
+    <ClInclude Include="Simulador.h" />
     <ClInclude Include="Carro.h" />
     <ClInclude Include="Consola.h" />
     <ClInclude Include="Corrida.h" />

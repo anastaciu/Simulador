@@ -4,7 +4,7 @@
 #include <sstream>
 #include <iostream>
 #include "MessageLog.h"
-#include "Campeonato.h"
+#include "Simulador.h"
 #include "GameGraphics.h"
 #include "FileLoader.h"
 
@@ -17,7 +17,7 @@ private:
 	const vector<string> COMMANDS = {"cria", "apaga", "carregaP", "carregaC", "carregaA", "entranocarro", "saidocarro", "lista", "savedgv", "loaddgv", "deldgv", "campeonato", "listacarros", "carregabat", "carregatudo", "corrida", "acidente", "stop", "destroi", "passatempo", "log", "sair",};
 	const vector<int> COMMANDS_ARGS = { 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 2, 0, 0, 1, 1, 1, 1, 0, 0 };
 	const MessageLog log;
-	Campeonato campeonato;
+	Simulador Simulador;
 	GameGraphics graphics;
 	FileLoader fileLoader;
 
@@ -30,7 +30,7 @@ public:
 	bool checkCommandFase1(int position);
 	bool checkCommandFase2(int position);
 	void deleteExcessArgs(int command_position, vector<string>& arguments);
-	bool startCampeonato(vector<string>* arguments);
+	bool startSimulador(vector<string>* arguments);
 	void abortStart();
 
 };

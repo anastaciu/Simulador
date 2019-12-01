@@ -8,7 +8,7 @@
 #include "Crazy.h"
 #include "Slow.h"
 #include "Fast.h"
-#include "Campeonato.h"
+#include "Simulador.h"
 
 using namespace std;
 
@@ -16,7 +16,7 @@ class FileLoader
 {
 public:
 	vector<string> getFileLines(string file_name);
-	bool getFileArgs(Campeonato& campeonato, string file_name);
+	bool getFileArgs(Simulador& Simulador, string file_name);
 	bool getFileArgs(string file_name, DGV& dgv);
 	bool getFileArgs(vector<Carro*>& carros, string file_name);
 };
