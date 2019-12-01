@@ -25,9 +25,20 @@ void Campeonato::addAutodromo(Autodromo autodromo)
 
 }
 
-void Campeonato::setFase(int fase, vector<string>* arguments)
+bool Campeonato::setFase(int fase, vector<string>* arguments)
 {
-	this->fase = fase;
+	if (arguments->size() < 1)
+		return false;
+	for (Autodromo a : autodromos) {
+		if (arguments->at(0) == a.getName()) {
+			autodromos_campeonato.push_back(&a);
+			cout << autodromos_campeonato.at(0)->getName();
+			system("pause");
+			this->fase = fase;
+			return true;
+		}	
+	}
+	return false;
 }
 
 void Campeonato::setFaseAbort(int fase)
@@ -314,6 +325,13 @@ bool Campeonato::passaTempo(vector<string>* arguments)
 	}
 	return true;
 }
+
+vector<Autodromo*>* Campeonato::getAutodromosCampeonato()
+{
+	return &autodromos_campeonato;
+}
+
+
 
 
 

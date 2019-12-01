@@ -26,7 +26,7 @@ public:
 
 
 	//define a fase do simulador
-	void setFase(int fase, vector<string>* arguments);
+	bool setFase(int fase, vector<string>* arguments);
 
 	void setFaseAbort(int fase);
 
@@ -88,5 +88,6 @@ public:
 	//comando passatempo
 	bool passaTempo(vector<string>* arguments);
 	
+	vector<Autodromo*>* getAutodromosCampeonato();
 };
 

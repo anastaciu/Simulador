@@ -10,7 +10,7 @@
 
 using namespace std;
 
-class UserConsole
+class UserInterface
 {
 private:
 	const int MAX_ARGS = 100;
@@ -22,7 +22,7 @@ private:
 	FileLoader fileLoader;
 
 public:
-	UserConsole();
+	UserInterface();
 	void start();
 	string readCommandLine() const;
 	int findCommand(const string& command) const;
@@ -30,7 +30,7 @@ public:
 	bool checkCommandFase1(int position);
 	bool checkCommandFase2(int position);
 	void deleteExcessArgs(int command_position, vector<string>& arguments);
-	void startCampeonato(vector<string>* arguments);
+	bool startCampeonato(vector<string>* arguments);
 	void abortStart();
 
 };

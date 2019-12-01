@@ -1,10 +1,10 @@
-#include "UserConsole.h"
+#include "UserInterface.h"
 
-UserConsole::UserConsole()
+UserInterface::UserInterface()
 {
 }
 
-void UserConsole::start()
+void UserInterface::start()
 {
 	graphics.gameInit();
 	int sair = -1;
@@ -25,7 +25,7 @@ void UserConsole::start()
 	} while (sair != EXIT_POSITION);
 }
 
-int UserConsole::executionCicle() {
+int UserInterface::executionCicle() {
 	string word, command;
 	exception e;
 	vector<string> arguments;
@@ -118,7 +118,9 @@ int UserConsole::executionCicle() {
 				break;
 			case 11:
 				try {
-					startCampeonato(&arguments);
+					if (!startCampeonato(&arguments)) {
+						throw log.getError() + log.getBadArgumentError();
+					}
 				}
 				catch (exception e) {
 					abortStart();
@@ -163,7 +165,7 @@ int UserConsole::executionCicle() {
 				break;
 			case 19:
 				if (campeonato.passaTempo(&arguments)) {
-					graphics.printAll(campeonato.getAutodromos().at(0).getPista(), campeonato.getDGV().getCars());
+					graphics.printAll(campeonato);
 				}
 				else
 					return graphics.endRace();				
@@ -186,13 +188,13 @@ int UserConsole::executionCicle() {
 	return command_position;
 }
 
-string UserConsole::readCommandLine() const {
+string UserInterface::readCommandLine() const {
 	string commandLine;
 	getline(cin, commandLine);
 	return commandLine;
 }
 
-int UserConsole::findCommand(const string& command) const {
+int UserInterface::findCommand(const string& command) const {
 	int command_position = 0;
 	for (string str : COMMANDS) {
 		if (!str.compare(command))
@@ -202,7 +204,7 @@ int UserConsole::findCommand(const string& command) const {
 	return -1;
 }
 
-bool UserConsole::checkCommandFase1(int position)
+bool UserInterface::checkCommandFase1(int position)
 {
 	int comandTreshold = 11;
 	if ((position <= comandTreshold && campeonato.getSimFase() == 1) && position != 21) {
@@ -211,7 +213,7 @@ bool UserConsole::checkCommandFase1(int position)
 	return false;
 }
 
-bool UserConsole::checkCommandFase2(int position)
+bool UserInterface::checkCommandFase2(int position)
 {
 	int comandTreshold = 11;
 	if (position > comandTreshold&& campeonato.getSimFase() == 2 || position == 5 || position == 6 || position == 7 || position == 21) {
@@ -220,7 +222,7 @@ bool UserConsole::checkCommandFase2(int position)
 	return false;
 }
 
-void UserConsole::deleteExcessArgs(int command_position, vector<string>& arguments)
+void UserInterface::deleteExcessArgs(int command_position, vector<string>& arguments)
 {
 	if (command_position != 0 && command_position != 1 && command_position != 5 && command_position != 6 && command_position != 11)
 		while (arguments.size() > COMMANDS_ARGS[command_position]) {
@@ -228,13 +230,17 @@ void UserConsole::deleteExcessArgs(int command_position, vector<string>& argumen
 		}
 }
 
-void UserConsole::startCampeonato(vector<string>* arguments)
-{
-	campeonato.setFase(2, arguments);
-	graphics.printAll(campeonato.getAutodromos().at(0).getPista(), campeonato.getDGV().getCars());
+bool UserInterface::startCampeonato(vector<string>* arguments)
+{	
+	if (campeonato.setFase(2, arguments)) {
+
+		graphics.printAll(campeonato);
+		return true;
+	}
+	return false;
 }
 
-void UserConsole::abortStart()
+void UserInterface::abortStart()
 {
 	campeonato.setFaseAbort(1);
 	throw log.getError() + log.erroCamp();

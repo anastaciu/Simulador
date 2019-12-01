@@ -168,7 +168,7 @@
     <ClCompile Include="Piloto.cpp" />
     <ClCompile Include="Pista.cpp" />
     <ClCompile Include="Slow.cpp" />
-    <ClCompile Include="UserConsole.cpp" />
+    <ClCompile Include="UserInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Autodromo.h" />
@@ -187,7 +187,7 @@
     <ClInclude Include="Piloto.h" />
     <ClInclude Include="Pista.h" />
     <ClInclude Include="Slow.h" />
-    <ClInclude Include="UserConsole.h" />
+    <ClInclude Include="UserInterface.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
