@@ -158,15 +158,15 @@ bool Simulador::criaObjecto(DGV& dgv, vector<string>* arguments)
 		str << arguments->back();
 
 		if (!arguments->at(1).compare("crazy")) {
-			dgv.addPiloto(&Crazy(str.str()));
+			dgv.addPiloto(new Crazy(str.str()));
 			return true;
 		}
 		else if (!arguments->at(1).compare("rapido")) {
-			dgv.addPiloto(&Fast(str.str()));
+			dgv.addPiloto(new Fast(str.str()));
 			return true;
 		}
 		else if (!arguments->at(1).compare("surpresa")) {
-			dgv.addPiloto(&Slow(str.str()));
+			dgv.addPiloto(new Slow(str.str()));
 			return true;
 		}
 	}
