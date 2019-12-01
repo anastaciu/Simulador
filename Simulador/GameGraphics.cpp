@@ -56,7 +56,7 @@ bool GameGraphics::listaElementos(Campeonato& campeonato) const
 
 bool GameGraphics::listaElementosFase2(Campeonato& campeonato) const
 {
-	Consola::gotoxy(0, campeonato.getAutodromosCampeonato().at(0).getPista().getPistas() + 40);
+	Consola::gotoxy(0, campeonato.getAutodromosCampeonato().at(0).getPista().getPistas() + 25);
 	return listaElementos(campeonato);
 }
 
@@ -114,8 +114,8 @@ void GameGraphics::printGarage(Pista& pista, vector<Carro*>& carros)
 
 	Consola::setBackgroundColor(Consola::AZUL_CLARO);
 	for (int i = 4; i < 80; i++)
-		for (int j = pista.getPistas() + 6; j < 40; j++) {
-			Consola::gotoxy(j, i);
+		for (int j = pista.getPistas() + 6; j < 20 + pista.getPistas(); j++) {
+			Consola::gotoxy(i, j);
 			cout << " ";
 		}
 }
