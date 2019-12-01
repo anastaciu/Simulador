@@ -165,7 +165,7 @@ int UserInterface::executionCicle() {
 				break;
 			case 19:
 				if (campeonato.passaTempo(&arguments)) {
-					graphics.printAll(campeonato);
+					graphics.printAll(campeonato.getAutodromos().at(0).getPista(), campeonato.getDGV().getCars());
 				}
 				else
 					return graphics.endRace();				
@@ -234,7 +234,7 @@ bool UserInterface::startCampeonato(vector<string>* arguments)
 {	
 	if (campeonato.setFase(2, arguments)) {
 
-		graphics.printAll(campeonato);
+		graphics.printAll(campeonato.getAutodromos().at(0).getPista(), campeonato.getDGV().getCars());
 		return true;
 	}
 	return false;
