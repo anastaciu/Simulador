@@ -14,6 +14,7 @@ private:
 
 public:
 	DGV();
+	~DGV();
 	vector<Carro*> &getCars();
 	vector<Piloto*> &getPilotos();
 	void addPiloto(Piloto* piloto);

@@ -31,8 +31,8 @@ bool Campeonato::setFase(int fase, vector<string>* arguments)
 		return false;
 	for (Autodromo a : autodromos) {
 		if (arguments->at(0) == a.getName()) {
-			autodromos_campeonato.push_back(&a);
-			cout << autodromos_campeonato.at(0)->getName();
+			autodromos_campeonat.push_back(a);
+			//cout << autodromos_campeonato.at(0)->getName();
 			system("pause");
 			this->fase = fase;
 			return true;
@@ -44,8 +44,8 @@ bool Campeonato::setFase(int fase, vector<string>* arguments)
 void Campeonato::setFaseAbort(int fase)
 {
 	this->fase = fase;
-	if(autodromos_campeonato.size() > 0)
-		this->autodromos_campeonato.clear();
+	if(autodromos_campeonat.size() > 0)
+		this->autodromos_campeonat.clear();
 }
 
 int Campeonato::getSimFase() const
@@ -326,9 +326,9 @@ bool Campeonato::passaTempo(vector<string>* arguments)
 	return true;
 }
 
-vector<Autodromo*>* Campeonato::getAutodromosCampeonato()
+vector<Autodromo>& Campeonato::getAutodromosCampeonato()
 {
-	return &autodromos_campeonato;
+	return autodromos_campeonat;
 }
 
 

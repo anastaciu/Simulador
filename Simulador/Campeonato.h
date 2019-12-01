@@ -16,7 +16,7 @@ class Campeonato
 {
 private:
 	vector<Autodromo> autodromos;
-	vector<Autodromo*> autodromos_campeonato;
+	vector<Autodromo> autodromos_campeonat;
 	DGV dgv;
 	int fase;
 
@@ -88,6 +88,6 @@ public:
 	//comando passatempo
 	bool passaTempo(vector<string>* arguments);
 	
-	vector<Autodromo*>* getAutodromosCampeonato();
+	vector<Autodromo>& getAutodromosCampeonato();
 };
 

@@ -56,7 +56,7 @@ bool GameGraphics::listaElementos(Campeonato& campeonato) const
 
 bool GameGraphics::listaElementosFase2(Campeonato& campeonato) const
 {
-	Consola::gotoxy(0, campeonato.getAutodromos().at(0).getPista().getPistas() + 40);
+	Consola::gotoxy(0, campeonato.getAutodromosCampeonato().at(0).getPista().getPistas() + 40);
 	return listaElementos(campeonato);
 }
 
@@ -115,7 +115,7 @@ void GameGraphics::printGarage(Pista& pista, vector<Carro*>& carros)
 	Consola::setBackgroundColor(Consola::AZUL_CLARO);
 	for (int i = 4; i < 80; i++)
 		for (int j = pista.getPistas() + 6; j < 40; j++) {
-			Consola::gotoxy(i, j);
+			Consola::gotoxy(j, i);
 			cout << " ";
 		}
 }
@@ -141,7 +141,7 @@ int GameGraphics::endRace()
 void GameGraphics::printCommandLine(int& i, Campeonato& campeonato)
 {
 	if (campeonato.getSimFase() == 2) {
-		Consola::gotoxy(90, campeonato.getAutodromos().at(0).getPista().getPistas() + 6 + i);
+		Consola::gotoxy(90, campeonato.getAutodromosCampeonato().at(0).getPista().getPistas() + 6 + i);
 		i++;
 		commandLineFase2();
 	}
@@ -153,7 +153,7 @@ void GameGraphics::printCommandLine(int& i, Campeonato& campeonato)
 void GameGraphics::printLog(string& log, Campeonato &campeonato, int& i)
 {
 	if (campeonato.getSimFase() == 2) {
-		Consola::gotoxy(90, campeonato.getAutodromos().at(0).getPista().getPistas() + 6 + i);
+		Consola::gotoxy(90, campeonato.getAutodromosCampeonato().at(0).getPista().getPistas() + 6 + i);
 		i++;
 	}
 	cout << log << endl;

@@ -5,6 +5,16 @@ DGV::DGV()
 
 }
 
+DGV::~DGV()
+{
+	for (Carro* c : carros) {
+		delete c;
+	}
+	for (Piloto* p : pilotos) {
+		delete p;
+	}
+}
+
 vector<Carro*> &DGV::getCars()
 {
 	return carros;
