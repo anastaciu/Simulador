@@ -64,6 +64,7 @@ void GameGraphics::printPista(Pista& pista)
 {
 	Consola::setBackgroundColor(Consola::BRANCO_CLARO);
 	Consola::clrscr();
+	Consola::setTextColor(Consola::BRANCO_CLARO);
 	Consola::setBackgroundColor(Consola::PRETO);
 	Consola::maximizeWindow();
 	Consola::setScreenSize(9999, pista.getComprimento() + 2);
