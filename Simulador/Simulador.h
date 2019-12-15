@@ -30,6 +30,7 @@ public:
 	//define a fase do simulador
 	bool setFase(int fase, vector<string>* arguments);
 
+	//faz reset ao comando setFase em caso de erro
 	void setFaseAbort(int fase);
 
 	//ve fase do simulador
@@ -58,14 +59,8 @@ public:
 	//Adiciona carro, piloto ou autódromo (comando cria)
 	bool adicionaObjecto(vector<string> *arguments);
 
-	//Cria carro, devolve true em caso de sucesso
-	bool criaObjecto(vector<Carro*> &carros, vector<string>* arguments);
-
 	//cria Autódromo, devolve true em caso de sucesso
 	bool criaObjecto(vector<string>* arguments);
-
-	//Cria piloto rápido, surpresa ou crazy, devolve true em caso de sucesso
-	bool criaObjecto(DGV& dgv, vector<string>* arguments);
 
 	//apaga carro, piloto ou autódromo, devolve true em caso de sucesso
 	bool removeObjecto(vector<string>* arguments);
@@ -79,15 +74,11 @@ public:
 	//apaga piloto, devolve true em caso de sucesso
 	bool apagaObjeto(vector<Piloto*>& pilotos, vector<string>* arguments);
 
-	//associa carro a piloto e vice versa, verifica se é possível piloto entrar no carro
-	//Devolve true em caso de sucesso
-	bool entraNoCarro(vector<Piloto*> pilotos, vector<Carro*> carros, vector<string>* arguments);
+	//chama a função entranocarro da classe DGV
+	bool entraNoCarro(vector<string>* arguments);
 
-	//Sai do carro por Id de carro ou por nome de piloto, devolve true em caso de sucesso
-	bool saiDoCarro(vector<Piloto*> pilotos, vector<Carro*> carros, vector<string>* arguments);
-
-	//sai do carro, apenas por ID de carro, devolve true em caso de sucesso
-	bool saiDoCarro(vector<Carro*> carros, vector<string>* arguments);
+	//chama a função entranocarro da classe DGV
+	bool saiDoCarro(vector<string>* arguments);
 	
 	//comando passatempo
 	bool passaTempo(vector<string>* arguments);

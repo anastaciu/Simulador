@@ -1,7 +1,11 @@
 #pragma once
 #include "Piloto.h"
+#include "Crazy.h"
+#include "Slow.h"
+#include "Fast.h"
 #include "Carro.h"
 #include <vector>
+#include <iterator>
 #include <random>
 
 using namespace std;
@@ -23,5 +27,31 @@ public:
 	string random_string(size_t length);
 	bool isNameValid(Piloto& piloto);
 	DGV *getDGV();
+
+
+	//Cria carro, devolve true em caso de sucesso
+	bool criaObjecto(vector<string>* arguments);
+
+	//Cria piloto rápido, surpresa ou crazy, devolve true em caso de sucesso
+	bool criaObjecto(DGV& dgv, vector<string>* arguments);
+
+	//apaga carro, piloto ou autódromo, devolve true em caso de sucesso
+	bool removeObjecto(vector<string>* arguments);
+
+	//apaga carro, devolve true em caso de sucesso
+	bool apagaObjeto(vector<Carro*>& carros, vector<string>* arguments);
+
+	//apaga autódromo, devolve true em caso de sucesso
+	bool apagaObjeto(vector<string>* arguments);
+
+	//apaga piloto, devolve true em caso de sucesso
+	bool apagaObjeto(vector<Piloto*>& pilotos, vector<string>* arguments);
+
+	//associa carro a piloto e vice versa, verifica se é possível piloto entrar no carro
+	//Devolve true em caso de sucesso
+	bool entraNoCarro(vector<string>* arguments);
+
+	//Sai do carro por Id de carro ou por nome de piloto, devolve true em caso de sucesso
+	bool saiDoCarro(vector<string>* arguments);
 };
 

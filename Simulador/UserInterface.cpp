@@ -92,14 +92,14 @@ int UserInterface::executionCicle() {
 					throw log.getError() + log.getFileError();
 				break;
 			case 5:
-				if (Simulador.entraNoCarro(Simulador.getDGV() , &arguments)) {
+				if (Simulador.entraNoCarro(&arguments)) {
 					throw log.entrou();
 				}
 				else
 					throw log.getError() + log.getBadArgumentError();
 				break;
 			case 6:
-				if (Simulador.saiDoCarro(Simulador.getDGV().getPilotos(), Simulador.getDGV().getCars(), &arguments)) {
+				if (Simulador.saiDoCarro(&arguments)) {
 					throw log.saiu();
 				}
 				else
@@ -132,14 +132,14 @@ int UserInterface::executionCicle() {
 		else if (checkCommandFase2(command_position)) {
 			switch (command_position) {
 			case 5:
-				if (Simulador.entraNoCarro(Simulador.getDGV(), &arguments)) {
+				if (Simulador.entraNoCarro(&arguments)) {
 					throw log.entrou();
 				}
 				else
 					throw log.getError() + log.getBadArgumentError();
 				break;
 			case 6:
-				if (Simulador.saiDoCarro(Simulador.getDGV().getPilotos(), Simulador.getDGV().getCars(), &arguments)) {
+				if (Simulador.saiDoCarro(&arguments)) {
 					throw log.saiu();
 				}
 				else

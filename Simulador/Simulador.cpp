@@ -3,7 +3,6 @@
 
 Simulador::Simulador() : fase(1)
 {
-
 }
 
 Simulador::~Simulador()
@@ -63,7 +62,6 @@ int Simulador::getSimFase() const
 	return this->fase;
 }
 
-
 bool Simulador::isNameValid(Autodromo& autodromo)
 {
 	for (Autodromo a : autodromos) {
@@ -98,37 +96,13 @@ vector<Autodromo>& Simulador::getAutodromos()
 
 bool Simulador::adicionaObjecto(vector<string>* arguments)
 {
-
-	if (!arguments->at(0).compare("c") && criaObjecto(this->dgv.getCars(), arguments)) {
+	if (!arguments->at(0).compare("c") && dgv.criaObjecto(arguments)) {
 		return true;
 	}
 	else if (!arguments->at(0).compare("a") && criaObjecto(arguments)) {
 		return true;
 	}
-	else if (!arguments->at(0).compare("p") && criaObjecto(dgv, arguments)) {
-		return true;
-	}
-	return false;
-
-}
-
-bool Simulador::criaObjecto(vector<Carro*>& carros, vector<string>* arguments)
-{
-	int v_max;
-	double energy, capacity;
-	exception e;
-	stringstream arg1(arguments->at(1));
-	arg1 >> v_max;
-	stringstream arg2(arguments->at(2));
-	arg2 >> energy;
-	stringstream arg3(arguments->at(3));
-	arg3 >> capacity;
-	if (arguments->size() == 6) {
-		carros.push_back(new Carro(v_max, energy, capacity, arguments->at(4), arguments->at(5)));
-		return true;
-	}
-	else if (arguments->size() == 5) {
-		carros.push_back(new Carro(v_max, energy, capacity, arguments->at(4)));
+	else if (!arguments->at(0).compare("p") && dgv.criaObjecto(dgv, arguments)) {
 		return true;
 	}
 	return false;
@@ -145,30 +119,6 @@ bool Simulador::criaObjecto(vector<string>* arguments)
 		Autodromo autodromo(arguments->at(3), pistas, comprimento);
 		addAutodromo(autodromo);
 		return true;
-	}
-	return false;
-}
-
-bool Simulador::criaObjecto(DGV& dgv, vector<string>* arguments)
-{
-	ostringstream str;
-	if (arguments->size() > 2)
-	{
-		copy(arguments->begin() + 2, arguments->end() - 1, ostream_iterator<string>(str, " "));
-		str << arguments->back();
-
-		if (!arguments->at(1).compare("crazy")) {
-			dgv.addPiloto(new Crazy(str.str()));
-			return true;
-		}
-		else if (!arguments->at(1).compare("rapido")) {
-			dgv.addPiloto(new Fast(str.str()));
-			return true;
-		}
-		else if (!arguments->at(1).compare("surpresa")) {
-			dgv.addPiloto(new Slow(str.str()));
-			return true;
-		}
 	}
 	return false;
 }
@@ -252,72 +202,14 @@ bool Simulador::removeObjecto(vector<string>* arguments)
 
 }
 
-
-bool Simulador::entraNoCarro(vector<Piloto*> pilotos, vector<Carro*> carros, vector<string>* arguments)
+bool Simulador::entraNoCarro(vector<string>* arguments)
 {
-	if (arguments->size() > 1) {
-		ostringstream str;
-		copy(arguments->begin() + 1, arguments->end() - 1, ostream_iterator<string>(str, " "));
-		str << arguments->back();
-		for (Piloto* p : pilotos) {
-			if (str.str() == p->getName() && &p->getCarro() == nullptr) {
-				for (Carro* c : carros) {
-					if (c->getId() == arguments->at(0) && &c->getPiloto() == nullptr) {
-						c->setPiloto(p);
-						p->setCarro(c);
-						c->setId(toupper(c->getId().at(0)));
-						return true;
-					}
-				}
-			}
-		}
-	}
-	return false;
+	return dgv.entraNoCarro(arguments);
 }
 
-bool Simulador::saiDoCarro(vector<Piloto*> pilotos, vector<Carro*> carros, vector<string>* arguments)
+bool Simulador::saiDoCarro(vector<string>* arguments)
 {
-	if (!arguments->empty()) {
-		if (arguments->size() == 1 && arguments->at(0).length() == 1) {
-			for (Carro* c : carros) {
-				int id = arguments->at(0).at(0);
-				if ((id == tolower(c->getId().at(0)) || id == c->getId().at(0)) && &c->getPiloto() != nullptr && &c->getPiloto().getCarro() != nullptr) {
-					cout << c->getId().at(0);
-					c->setId(tolower(c->getId().at(0)));
-					c->getPiloto().setCarro(nullptr);
-					c->setPiloto(nullptr);
-					return true;
-				}
-			}
-		}
-		ostringstream str;
-		copy(arguments->begin(), arguments->end() - 1, ostream_iterator<string>(str, " "));
-		str << arguments->back();
-		for (Piloto* p : pilotos) {
-			if (str.str() == p->getName() && &p->getCarro() != nullptr && &p->getCarro().getPiloto() != nullptr) {
-				p->getCarro().setId(tolower(p->getCarro().getId().at(0)));
-				p->getCarro().setPiloto(nullptr);
-				p->setCarro(nullptr);
-				return true;
-			}
-		}
-
-	}
-	return false;
-}
-
-bool Simulador::saiDoCarro(vector<Carro*> carros, vector<string>* arguments)
-{
-	if (arguments->size() == 1) {
-		for (Carro* c : carros) {
-			if (arguments->at(0) == c->getId() && &c->getPiloto() != nullptr && &c->getPiloto().getCarro() != nullptr) {
-				c->getPiloto().setCarro(nullptr);
-				c->setPiloto(nullptr);
-				return true;
-			}
-		}
-	}
-	return false;
+	return dgv.saiDoCarro(arguments);
 }
 
 bool Simulador::passaTempo(vector<string>* arguments)
