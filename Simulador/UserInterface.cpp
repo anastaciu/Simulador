@@ -41,7 +41,7 @@ int UserInterface::executionCicle() {
 	command_position = findCommand(arguments.at(0));
 	if (command_position != -1) {
 		arguments.erase(arguments.begin());
-		if (arguments.size() < COMMANDS_ARGS[command_position]) {
+		if ((int)arguments.size() < COMMANDS_ARGS[command_position]) {
 			throw log.getError() + log.getArgumentError();
 		}
 		deleteExcessArgs(command_position, arguments);
@@ -92,7 +92,7 @@ int UserInterface::executionCicle() {
 					throw log.getError() + log.getFileError();
 				break;
 			case 5:
-				if (Simulador.entraNoCarro(Simulador.getDGV().getPilotos(), Simulador.getDGV().getCars(), &arguments)) {
+				if (Simulador.entraNoCarro(Simulador.getDGV() , &arguments)) {
 					throw log.entrou();
 				}
 				else
@@ -132,7 +132,7 @@ int UserInterface::executionCicle() {
 		else if (checkCommandFase2(command_position)) {
 			switch (command_position) {
 			case 5:
-				if (Simulador.entraNoCarro(Simulador.getDGV().getPilotos(), Simulador.getDGV().getCars(), &arguments)) {
+				if (Simulador.entraNoCarro(Simulador.getDGV(), &arguments)) {
 					throw log.entrou();
 				}
 				else
@@ -225,7 +225,7 @@ bool UserInterface::checkCommandFase2(int position)
 void UserInterface::deleteExcessArgs(int command_position, vector<string>& arguments)
 {
 	if (command_position != 0 && command_position != 1 && command_position != 5 && command_position != 6 && command_position != 11)
-		while (arguments.size() > COMMANDS_ARGS[command_position]) {
+		while ((int)arguments.size() > COMMANDS_ARGS[command_position]) {
 			arguments.pop_back();
 		}
 }

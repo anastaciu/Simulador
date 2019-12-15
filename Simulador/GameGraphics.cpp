@@ -82,7 +82,7 @@ void GameGraphics::printCarros(Pista& pista, vector<Carro*>& carros)
 {
 	Consola::setBackgroundColor(Consola::AMARELO);
 	Consola::setTextColor(Consola::PRETO);
-	for (int i = 0, j = 0, z = 0, y = 0; i < carros.size(); i++) {
+	for (int i = 0, j = 0, z = 0, y = 0; i < (int)carros.size(); i++) {
 		if ((&carros.at(i)->getPiloto() != nullptr) /*&& !carros.at(i)->getGarage()*/) {
 			if (j < pista.getPistas()) {
 				Consola::gotoxy(carros.at(i)->getXPosition(), j + 2);
