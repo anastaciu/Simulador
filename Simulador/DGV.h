@@ -35,13 +35,7 @@ public:
 	//Cria piloto rápido, surpresa ou crazy, devolve true em caso de sucesso
 	bool criaObjecto(DGV& dgv, vector<string>* arguments);
 
-	//apaga carro, piloto ou autódromo, devolve true em caso de sucesso
-	bool removeObjecto(vector<string>* arguments);
-
 	//apaga carro, devolve true em caso de sucesso
-	bool apagaObjeto(vector<Carro*>& carros, vector<string>* arguments);
-
-	//apaga autódromo, devolve true em caso de sucesso
 	bool apagaObjeto(vector<string>* arguments);
 
 	//apaga piloto, devolve true em caso de sucesso

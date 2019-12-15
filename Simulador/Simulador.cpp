@@ -123,42 +123,6 @@ bool Simulador::criaObjecto(vector<string>* arguments)
 	return false;
 }
 
-bool Simulador::apagaObjeto(vector<Piloto*>& pilotos, vector<string>* arguments)
-{
-	vector<Piloto*>::iterator it;
-	it = pilotos.begin();
-	ostringstream str;
-	copy(arguments->begin() + 1, arguments->end() - 1, ostream_iterator<string>(str, " "));
-	str << arguments->back();
-	cout << str.str();
-	while (it != pilotos.end()) {
-		if (str.str() == (*it)->getName()) {
-			it = pilotos.erase(it);
-			return true;
-		}
-		else {
-			it++;
-		}
-	}
-	return false;
-}
-
-bool Simulador::apagaObjeto(vector<Carro*>& carros, vector<string>* arguments)
-{
-	vector<Carro*>::iterator it;
-	it = carros.begin();
-	while (it != carros.end()) {
-		if (arguments->at(1) == (*it)->getId()) {
-			it = carros.erase(it);
-			return true;
-		}
-		else {
-			it++;
-		}
-	}
-	return false;
-}
-
 bool Simulador::apagaObjeto(vector<string>* arguments)
 {
 	vector<Autodromo>::iterator it;
@@ -180,7 +144,7 @@ bool Simulador::removeObjecto(vector<string>* arguments)
 	exception e;
 
 	if (!arguments->at(0).compare("c")) {
-		if (apagaObjeto(this->dgv.getCars(), arguments))
+		if (dgv.apagaObjeto(arguments))
 			return true;
 		else
 			return false;
@@ -192,7 +156,7 @@ bool Simulador::removeObjecto(vector<string>* arguments)
 			return false;
 	}
 	else if (!arguments->at(0).compare("p")) {
-		if (apagaObjeto(dgv.getPilotos(), arguments))
+		if (dgv.apagaObjeto(dgv.getPilotos(), arguments))
 			return true;
 		else
 			return false;

@@ -174,6 +174,40 @@ bool DGV::criaObjecto(DGV& dgv, vector<string>* arguments)
 	return false;
 }
 
+bool DGV::apagaObjeto(vector<Piloto*>& pilotos, vector<string>* arguments)
+{
+	vector<Piloto*>::iterator it;
+	it = pilotos.begin();
+	ostringstream str;
+	copy(arguments->begin() + 1, arguments->end() - 1, ostream_iterator<string>(str, " "));
+	str << arguments->back();
+	while (it != pilotos.end()) {
+		if (str.str() == (*it)->getName()) {
+			it = pilotos.erase(it);
+			return true;
+		}
+		else {
+			it++;
+		}
+	}
+	return false;
+}
+
+bool DGV::apagaObjeto(vector<string>* arguments)
+{
+	vector<Carro*>::iterator it;
+	it = carros.begin();
+	while (it != carros.end()) {
+		if (arguments->at(1) == (*it)->getId()) {
+			it = carros.erase(it);
+			return true;
+		}
+		else {
+			it++;
+		}
+	}
+	return false;
+}
 
 
 
