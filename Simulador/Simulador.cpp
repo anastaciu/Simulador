@@ -144,26 +144,16 @@ bool Simulador::removeObjecto(vector<string>* arguments)
 	exception e;
 
 	if (!arguments->at(0).compare("c")) {
-		if (dgv.apagaObjeto(arguments))
-			return true;
-		else
-			return false;
+		return dgv.apagaObjeto(arguments);
 	}
 	else if (!arguments->at(0).compare("a")) {
-		if (apagaObjeto(arguments))
-			return true;
-		else
-			return false;
+		return apagaObjeto(arguments);
 	}
 	else if (!arguments->at(0).compare("p")) {
-		if (dgv.apagaObjeto(dgv.getPilotos(), arguments))
-			return true;
-		else
-			return false;
+		return dgv.apagaObjeto(dgv.getPilotos(), arguments);
 	}
-	else throw e;
-	return false;
 
+	return false;
 }
 
 bool Simulador::entraNoCarro(vector<string>* arguments)

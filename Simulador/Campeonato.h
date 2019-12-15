@@ -6,7 +6,7 @@
 
 class Campeonato
 {
-
+private:
 	vector<Autodromo> autodromos_campeonat;
 
 public:

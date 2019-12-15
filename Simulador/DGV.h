@@ -28,7 +28,6 @@ public:
 	bool isNameValid(Piloto& piloto);
 	DGV *getDGV();
 
-
 	//Cria carro, devolve true em caso de sucesso
 	bool criaObjecto(vector<string>* arguments);
 
