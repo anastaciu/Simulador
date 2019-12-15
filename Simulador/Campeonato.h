@@ -7,10 +7,10 @@
 class Campeonato
 {
 private:
-	vector<Autodromo> autodromos_campeonat;
+	vector<Autodromo*> autodromos_campeonat;
 
 public:
-	vector<Autodromo>& getAutodromosCampeonato();
+	vector<Autodromo*>& getAutodromosCampeonato();
 
 	//comando passatempo
 	bool passaTempo(vector<string>* arguments, vector<Carro*> carros);

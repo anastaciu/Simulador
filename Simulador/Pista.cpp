@@ -1,8 +1,7 @@
 #include "Pista.h"
 
-Pista::Pista(int pistas, int comprimento): pistas(pistas), comprimento(comprimento)
+Pista::Pista(int pistas, int comprimento) : pistas(pistas), comprimento(comprimento)
 {
-
 }
 
 Pista::~Pista()
@@ -17,4 +16,9 @@ int Pista::getPistas() const
 int Pista::getComprimento() const
 {
 	return comprimento;
+}
+
+vector<Carro*> Pista::getCarrosPista()
+{
+	return carros;
 }

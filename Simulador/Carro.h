@@ -13,10 +13,11 @@ private:
 	static char id_global;
 	string id;
 	string marca, modelo;
-	double energy, capacity;
+	double energy, capacity, positionX;
 	Pedals pedals;
 	bool is_moving, emergency, in_garage, is_damaged;
-	int speed, max_speed, positionX, positionY;
+	int speed, max_speed, positionY;
+
 	Piloto *condutor = nullptr;
 
 public:
@@ -63,13 +64,13 @@ public:
 	string getAsString() const;
 
 	//devolve a posição x do carro
-	int getXPosition() const;
+	double getXPosition();
 
 	// devolve a posição Y do carro
 	int getYPosition() const;
 
 	//estabelece a posição do carro;
-	void setPosition(int x, int y);
+	void setPosition(double x, int y);
 	
 	void setGarage(bool);
 	bool getGarage() const;

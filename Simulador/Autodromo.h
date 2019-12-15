@@ -33,5 +33,6 @@ public:
 	string getAsString() const;
 
 	Pista& getPista();
+	Garagem getGaragem() const;
 };
 

@@ -4,6 +4,15 @@
 
 class Garagem
 {
+private:
+	int width, height;
+	vector<Carro*> carros;
 
+public:
+	Garagem(int width, int height);
+	~Garagem();
+	int getWidth() const;
+	int getHeight() const;
+	vector<Carro*>& getCarrosGaragem();
 };
 

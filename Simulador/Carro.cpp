@@ -92,7 +92,7 @@ string Carro::getAsString() const
 	return os.str();
 }
 
-int Carro::getXPosition() const
+double Carro::getXPosition()
 {
 	return positionX;
 }
@@ -102,7 +102,7 @@ int Carro::getYPosition() const
 	return positionY;
 }
 
-void Carro::setPosition(int x, int y)
+void Carro::setPosition(double x, int y)
 {
 	this->positionX = x;
 	this->positionY = y;

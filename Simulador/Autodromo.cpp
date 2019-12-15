@@ -1,7 +1,7 @@
 #include "Autodromo.h"
 
 
-Autodromo::Autodromo(string name, int pistas, int comprimento) : name(name), garagem(), pista(pistas, comprimento)
+Autodromo::Autodromo(string name, int pistas, int comprimento) : name(name), pista(pistas, comprimento), garagem(80, 20)
 {
 	
 }
@@ -32,3 +32,9 @@ Pista& Autodromo::getPista()
 {
 	return pista;
 }
+
+Garagem Autodromo::getGaragem() const
+{
+	return garagem;
+}
+

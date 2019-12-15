@@ -33,7 +33,7 @@ bool FileLoader::getFileArgs(Simulador& Simulador, string file_name)
 		arg1 >> pistas;
 		stringstream arg2(argmts.at(1));
 		arg2 >> comprimento;
-		Autodromo autodromo(argmts.at(2), pistas, comprimento);
+		Autodromo* autodromo = new Autodromo(argmts.at(2), pistas, comprimento);
 		Simulador.addAutodromo(autodromo);
 	}
 	return true;

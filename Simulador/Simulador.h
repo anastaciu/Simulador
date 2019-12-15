@@ -17,7 +17,7 @@ using namespace std;
 class Simulador
 {
 private:
-	vector<Autodromo> autodromos;
+	vector<Autodromo*> autodromos;
 	DGV dgv;
 	int fase;
 	Campeonato campeonato;
@@ -42,7 +42,7 @@ public:
 	Campeonato& getCampeonato();
 
 	//Adiciona autódromo com verificação de nome
-	void addAutodromo(Autodromo autodromo);
+	void addAutodromo(Autodromo* autodromo);
 
 	//verifica nomes duplicados
 	bool isNameValid(Autodromo& autodromo);
@@ -51,10 +51,10 @@ public:
 	string random_string(size_t length);
 
 	//Adiciona autódromo ao vetor
-	void operator +=(Autodromo autodromo);
+	void operator +=(Autodromo* autodromo);
 
 	//Devolvere referência para o vetor de autódromos
-	vector<Autodromo> &getAutodromos();
+	vector<Autodromo*> &getAutodromos();
 
 	//Adiciona carro, piloto ou autódromo (comando cria)
 	bool adicionaObjecto(vector<string> *arguments);
@@ -65,14 +65,8 @@ public:
 	//apaga carro, piloto ou autódromo, devolve true em caso de sucesso
 	bool removeObjecto(vector<string>* arguments);
 
-	//apaga carro, devolve true em caso de sucesso
-	bool apagaObjeto(vector<Carro*>& carros, vector<string>* arguments);
-
 	//apaga autódromo, devolve true em caso de sucesso
 	bool apagaObjeto(vector<string>* arguments);
-
-	//apaga piloto, devolve true em caso de sucesso
-	bool apagaObjeto(vector<Piloto*>& pilotos, vector<string>* arguments);
 
 	//chama a função entranocarro da classe DGV
 	bool entraNoCarro(vector<string>* arguments);

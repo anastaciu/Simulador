@@ -19,8 +19,8 @@ public:
 	bool listaElementosFase2(Simulador& Simulador) const;
 	void printPista(Pista& pista);
 	void printCarros(Pista& pista, vector<Carro*>& carros);
-	void printGarage(Pista& pista, vector<Carro*>& carros);
-	void printAll(Pista& pista, vector<Carro*>& carros);
+	void printGarage(Autodromo& autodromo, vector<Carro*>& carros);
+	void printAll(Autodromo& autodromo, vector<Carro*>& carros);
 	int endRace();
 	void printCommandLine(int& i, Simulador& Simulador);
 	void printLog(string& log, Simulador &Simulador, int& i);
