@@ -78,39 +78,45 @@ void GameGraphics::printPista(Pista& pista)
 	cout << endl;
 }
 
-void GameGraphics::printCarros(Pista& pista, vector<Carro*>& carros)
+void GameGraphics::printCarros(Autodromo& autodromo)
 {
 	Consola::setBackgroundColor(Consola::AMARELO);
 	Consola::setTextColor(Consola::PRETO);
-	for (int i = 0, j = 0, z = 0, y = 0; i < (int)carros.size(); i ++){
-		if ((&carros.at(i)->getPiloto() != nullptr)) {
-			if (j < pista.getPistas()) {
-				Consola::gotoxy(carros.at(i)->getXPosition(), j + 2);
-				cout << carros.at(i)->getId();
-				carros.at(i)->setPosition(carros.at(i)->getXPosition(), j + 2);
-				j++;
-			}
-			else {
-				Consola::gotoxy(4 + z, pista.getPistas() + 6 + y);
-				carros.at(i)->setGarage(true);
-				cout << carros.at(i)->getId();
-				z++;
-			}			
-		}
-		else {
-			Consola::gotoxy(4 + z, pista.getPistas() + 6 + y);
-			carros.at(i)->setGarage(true);
-			cout << carros.at(i)->getId();
-			z++;
-		}
-		if (z > 75) {
-			y++;
-			z = 0;
-		}
+	for (Carro* c : autodromo.getPista().getCarrosPista()) {
+		Consola::gotoxy(static_cast<int>(trunc(c->getXPosition())) + 4,  c->getYPosition() + 2);
+ 		cout << c->getId();
 	}
+	for (Carro* c : autodromo.getGaragem().getCarrosGaragem()) {
+
+	}
+
+
+	//for (int i = 0, j = 0, z = 0, y = 0; i < static_cast<int>(carrosPista.size()); i++) {
+	//	if ((&carrosPista.at(i)->getPiloto() != nullptr)) {
+	//		if (j < pista.getPistas()) {
+	//			Consola::gotoxy(static_cast<int>(trunc(carrosPista.at(i)->getXPosition())) + 4, j + 2);
+	//			cout << carrosPista.at(i)->getId();
+	//			j++;
+	//		}
+	//		else {
+	//			Consola::gotoxy(4 + z, pista.getPistas() + 6 + y);
+	//			cout << carrosPista.at(i)->getId();
+	//			z++;
+	//		}			
+	//	}
+	//	else {
+	//		Consola::gotoxy(4 + z, pista.getPistas() + 6 + y);
+	//		cout << carrosPista.at(i)->getId();
+	//		z++;
+	//	}
+	//	if (z > 75) {
+	//		y++;
+	//		z = 0;
+	//	}
+	//}
 }
 
-void GameGraphics::printGarage(Autodromo& autodromo, vector<Carro*>& carros)
+void GameGraphics::printGarage(Autodromo& autodromo)
 {
 
 	Consola::setBackgroundColor(Consola::AZUL_CLARO);
@@ -121,10 +127,13 @@ void GameGraphics::printGarage(Autodromo& autodromo, vector<Carro*>& carros)
 		}
 }
 
-void GameGraphics::printAll(Autodromo& autodromo, vector<Carro*>& carros) {
-	printPista(autodromo.getPista());
-	printGarage(autodromo, carros);
-	printCarros(autodromo.getPista(), carros);
+void GameGraphics::printAll(Autodromo& autodromo, vector<Carro*>& carros, int* tempo) {
+
+		printPista(autodromo.getPista());
+		printGarage(autodromo);
+		printCarros(autodromo);
+		printTempo(autodromo.getPista().getPistas() + 3, tempo);
+	
 }
 
 int GameGraphics::endRace()
@@ -159,6 +168,18 @@ void GameGraphics::printLog(string& log, Simulador &Simulador, int& i)
 	}
 	cout << log << endl;
 }
+
+void GameGraphics::printTempo(int posY, int *tempo)
+{
+	if (*tempo > 0) {
+		Consola::setBackgroundColor(Consola::VERDE);
+		Consola::setTextColor(Consola::BRANCO);
+		Consola::gotoxy(4, posY);
+		cout << "Tempo: " << *tempo;
+		Consola::getch();
+	}
+}
+
 
 
 

@@ -30,6 +30,7 @@ int UserInterface::executionCicle() {
 	exception e;
 	vector<string> arguments;
 	int command_position = -1;
+	int* tempo = new int();
 	if ((command = readCommandLine()).empty()) {
 		throw e;
 	}
@@ -41,7 +42,7 @@ int UserInterface::executionCicle() {
 	command_position = findCommand(arguments.at(0));
 	if (command_position != -1) {
 		arguments.erase(arguments.begin());
-		if ((int)arguments.size() < COMMANDS_ARGS[command_position]) {
+		if (static_cast<int>(arguments.size()) < COMMANDS_ARGS[command_position]) {
 			throw log.getError() + log.getArgumentError();
 		}
 		deleteExcessArgs(command_position, arguments);
@@ -118,8 +119,9 @@ int UserInterface::executionCicle() {
 				break;
 			case 11:
 				try {
-					if (!startSimulador(&arguments)) {
-						throw log.getError() + log.getBadArgumentError();
+					if (!startSimulador(&arguments, tempo)) {
+						abortStart();
+						throw log.getError() + log.erroCamp();
 					}
 				}
 				catch (exception e) {
@@ -163,12 +165,23 @@ int UserInterface::executionCicle() {
 				break;
 			case 18:
 				break;
-			case 19:
-				if (Simulador.getCampeonato().passaTempo(&arguments, Simulador.getDGV().getCars())) {
-					graphics.printAll(*Simulador.getCampeonato().getAutodromosCampeonato().at(0), Simulador.getDGV().getCars());
+			case 19: {
+				stringstream ss(arguments.at(0));
+				ss >> *tempo;
+				if(*tempo > 0)
+					graphics.printTempo(Simulador.getCampeonato().getAutodromosCampeonato().at(0)->getPista().getPistas() + 3, tempo);
+				else {
+					throw log.getError() + log.getBadArgumentError();
 				}
-				else
-					return graphics.endRace();				
+				try {
+					while (Simulador.getCampeonato().passaTempo(tempo)) {
+						graphics.printAll(*Simulador.getCampeonato().getAutodromosCampeonato().at(0), Simulador.getAutodromos().at(0)->getPista().getCarrosPista(), tempo);
+					}
+				}
+				catch (exception) {
+					return graphics.endRace();
+				}
+			}
 				break;
 			case 20:
 				break;
@@ -230,11 +243,11 @@ void UserInterface::deleteExcessArgs(int command_position, vector<string>& argum
 		}
 }
 
-bool UserInterface::startSimulador(vector<string>* arguments)
+bool UserInterface::startSimulador(vector<string>* arguments, int *tempo)
 {	
 	if (Simulador.setFase(2, arguments)) {
 
-		graphics.printAll(*Simulador.getCampeonato().getAutodromosCampeonato().at(0), Simulador.getDGV().getCars());
+		graphics.printAll(*Simulador.getCampeonato().getAutodromosCampeonato().at(0), Simulador.getCampeonato().getAutodromosCampeonato().at(0)->getPista().getCarrosPista(), tempo);
 		return true;
 	}
 	return false;

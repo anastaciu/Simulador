@@ -13,6 +13,7 @@ public:
 	~Pista();
 	int getPistas() const;
 	int getComprimento() const;
-	vector<Carro*> getCarrosPista();
+	vector<Carro*>& getCarrosPista();
+	void addCarroPista(Carro* carro);
 };
 

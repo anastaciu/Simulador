@@ -30,7 +30,7 @@ public:
 	bool checkCommandFase1(int position);
 	bool checkCommandFase2(int position);
 	void deleteExcessArgs(int command_position, vector<string>& arguments);
-	bool startSimulador(vector<string>* arguments);
+	bool startSimulador(vector<string>* arguments, int* tempo);
 	void abortStart();
 
 };

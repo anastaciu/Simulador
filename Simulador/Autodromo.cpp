@@ -38,3 +38,25 @@ Garagem Autodromo::getGaragem() const
 	return garagem;
 }
 
+bool Autodromo::passaTempo(int* tempo)
+{
+	int i = 0;
+	exception e;
+	//cout << carros.at(0)->getXPosition() << "teste" << endl;
+	//system("pause");
+	while ((*tempo)--) {
+		for (Carro* c : this->pista.getCarrosPista()) {
+			if (&c->getPiloto() != nullptr) {
+				c->setPosition(c->getXPosition() + ((160.0 / getPista().getComprimento()) * i++), c->getYPosition());
+				//cout << c->getXPosition();
+				//system("pause");
+				if (c->getXPosition() > 160.0) {
+					throw e;
+				}
+			}
+		}
+		return true;
+	}
+	return false;
+
+}

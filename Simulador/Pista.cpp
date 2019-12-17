@@ -18,7 +18,13 @@ int Pista::getComprimento() const
 	return comprimento;
 }
 
-vector<Carro*> Pista::getCarrosPista()
+vector<Carro*>& Pista::getCarrosPista()
 {
 	return carros;
 }
+
+void Pista::addCarroPista(Carro* carro)
+{
+		carros.push_back(carro);
+}
+

@@ -23,3 +23,8 @@ vector<Carro*>& Garagem::getCarrosGaragem()
 {
 	return carros;
 }
+
+void Garagem::addCarroToGaragem(Carro* carro)
+{
+	carros.push_back(carro);
+}

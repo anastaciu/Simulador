@@ -3,7 +3,6 @@
 #include <sstream>
 #include "Pista.h"
 #include "Garagem.h"
-#include "Corrida.h"
 
 
 using namespace std;
@@ -14,7 +13,7 @@ private:
 	string name;
 	Garagem garagem;
 	Pista pista;
-	Corrida corrida;
+	//Corrida corrida;
 
 public:
 	//construtor
@@ -33,6 +32,9 @@ public:
 	string getAsString() const;
 
 	Pista& getPista();
+
 	Garagem getGaragem() const;
+
+	bool passaTempo(int* tempo);
 };
 

@@ -18,11 +18,12 @@ public:
 	bool listaElementos(Simulador& Simulador) const;
 	bool listaElementosFase2(Simulador& Simulador) const;
 	void printPista(Pista& pista);
-	void printCarros(Pista& pista, vector<Carro*>& carros);
-	void printGarage(Autodromo& autodromo, vector<Carro*>& carros);
-	void printAll(Autodromo& autodromo, vector<Carro*>& carros);
+	void printCarros(Autodromo& autodromo);
+	void printGarage(Autodromo& autodromo);
+	void printAll(Autodromo& autodromo, vector<Carro*>& carros, int *tempo);
 	int endRace();
 	void printCommandLine(int& i, Simulador& Simulador);
 	void printLog(string& log, Simulador &Simulador, int& i);
+	void printTempo(int posY, int *tempo);
 };
 

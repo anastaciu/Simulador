@@ -77,5 +77,8 @@ public:
 	//comando passatempo
 	bool passaTempo(vector<string>* arguments);
 	
+	bool addCarrosToAutodromo();
+
+	bool addAutodromosToCampeonato(int fase, vector<string>* arguments);
 };
 

@@ -73,6 +73,9 @@ public:
 	void setPosition(double x, int y);
 	
 	void setGarage(bool);
+
 	bool getGarage() const;
+
+	int getSpeed() const;
 };
 

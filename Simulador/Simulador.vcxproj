@@ -156,7 +156,6 @@
     <ClCompile Include="Simulador.cpp" />
     <ClCompile Include="Carro.cpp" />
     <ClCompile Include="Consola.cpp" />
-    <ClCompile Include="Corrida.cpp" />
     <ClCompile Include="Crazy.cpp" />
     <ClCompile Include="DGV.cpp" />
     <ClCompile Include="Fast.cpp" />
@@ -177,7 +176,6 @@
     <ClInclude Include="Simulador.h" />
     <ClInclude Include="Carro.h" />
     <ClInclude Include="Consola.h" />
-    <ClInclude Include="Corrida.h" />
     <ClInclude Include="Crazy.h" />
     <ClInclude Include="DGV.h" />
     <ClInclude Include="Fast.h" />

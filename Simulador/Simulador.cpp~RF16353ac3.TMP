@@ -35,8 +35,29 @@ void Simulador::addAutodromo(Autodromo* autodromo)
 }
 
 bool Simulador::setFase(int fase, vector<string>* arguments)
-{
-	return addAutodromosToCampeonato(fase, arguments) && addCarrosToAutodromo();
+{	
+	bool isValid = false;
+	if (arguments->size() < 1)
+		return isValid;
+	for (Autodromo* a : autodromos)
+		for (string s : *arguments) {
+			if (s == a->getName()) {
+				campeonato.getAutodromosCampeonato().push_back(a);
+				this->fase = fase;
+				if (!isValid)
+					isValid = true;
+			}
+		}
+	for (int i = 0; i < campeonato.getAutodromosCampeonato().size(); i++)
+		cout << campeonato.getAutodromosCampeonato().at(i)->getName();
+	system("pause");
+	addCarrosToAutodromo();
+	for (Carro* c : campeonato.getAutodromosCampeonato().at(0)->getPista().getCarrosPista())
+		cout << "mrerda: " << c->getId();
+	cout << "foda-se";
+	system("pause");
+	
+	return isValid;
 }
 
 void Simulador::setFaseAbort(int fase)
@@ -163,48 +184,30 @@ bool Simulador::passaTempo(vector<string>* arguments)
 
 bool Simulador::addCarrosToAutodromo() {
 	bool isValid = false;
-	for (int i = 0, j = 0, y = 0, z = campeonato.getAutodromosCampeonato().at(i)->getGaragem().getWidth();
-		i < static_cast<int>(campeonato.getAutodromosCampeonato().size()); i++) {
+	for (int i = 0, z = 0, y = 0; i < static_cast<int>(campeonato.getAutodromosCampeonato().size()); i++) {
 		for (Carro* c : dgv.getCars()) {
-			if (&c->getPiloto() != nullptr && campeonato.getAutodromosCampeonato().at(i)->getPista().getPistas() > j) {
+			cout << c->getId() << "caralhadas" << endl;
+			if(&c->getPiloto() != nullptr)
+			cout << c->getPiloto().getAsString() << "putamadre" << endl;
+			if (&c->getPiloto() != nullptr && campeonato.getAutodromosCampeonato().at(i)->getPista().getPistas() > z) {
 				campeonato.getAutodromosCampeonato().at(i)->getPista().addCarroPista(c);
-				c->setPosition(0, j++);
+				c->setPosition(0, z);
+				cout << c->getId() <<"caralho" << endl;
+				z++;
 				if (!isValid)
 					isValid = true;
 			}
 			else {
-				if (y < campeonato.getAutodromosCampeonato().at(i)->getGaragem().getHeight() * campeonato.getAutodromosCampeonato()
-					.at(i)->getGaragem().getWidth()) {
+				while (y < campeonato.getAutodromosCampeonato().at(i)->getGaragem().getHeight() * campeonato.getAutodromosCampeonato().at(i)->getGaragem().getWidth()) {
 					campeonato.getAutodromosCampeonato().at(i)->getGaragem().addCarroToGaragem(c);
 					y++;
-					c->setPosition(campeonato.getAutodromosCampeonato().at(0)->getPista()
-						.getPistas(), campeonato.getAutodromosCampeonato().at(i)->getGaragem().getWidth() - z);
 				}
 			}
 		}
-
+		
 	}
 	return isValid;
 }
-
-bool Simulador::addAutodromosToCampeonato(int fase, vector<string>* arguments)
-{
-	bool isValid = false;
-	if (arguments->size() < 1)
-		return isValid;
-	for (Autodromo* a : autodromos) {
-		for (string s : *arguments) {
-			if (s == a->getName()) {
-				campeonato.getAutodromosCampeonato().push_back(a);
-				this->fase = fase;
-				if (!isValid)
-					isValid = true;
-			}
-		}
-	}
-	return isValid;
-}
-
 
 
 

@@ -9,10 +9,12 @@ private:
 	vector<Carro*> carros;
 
 public:
+	Garagem();
 	Garagem(int width, int height);
 	~Garagem();
 	int getWidth() const;
 	int getHeight() const;
 	vector<Carro*>& getCarrosGaragem();
+	void addCarroToGaragem(Carro* carro);
 };
 

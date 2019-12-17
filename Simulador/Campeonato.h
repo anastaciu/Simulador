@@ -13,6 +13,6 @@ public:
 	vector<Autodromo*>& getAutodromosCampeonato();
 
 	//comando passatempo
-	bool passaTempo(vector<string>* arguments, vector<Carro*> carros);
+	bool passaTempo(int* tempo);
 };
 
