@@ -97,7 +97,7 @@ double Carro::getXPosition()
 	return positionX;
 }
 
-int Carro::getYPosition() const
+int Carro::getYPosition()
 {
 	return positionY;
 }
@@ -121,6 +121,18 @@ bool Carro::getGarage() const
 int Carro::getSpeed() const
 {
 	return speed;
+}
+
+void Carro::passatempo(int* tempo, double comprimento, double const comprimentoPista)
+{
+	int i = 5;
+	exception e;
+	if (condutor != nullptr) {
+		setPosition(positionX + (comprimento * ++i) , positionY);
+		if (getXPosition() > comprimentoPista) {
+			throw e;
+		}
+	}
 }
 
 

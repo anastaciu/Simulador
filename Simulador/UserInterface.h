@@ -26,12 +26,12 @@ public:
 	void start();
 	string readCommandLine() const;
 	int findCommand(const string& command) const;
-	int executionCicle();
+	int executionCicle(bool* passaTempo);
 	bool checkCommandFase1(int position);
 	bool checkCommandFase2(int position);
 	void deleteExcessArgs(int command_position, vector<string>& arguments);
 	bool startSimulador(vector<string>* arguments, int* tempo);
 	void abortStart();
-
+	int passatempo(int* tempo);
 };
 

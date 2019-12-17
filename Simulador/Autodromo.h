@@ -13,7 +13,6 @@ private:
 	string name;
 	Garagem garagem;
 	Pista pista;
-	//Corrida corrida;
 
 public:
 	//construtor
@@ -33,8 +32,10 @@ public:
 
 	Pista& getPista();
 
-	Garagem getGaragem() const;
+	Garagem& getGaragem();
 
 	bool passaTempo(int* tempo);
+
+
 };
 

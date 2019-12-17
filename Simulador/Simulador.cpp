@@ -34,9 +34,9 @@ void Simulador::addAutodromo(Autodromo* autodromo)
 
 }
 
-bool Simulador::setFase(int fase, vector<string>* arguments)
+bool Simulador::setFase(int fase, vector<string>* arguments, int* i)
 {
-	return addAutodromosToCampeonato(fase, arguments) && addCarrosToAutodromo();
+	return addAutodromosToCampeonato(fase, arguments) && addCarrosToAutodromo(i);
 }
 
 void Simulador::setFaseAbort(int fase)
@@ -161,28 +161,24 @@ bool Simulador::passaTempo(vector<string>* arguments)
 }
 
 
-bool Simulador::addCarrosToAutodromo() {
+bool Simulador::addCarrosToAutodromo(int* i) {
 	bool isValid = false;
-	for (int i = 0, j = 0, y = 0, z = campeonato.getAutodromosCampeonato().at(i)->getGaragem().getWidth();
-		i < static_cast<int>(campeonato.getAutodromosCampeonato().size()); i++) {
-		for (Carro* c : dgv.getCars()) {
-			if (&c->getPiloto() != nullptr && campeonato.getAutodromosCampeonato().at(i)->getPista().getPistas() > j) {
-				campeonato.getAutodromosCampeonato().at(i)->getPista().addCarroPista(c);
-				c->setPosition(0, j++);
-				if (!isValid)
-					isValid = true;
-			}
-			else {
-				if (y < campeonato.getAutodromosCampeonato().at(i)->getGaragem().getHeight() * campeonato.getAutodromosCampeonato()
-					.at(i)->getGaragem().getWidth()) {
-					campeonato.getAutodromosCampeonato().at(i)->getGaragem().addCarroToGaragem(c);
-					y++;
-					c->setPosition(campeonato.getAutodromosCampeonato().at(0)->getPista()
-						.getPistas(), campeonato.getAutodromosCampeonato().at(i)->getGaragem().getWidth() - z);
-				}
-			}
+	int j = 0, x = 0, y = 0;
+	for (Carro* c : dgv.getCars()) {
+		if (&c->getPiloto() != nullptr && campeonato.getAutodromosCampeonato().at(*i)->getPista().getPistas() > j) {
+			campeonato.getAutodromosCampeonato().at(*i)->getPista().addCarroPista(c);
+			c->setPosition(0, j++);
+			if (!isValid)
+				isValid = !isValid;
 		}
-
+		else {
+			campeonato.getAutodromosCampeonato().at(*i)->getGaragem().addCarroToGaragem(c);
+			c->setPosition(x, y++);
+			if (y >= campeonato.getAutodromosCampeonato().at(*i)->getGaragem().getHeight()) {
+				x++;
+				y = 0;				
+			}
+		}		
 	}
 	return isValid;
 }

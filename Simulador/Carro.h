@@ -67,7 +67,7 @@ public:
 	double getXPosition();
 
 	// devolve a posição Y do carro
-	int getYPosition() const;
+	int getYPosition();
 
 	//estabelece a posição do carro;
 	void setPosition(double x, int y);
@@ -77,5 +77,7 @@ public:
 	bool getGarage() const;
 
 	int getSpeed() const;
+
+	void passatempo(int* tempo, double comprimento, double const comprimentoPista);
 };
 

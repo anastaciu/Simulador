@@ -9,7 +9,6 @@ private:
 	vector<Carro*> carros;
 
 public:
-	Garagem();
 	Garagem(int width, int height);
 	~Garagem();
 	int getWidth() const;

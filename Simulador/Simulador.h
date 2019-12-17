@@ -28,7 +28,7 @@ public:
 	~Simulador();
 
 	//define a fase do simulador
-	bool setFase(int fase, vector<string>* arguments);
+	bool setFase(int fase, vector<string>* arguments, int* i);
 
 	//faz reset ao comando setFase em caso de erro
 	void setFaseAbort(int fase);
@@ -77,7 +77,7 @@ public:
 	//comando passatempo
 	bool passaTempo(vector<string>* arguments);
 	
-	bool addCarrosToAutodromo();
+	bool addCarrosToAutodromo(int* i);
 
 	bool addAutodromosToCampeonato(int fase, vector<string>* arguments);
 };

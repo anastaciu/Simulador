@@ -84,56 +84,29 @@ void GameGraphics::printCarros(Autodromo& autodromo)
 	Consola::setTextColor(Consola::PRETO);
 	for (Carro* c : autodromo.getPista().getCarrosPista()) {
 		Consola::gotoxy(static_cast<int>(trunc(c->getXPosition())) + 4,  c->getYPosition() + 2);
- 		cout << c->getId();
+		cout << c->getId();
 	}
-	for (Carro* c : autodromo.getGaragem().getCarrosGaragem()) {
-
+	for (Carro* c : autodromo.getGaragem().getCarrosGaragem()) {		
+		Consola::gotoxy(4 + static_cast<int>(trunc(c->getXPosition())), autodromo.getPista().getPistas() + 6 + c->getYPosition());
+		cout << c->getId();
 	}
-
-
-	//for (int i = 0, j = 0, z = 0, y = 0; i < static_cast<int>(carrosPista.size()); i++) {
-	//	if ((&carrosPista.at(i)->getPiloto() != nullptr)) {
-	//		if (j < pista.getPistas()) {
-	//			Consola::gotoxy(static_cast<int>(trunc(carrosPista.at(i)->getXPosition())) + 4, j + 2);
-	//			cout << carrosPista.at(i)->getId();
-	//			j++;
-	//		}
-	//		else {
-	//			Consola::gotoxy(4 + z, pista.getPistas() + 6 + y);
-	//			cout << carrosPista.at(i)->getId();
-	//			z++;
-	//		}			
-	//	}
-	//	else {
-	//		Consola::gotoxy(4 + z, pista.getPistas() + 6 + y);
-	//		cout << carrosPista.at(i)->getId();
-	//		z++;
-	//	}
-	//	if (z > 75) {
-	//		y++;
-	//		z = 0;
-	//	}
-	//}
 }
 
 void GameGraphics::printGarage(Autodromo& autodromo)
 {
-
 	Consola::setBackgroundColor(Consola::AZUL_CLARO);
 	for (int i = 4; i < autodromo.getGaragem().getWidth(); i++)
-		for (int j = autodromo.getPista().getPistas() + 6; j < 20 + autodromo.getPista().getPistas(); j++) {
+		for (int j = autodromo.getPista().getPistas() + 6; j < autodromo.getGaragem().getHeight() + 6 + autodromo.getPista().getPistas(); j++) {
 			Consola::gotoxy(i, j);
 			cout << " ";
 		}
 }
 
-void GameGraphics::printAll(Autodromo& autodromo, vector<Carro*>& carros, int* tempo) {
-
+void GameGraphics::printAll(Autodromo& autodromo, int* tempo) {
 		printPista(autodromo.getPista());
 		printGarage(autodromo);
 		printCarros(autodromo);
 		printTempo(autodromo.getPista().getPistas() + 3, tempo);
-	
 }
 
 int GameGraphics::endRace()
@@ -148,16 +121,19 @@ int GameGraphics::endRace()
 	return sair;
 }
 
-void GameGraphics::printCommandLine(int& i, Simulador& Simulador)
+void GameGraphics::printCommandLine(int& i, Simulador& Simulador, bool* passaTempo)
 {
 	if (Simulador.getSimFase() == 2) {
+		if (*passaTempo) {
+			i = 0;
+			*passaTempo = !*passaTempo;
+		}
 		Consola::gotoxy(90, Simulador.getCampeonato().getAutodromosCampeonato().at(0)->getPista().getPistas() + 6 + i);
 		i++;
 		commandLineFase2();
 	}
 	else
 		commandLine();
-
 }
 
 void GameGraphics::printLog(string& log, Simulador &Simulador, int& i)

@@ -9,11 +9,12 @@ void UserInterface::start()
 	graphics.gameInit();
 	int sair = -1;
 	int i = 0;
+	bool passaTempo = false;	
 	const int EXIT_POSITION = 21;
 	do {
-		graphics.printCommandLine(i, Simulador);
+		graphics.printCommandLine(i, Simulador, &passaTempo);
 		try {
-			sair = executionCicle();
+			sair = executionCicle(&passaTempo);
 		}
 		catch (string & log) {
 			graphics.printLog(log, Simulador, i);
@@ -25,7 +26,7 @@ void UserInterface::start()
 	} while (sair != EXIT_POSITION);
 }
 
-int UserInterface::executionCicle() {
+int UserInterface::executionCicle(bool* passaTempo) {
 	string word, command;
 	exception e;
 	vector<string> arguments;
@@ -118,7 +119,7 @@ int UserInterface::executionCicle() {
 			case 10:
 				break;
 			case 11:
-				try {
+				try {					
 					if (!startSimulador(&arguments, tempo)) {
 						abortStart();
 						throw log.getError() + log.erroCamp();
@@ -168,19 +169,8 @@ int UserInterface::executionCicle() {
 			case 19: {
 				stringstream ss(arguments.at(0));
 				ss >> *tempo;
-				if(*tempo > 0)
-					graphics.printTempo(Simulador.getCampeonato().getAutodromosCampeonato().at(0)->getPista().getPistas() + 3, tempo);
-				else {
-					throw log.getError() + log.getBadArgumentError();
-				}
-				try {
-					while (Simulador.getCampeonato().passaTempo(tempo)) {
-						graphics.printAll(*Simulador.getCampeonato().getAutodromosCampeonato().at(0), Simulador.getAutodromos().at(0)->getPista().getCarrosPista(), tempo);
-					}
-				}
-				catch (exception) {
-					return graphics.endRace();
-				}
+				passatempo(tempo);
+				*passaTempo = !*passaTempo;
 			}
 				break;
 			case 20:
@@ -244,10 +234,11 @@ void UserInterface::deleteExcessArgs(int command_position, vector<string>& argum
 }
 
 bool UserInterface::startSimulador(vector<string>* arguments, int *tempo)
-{	
-	if (Simulador.setFase(2, arguments)) {
+{
+	int i = 0;
+	if (Simulador.setFase(2, arguments, &i)) {
 
-		graphics.printAll(*Simulador.getCampeonato().getAutodromosCampeonato().at(0), Simulador.getCampeonato().getAutodromosCampeonato().at(0)->getPista().getCarrosPista(), tempo);
+		graphics.printAll(*Simulador.getCampeonato().getAutodromosCampeonato().at(i), tempo);
 		return true;
 	}
 	return false;
@@ -257,6 +248,25 @@ void UserInterface::abortStart()
 {
 	Simulador.setFaseAbort(1);
 	throw log.getError() + log.erroCamp();
+}
+
+int UserInterface::passatempo(int* tempo)
+{
+	int command = 19;
+	if (*tempo > 0)
+		graphics.printTempo(Simulador.getCampeonato().getAutodromosCampeonato().at(0)->getPista().getPistas() + 3, tempo);
+	else {
+		throw log.getError() + log.getBadArgumentError();
+	}
+	try {
+		while (Simulador.getCampeonato().passaTempo(tempo)) {
+			graphics.printAll(*Simulador.getCampeonato().getAutodromosCampeonato().at(0), tempo);
+		}
+	}
+	catch (exception) {
+		return graphics.endRace();
+	}
+	return command;
 }
 
 

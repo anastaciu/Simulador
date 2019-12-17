@@ -39,6 +39,16 @@ bool Piloto::operator== (Piloto *piloto)
 	return this->name == piloto->name;
 }
 
+void Piloto::setPontos(int pontos)
+{
+	this->pontos = pontos;
+}
+
+int Piloto::getPontos() const
+{
+	return pontos;
+}
+
 
 
 

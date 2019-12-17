@@ -11,6 +11,7 @@ class Piloto
 {
 private:
 	string name;	
+	int pontos;
 	Carro* carro = nullptr;
 public:	
 	Piloto(string name);
@@ -20,7 +21,10 @@ public:
 	Carro& getCarro() const;
 	void setCarro(Carro *carro);
 	bool operator== (Piloto* piloto);
+	void setPontos(int pontos);
+	int getPontos() const;
 	virtual string getAsString() const = 0;
 	virtual string getPilotDetais() const = 0;
+
 };
 

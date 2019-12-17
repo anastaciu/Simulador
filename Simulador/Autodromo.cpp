@@ -1,7 +1,7 @@
 #include "Autodromo.h"
 
 
-Autodromo::Autodromo(string name, int pistas, int comprimento) : name(name), pista(pistas, comprimento), garagem(80, 20)
+Autodromo::Autodromo(string name, int pistas, int comprimento) : name(name), pista(pistas, comprimento), garagem(80, 15)
 {
 	
 }
@@ -33,30 +33,21 @@ Pista& Autodromo::getPista()
 	return pista;
 }
 
-Garagem Autodromo::getGaragem() const
+Garagem& Autodromo::getGaragem()
 {
 	return garagem;
 }
 
 bool Autodromo::passaTempo(int* tempo)
 {
-	int i = 0;
-	exception e;
-	//cout << carros.at(0)->getXPosition() << "teste" << endl;
-	//system("pause");
-	while ((*tempo)--) {
-		for (Carro* c : this->pista.getCarrosPista()) {
-			if (&c->getPiloto() != nullptr) {
-				c->setPosition(c->getXPosition() + ((160.0 / getPista().getComprimento()) * i++), c->getYPosition());
-				//cout << c->getXPosition();
-				//system("pause");
-				if (c->getXPosition() > 160.0) {
-					throw e;
-				}
-			}
-		}
-		return true;
+	try {
+		return pista.passatempo(tempo);
 	}
-	return false;
-
+	catch (exception e) {
+		throw e;
+	}
 }
+
+
+
+

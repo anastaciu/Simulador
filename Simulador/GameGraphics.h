@@ -20,9 +20,9 @@ public:
 	void printPista(Pista& pista);
 	void printCarros(Autodromo& autodromo);
 	void printGarage(Autodromo& autodromo);
-	void printAll(Autodromo& autodromo, vector<Carro*>& carros, int *tempo);
+	void printAll(Autodromo& autodromo, int *tempo);
 	int endRace();
-	void printCommandLine(int& i, Simulador& Simulador);
+	void printCommandLine(int& i, Simulador& Simulador, bool* passaTempo);
 	void printLog(string& log, Simulador &Simulador, int& i);
 	void printTempo(int posY, int *tempo);
 };

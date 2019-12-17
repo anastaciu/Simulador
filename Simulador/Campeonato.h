@@ -14,5 +14,6 @@ public:
 
 	//comando passatempo
 	bool passaTempo(int* tempo);
+
 };
 

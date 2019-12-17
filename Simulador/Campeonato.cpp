@@ -1,6 +1,5 @@
 #include "Campeonato.h"
 #include "DGV.h"
-#include <iostream>
 #include "Consola.h"
 
 
@@ -12,5 +11,6 @@ vector<Autodromo*>& Campeonato::getAutodromosCampeonato()
 bool Campeonato::passaTempo(int *tempo)
 {
 	return autodromos_campeonat.at(0)->passaTempo(tempo);
-	
 }
+
+

@@ -1,5 +1,5 @@
 5 200 nurburgring
-25 500 estoril
+10 50 estoril
 35 250 imola
 55 160 monaco
 34 150 silverstone
