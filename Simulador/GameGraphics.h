@@ -22,8 +22,9 @@ public:
 	void printGarage(Autodromo& autodromo);
 	void printAll(Autodromo& autodromo, int *tempo);
 	int endRace();
-	void printCommandLine(int& i, Simulador& Simulador, bool* passaTempo);
-	void printLog(string& log, Simulador &Simulador, int& i);
+	void printCommandLine(int& i, Simulador& Simulador, bool* passaTempo, int* it);
+	void printLog(string& log, Simulador &Simulador, int& i, int* it);
 	void printTempo(int posY, int *tempo);
+	void printAutodromoName(string name);
 };
 

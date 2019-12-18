@@ -20,9 +20,11 @@ private:
 	Simulador Simulador;
 	GameGraphics graphics;
 	FileLoader fileLoader;
+	int* it;
 
 public:
 	UserInterface();
+	~UserInterface();
 	void start();
 	string readCommandLine() const;
 	int findCommand(const string& command) const;

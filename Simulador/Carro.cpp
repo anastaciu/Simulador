@@ -108,16 +108,6 @@ void Carro::setPosition(double x, int y)
 	this->positionY = y;
 }
 
-void Carro::setGarage(bool)
-{
-	this->in_garage = true;
-}
-
-bool Carro::getGarage() const
-{
-	return in_garage;
-}
-
 int Carro::getSpeed() const
 {
 	return speed;

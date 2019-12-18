@@ -102,11 +102,11 @@ void GameGraphics::printGarage(Autodromo& autodromo)
 		}
 }
 
-void GameGraphics::printAll(Autodromo& autodromo, int* tempo) {
-		printPista(autodromo.getPista());
-		printGarage(autodromo);
-		printCarros(autodromo);
-		printTempo(autodromo.getPista().getPistas() + 3, tempo);
+void GameGraphics::printAll(Autodromo& autodromo, int* tempo) {	
+	printPista(autodromo.getPista());
+	printGarage(autodromo);
+	printCarros(autodromo);
+	printTempo(autodromo.getPista().getPistas() + 3, tempo);
 }
 
 int GameGraphics::endRace()
@@ -121,14 +121,14 @@ int GameGraphics::endRace()
 	return sair;
 }
 
-void GameGraphics::printCommandLine(int& i, Simulador& Simulador, bool* passaTempo)
+void GameGraphics::printCommandLine(int& i, Simulador& Simulador, bool* passaTempo, int *it)
 {
 	if (Simulador.getSimFase() == 2) {
 		if (*passaTempo) {
 			i = 0;
 			*passaTempo = !*passaTempo;
 		}
-		Consola::gotoxy(90, Simulador.getCampeonato().getAutodromosCampeonato().at(0)->getPista().getPistas() + 6 + i);
+		Consola::gotoxy(90, Simulador.getCampeonato().getAutodromosCampeonato().at(*it)->getPista().getPistas() + 6 + i);
 		i++;
 		commandLineFase2();
 	}
@@ -136,10 +136,10 @@ void GameGraphics::printCommandLine(int& i, Simulador& Simulador, bool* passaTem
 		commandLine();
 }
 
-void GameGraphics::printLog(string& log, Simulador &Simulador, int& i)
+void GameGraphics::printLog(string& log, Simulador &Simulador, int& i, int* it)
 {
 	if (Simulador.getSimFase() == 2) {
-		Consola::gotoxy(90, Simulador.getCampeonato().getAutodromosCampeonato().at(0)->getPista().getPistas() + 6 + i);
+		Consola::gotoxy(90, Simulador.getCampeonato().getAutodromosCampeonato().at(*it)->getPista().getPistas() + 6 + i);
 		i++;
 	}
 	cout << log << endl;
@@ -154,6 +154,15 @@ void GameGraphics::printTempo(int posY, int *tempo)
 		cout << "Tempo: " << *tempo;
 		Consola::getch();
 	}
+}
+
+void GameGraphics::printAutodromoName(string name)
+{
+	Consola::setBackgroundColor(Consola::AZUL_CLARO);
+	Consola::setTextColor(Consola::BRANCO);
+	Consola::gotoxy(70, 1);
+	cout << "Autodromo: " << name;
+
 }
 
 

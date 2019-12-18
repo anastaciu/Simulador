@@ -13,7 +13,7 @@ public:
 	vector<Autodromo*>& getAutodromosCampeonato();
 
 	//comando passatempo
-	bool passaTempo(int* tempo);
+	bool passaTempo(int* tempo, int *i);
 
 };
 
