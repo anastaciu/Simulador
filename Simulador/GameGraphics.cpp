@@ -54,9 +54,9 @@ bool GameGraphics::listaElementos(Simulador& Simulador) const
 	return false;
 }
 
-bool GameGraphics::listaElementosFase2(Simulador& Simulador) const
+bool GameGraphics::listaElementosFase2(Simulador& Simulador, int *it) const
 {
-	Consola::gotoxy(0, Simulador.getCampeonato().getAutodromosCampeonato().at(0)->getPista().getPistas() + 25);
+	Consola::gotoxy(0, Simulador.getCampeonato().getAutodromosCampeonato().at(*it)->getPista().getPistas() + Simulador.getCampeonato().getAutodromosCampeonato().at(*it)->getGaragem().getHeight() + 10);
 	return listaElementos(Simulador);
 }
 
@@ -68,8 +68,8 @@ void GameGraphics::printPista(Pista& pista)
 	Consola::setBackgroundColor(Consola::PRETO);
 	Consola::maximizeWindow();
 	Consola::setScreenSize(9999, pista.getComprimento() + 2);
-	for (int i = 2; i < pista.getPistas() + 2; i++) {
-		for (int j = 4; j < 165; j++) {
+	for (int i = 6; i < pista.getPistas() + 6; i++) {
+		for (int j = 4; j < pista.getComprimentoNormal() + 4; j++) {
 			Consola::gotoxy(j, i);
 			cout << "_";
 		}
@@ -83,11 +83,11 @@ void GameGraphics::printCarros(Autodromo& autodromo)
 	Consola::setBackgroundColor(Consola::AMARELO);
 	Consola::setTextColor(Consola::PRETO);
 	for (Carro* c : autodromo.getPista().getCarrosPista()) {
-		Consola::gotoxy(static_cast<int>(trunc(c->getXPosition())) + 4,  c->getYPosition() + 2);
+		Consola::gotoxy(static_cast<int>(trunc(c->getXPosition())) + 4,  c->getYPosition() + 6);
 		cout << c->getId();
 	}
 	for (Carro* c : autodromo.getGaragem().getCarrosGaragem()) {		
-		Consola::gotoxy(4 + static_cast<int>(trunc(c->getXPosition())), autodromo.getPista().getPistas() + 6 + c->getYPosition());
+		Consola::gotoxy(4 + static_cast<int>(trunc(c->getXPosition())), autodromo.getPista().getPistas() + 10 + c->getYPosition());
 		cout << c->getId();
 	}
 }
@@ -96,7 +96,7 @@ void GameGraphics::printGarage(Autodromo& autodromo)
 {
 	Consola::setBackgroundColor(Consola::AZUL_CLARO);
 	for (int i = 4; i < autodromo.getGaragem().getWidth(); i++)
-		for (int j = autodromo.getPista().getPistas() + 6; j < autodromo.getGaragem().getHeight() + 6 + autodromo.getPista().getPistas(); j++) {
+		for (int j = autodromo.getPista().getPistas() + 10; j < autodromo.getGaragem().getHeight() + 10 + autodromo.getPista().getPistas(); j++) {
 			Consola::gotoxy(i, j);
 			cout << " ";
 		}
@@ -106,7 +106,9 @@ void GameGraphics::printAll(Autodromo& autodromo, int* tempo) {
 	printPista(autodromo.getPista());
 	printGarage(autodromo);
 	printCarros(autodromo);
-	printTempo(autodromo.getPista().getPistas() + 3, tempo);
+	printAutodromoName(autodromo.getName());
+	printTempo(autodromo.getPista().getPistas() + 7, tempo);
+	
 }
 
 int GameGraphics::endRace()
@@ -128,7 +130,7 @@ void GameGraphics::printCommandLine(int& i, Simulador& Simulador, bool* passaTem
 			i = 0;
 			*passaTempo = !*passaTempo;
 		}
-		Consola::gotoxy(90, Simulador.getCampeonato().getAutodromosCampeonato().at(*it)->getPista().getPistas() + 6 + i);
+		Consola::gotoxy(90, Simulador.getCampeonato().getAutodromosCampeonato().at(*it)->getPista().getPistas() + 10 + i);
 		i++;
 		commandLineFase2();
 	}
@@ -139,7 +141,7 @@ void GameGraphics::printCommandLine(int& i, Simulador& Simulador, bool* passaTem
 void GameGraphics::printLog(string& log, Simulador &Simulador, int& i, int* it)
 {
 	if (Simulador.getSimFase() == 2) {
-		Consola::gotoxy(90, Simulador.getCampeonato().getAutodromosCampeonato().at(*it)->getPista().getPistas() + 6 + i);
+		Consola::gotoxy(90, Simulador.getCampeonato().getAutodromosCampeonato().at(*it)->getPista().getPistas() + 10 + i);
 		i++;
 	}
 	cout << log << endl;
@@ -158,10 +160,18 @@ void GameGraphics::printTempo(int posY, int *tempo)
 
 void GameGraphics::printAutodromoName(string name)
 {
+	Consola::gotoxy(66, 1);
 	Consola::setBackgroundColor(Consola::AZUL_CLARO);
 	Consola::setTextColor(Consola::BRANCO);
-	Consola::gotoxy(70, 1);
-	cout << "Autodromo: " << name;
+	cout << "       **** Race Simulator ****       ";
+	Consola::gotoxy(75, 2);
+	Consola::setBackgroundColor(Consola::VERDE);
+	Consola::setTextColor(Consola::BRANCO);
+	cout << "     * Fase 2 *     ";
+	Consola::gotoxy(72, 4);
+	Consola::setBackgroundColor(Consola::VERMELHO_CLARO);
+	Consola::setTextColor(Consola::PRETO);
+	cout << "  Autodromo: " << name << "  ";
 
 }
 

@@ -16,7 +16,7 @@ public:
 	void commandLine();
 	void commandLineFase2();
 	bool listaElementos(Simulador& Simulador) const;
-	bool listaElementosFase2(Simulador& Simulador) const;
+	bool listaElementosFase2(Simulador& Simulador, int* it) const;
 	void printPista(Pista& pista);
 	void printCarros(Autodromo& autodromo);
 	void printGarage(Autodromo& autodromo);

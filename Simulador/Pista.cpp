@@ -46,3 +46,8 @@ bool Pista::passatempo(int* tempo)
 	return false;
 }
 
+int Pista::getComprimentoNormal()
+{
+	return COMPRIMENTO_PISTA;
+}
+

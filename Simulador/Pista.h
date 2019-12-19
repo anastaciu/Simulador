@@ -17,6 +17,6 @@ public:
 	vector<Carro*>& getCarrosPista();
 	void addCarroPista(Carro* carro);
 	bool passatempo(int* tempo);
-
+	int getComprimentoNormal();
 };
 

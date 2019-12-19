@@ -153,7 +153,7 @@ int UserInterface::executionCicle(bool* passaTempo) {
 					throw log.getError() + log.getBadArgumentError();
 				break;
 			case 7:
-				if (!graphics.listaElementosFase2(Simulador)) {
+				if (!graphics.listaElementosFase2(Simulador, it)) {
 					throw log.getError() + log.listaErros();
 				}
 			case 12:
@@ -257,7 +257,7 @@ int UserInterface::passatempo(int* tempo)
 {
 	int sair = 19;
 	if (*tempo > 0)
-		graphics.printTempo(Simulador.getCampeonato().getAutodromosCampeonato().at(*it)->getPista().getPistas() + 3, tempo);
+		graphics.printTempo(Simulador.getCampeonato().getAutodromosCampeonato().at(*it)->getPista().getPistas() + 7, tempo);
 	else {
 		throw log.getError() + log.getBadArgumentError();
 	}
@@ -270,7 +270,12 @@ int UserInterface::passatempo(int* tempo)
 		(*it)++;
 		if(*it >= Simulador.getCampeonato().getAutodromosCampeonato().size())
 			sair = graphics.endRace();
-		graphics.printAll(*Simulador.getCampeonato().getAutodromosCampeonato().at(*it), tempo);
+		else {
+			*tempo = 0;
+			Simulador.addCarrosToAutodromo(it);
+			graphics.printAll(*Simulador.getCampeonato().getAutodromosCampeonato().at(*it), tempo);
+		}
+		
 	}
 	return sair;
 }
