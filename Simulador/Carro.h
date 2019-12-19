@@ -64,10 +64,10 @@ public:
 	string getAsString() const;
 
 	//devolve a posição x do carro
-	double getXPosition();
+	double getXPosition() const;
 
 	// devolve a posição Y do carro
-	int getYPosition();
+	int getYPosition() const;
 
 	//estabelece a posição do carro;
 	void setPosition(double x, int y);

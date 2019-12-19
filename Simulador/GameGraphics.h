@@ -10,8 +10,10 @@ class GameGraphics
 {
 private:
 	MessageLog log;
+	bool screenSet;
 	
 public:
+	GameGraphics();
 	void gameInit();
 	void commandLine();
 	void commandLineFase2();
@@ -26,5 +28,7 @@ public:
 	void printLog(string& log, Simulador &Simulador, int& i, int* it);
 	void printTempo(int posY, int *tempo);
 	void printAutodromoName(string name);
+	void printBackground();
+	void setScreenSize();
 };
 

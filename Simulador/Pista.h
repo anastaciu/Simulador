@@ -1,6 +1,9 @@
 #pragma once
 #include "Carro.h"
 #include <vector>
+#include <algorithm>
+
+using namespace std;
 
 class Pista
 {
@@ -17,6 +20,7 @@ public:
 	vector<Carro*>& getCarrosPista();
 	void addCarroPista(Carro* carro);
 	bool passatempo(int* tempo);
-	int getComprimentoNormal();
+	const double getComprimentoNormal();
+	static bool sortCarrosByPosition(Carro* p1, Carro* p2);
 };
 

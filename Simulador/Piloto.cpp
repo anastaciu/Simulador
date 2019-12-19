@@ -41,7 +41,7 @@ bool Piloto::operator== (Piloto *piloto)
 
 void Piloto::setPontos(int pontos)
 {
-	this->pontos = pontos;
+	this->pontos += pontos;
 }
 
 int Piloto::getPontos() const

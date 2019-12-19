@@ -92,12 +92,12 @@ string Carro::getAsString() const
 	return os.str();
 }
 
-double Carro::getXPosition()
+double Carro::getXPosition() const
 {
 	return positionX;
 }
 
-int Carro::getYPosition()
+int Carro::getYPosition() const
 {
 	return positionY;
 }

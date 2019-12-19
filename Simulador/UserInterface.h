@@ -35,5 +35,6 @@ public:
 	bool startSimulador(vector<string>* arguments, int* tempo);
 	void abortStart();
 	int passatempo(int* tempo);
+	bool corrida();
 };
 

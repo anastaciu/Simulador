@@ -1,5 +1,9 @@
 #include "GameGraphics.h"
 
+GameGraphics::GameGraphics(): screenSet(false)
+{
+}
+
 void GameGraphics::gameInit()
 {
 
@@ -62,14 +66,10 @@ bool GameGraphics::listaElementosFase2(Simulador& Simulador, int *it) const
 
 void GameGraphics::printPista(Pista& pista)
 {
-	Consola::setBackgroundColor(Consola::BRANCO_CLARO);
-	Consola::clrscr();
 	Consola::setTextColor(Consola::BRANCO_CLARO);
-	Consola::setBackgroundColor(Consola::PRETO);
-	Consola::maximizeWindow();
-	Consola::setScreenSize(9999, pista.getComprimento() + 2);
-	for (int i = 6; i < pista.getPistas() + 6; i++) {
+	Consola::setBackgroundColor(Consola::PRETO);	
 		for (int j = 4; j < pista.getComprimentoNormal() + 4; j++) {
+			for (int i = 6; i < pista.getPistas() + 6; i++) {
 			Consola::gotoxy(j, i);
 			cout << "_";
 		}
@@ -103,6 +103,8 @@ void GameGraphics::printGarage(Autodromo& autodromo)
 }
 
 void GameGraphics::printAll(Autodromo& autodromo, int* tempo) {	
+	printBackground();
+	setScreenSize();
 	printPista(autodromo.getPista());
 	printGarage(autodromo);
 	printCarros(autodromo);
@@ -174,6 +176,20 @@ void GameGraphics::printAutodromoName(string name)
 	cout << "  Autodromo: " << name << "  ";
 
 }
+
+void GameGraphics::printBackground()
+{
+	Consola::setBackgroundColor(Consola::BRANCO_CLARO);
+	Consola::clrscr();
+}
+
+void GameGraphics::setScreenSize()
+{
+	Consola::maximizeWindow();
+	Consola::setScreenSize(2000, 170);
+}
+
+
 
 
 

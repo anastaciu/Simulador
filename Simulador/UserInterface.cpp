@@ -271,13 +271,19 @@ int UserInterface::passatempo(int* tempo)
 		if(*it >= Simulador.getCampeonato().getAutodromosCampeonato().size())
 			sair = graphics.endRace();
 		else {
-			*tempo = 0;
-			Simulador.addCarrosToAutodromo(it);
-			graphics.printAll(*Simulador.getCampeonato().getAutodromosCampeonato().at(*it), tempo);
+			corrida();
 		}
 		
 	}
 	return sair;
+}
+
+bool UserInterface::corrida()
+{
+	int tempo = 0;
+	bool add_carros = Simulador.addCarrosToAutodromo(it);
+	graphics.printAll(*Simulador.getCampeonato().getAutodromosCampeonato().at(*it), &tempo);
+	return add_carros;
 }
 
 
