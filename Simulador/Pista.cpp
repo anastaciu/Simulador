@@ -35,19 +35,15 @@ bool Pista::passatempo(int* tempo)
 	while ((*tempo)--) {		
 		for (Carro* c : this->carros) {
 			try {
-				c->passatempo(tempo, normalizedLength, COMPRIMENTO_PISTA);
+				c->passatempo(tempo, normalizedLength, COMPRIMENTO_PISTA);				
 			}
 			catch (exception e) {	
-				sort(carros.begin(), carros.end(), sortCarrosByPosition);
-				if(carros.size() > 0)
-					carros.at(0)->getPiloto().setPontos(&carros.at(0)->getPiloto() != nullptr ? 10 : 0);
-				if (carros.size() > 1)
-					carros.at(1)->getPiloto().setPontos(&carros.at(1)->getPiloto() != nullptr ? 5 : 0);
-				if (carros.size() > 2)
-					carros.at(2)->getPiloto().setPontos(&carros.at(2)->getPiloto() != nullptr ? 2 : 0);
+				setPontos();
 				throw e;
 			}
-		}
+		}		
+		setFirstAndLast();
+		setPilotosPosition();
 		return true;
 	}
 	return false;
@@ -61,5 +57,39 @@ const double Pista::getComprimentoNormal()
 bool Pista::sortCarrosByPosition(Carro* p1, Carro* p2)
 {
 		return p1->getXPosition() > p2->getXPosition();
+}
+
+void Pista::setPontos()
+{
+	if (carros.size() > 1)
+		sort(carros.begin(), carros.end(), sortCarrosByPosition);
+	if (carros.size() > 0)
+		carros.at(0)->getPiloto().addPontos(&carros.at(0)->getPiloto() != nullptr ? 10 : 0);
+	if (carros.size() > 1)
+		carros.at(1)->getPiloto().addPontos(&carros.at(1)->getPiloto() != nullptr ? 5 : 0);
+	if (carros.size() > 2)
+		carros.at(2)->getPiloto().addPontos(&carros.at(2)->getPiloto() != nullptr ? 2 : 0);
+}
+
+void Pista::setFirstAndLast()
+{
+	if (carros.size() > 1) {
+		sort(carros.begin(), carros.end(), sortCarrosByPosition);
+		//(*carros.end())->getPiloto().setPosition(static_cast<int>(carros.size()), false, true);
+	}
+	if (carros.size() > 0)
+		;
+		//(*carros.begin())->getPiloto().setPosition(1, true, false);	
+} 
+
+void Pista::setPilotosPosition()
+{
+	int i = 2;
+	vector<Carro*>::iterator it;
+	if (carros.size() > 2) {
+		for (it = carros.begin() + 1; it != carros.end() - 1; it++) {
+			(*it)->getPiloto().setPosition(i++, false, false);
+		}
+	}
 }
 

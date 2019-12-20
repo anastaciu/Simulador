@@ -22,5 +22,8 @@ public:
 	bool passatempo(int* tempo);
 	const double getComprimentoNormal();
 	static bool sortCarrosByPosition(Carro* p1, Carro* p2);
+	void setPontos();
+	void setFirstAndLast();
+	void setPilotosPosition();
 };
 

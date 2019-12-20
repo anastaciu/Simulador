@@ -9,5 +9,7 @@ public:
 	Crazy(string name);
 	string getAsString() const override;
 	string getPilotDetais() const override;
+	
+	
 };
 

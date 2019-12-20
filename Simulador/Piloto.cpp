@@ -1,11 +1,12 @@
 #include "Piloto.h"
 #include "Carro.h"
 #include <iostream>
+#include <random>
 
 
 
 
-Piloto::Piloto(string name) : name(name)
+Piloto::Piloto(string name) : name(name), position(0), first(false), last(false)
 {
 	this->name = name;
 }
@@ -39,7 +40,7 @@ bool Piloto::operator== (Piloto *piloto)
 	return this->name == piloto->name;
 }
 
-void Piloto::setPontos(int pontos)
+void Piloto::addPontos(int pontos)
 {
 	this->pontos += pontos;
 }
@@ -47,6 +48,36 @@ void Piloto::setPontos(int pontos)
 int Piloto::getPontos() const
 {
 	return pontos;
+}
+
+int Piloto::randomIntGenerator(int start, int finish)
+{
+	thread_local static mt19937 rand_gen{ random_device{}() };
+	thread_local static uniform_int_distribution<int> generate(start, finish);
+	int value = generate(rand_gen);
+	return value;
+}
+
+void Piloto::setPosition(int position, bool first, bool last)
+{
+	this->position = position;
+	this->first = first;
+	this->last = last;
+}
+
+int Piloto::getPosition() const
+{
+	return position;
+}
+
+bool Piloto::getLast() const
+{
+	return last;
+}
+
+bool Piloto::getFirst() const
+{
+	return first;
 }
 
 
