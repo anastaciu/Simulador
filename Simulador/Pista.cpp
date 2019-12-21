@@ -73,13 +73,16 @@ void Pista::setPontos()
 
 void Pista::setFirstAndLast()
 {
+	vector<Carro*>::iterator it;
 	if (carros.size() > 1) {
-		sort(carros.begin(), carros.end(), sortCarrosByPosition);
-		//(*carros.end())->getPiloto().setPosition(static_cast<int>(carros.size()), false, true);
+		sort(carros.begin(), carros.end(), sortCarrosByPosition);		
+		it = carros.end() - 1;
+		(*it)->getPiloto().setPosition(static_cast<int>(carros.size()), false, true);
 	}
-	if (carros.size() > 0)
-		;
-		//(*carros.begin())->getPiloto().setPosition(1, true, false);	
+	if (carros.size() > 0) {
+		it = carros.begin();
+		(*it)->getPiloto().setPosition(1, true, false);
+	}
 } 
 
 void Pista::setPilotosPosition()
