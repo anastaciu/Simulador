@@ -15,7 +15,7 @@ private:
 	string marca, modelo;
 	double energy, capacity, positionX;
 	Pedals pedals;
-	bool is_moving, emergency, in_garage, is_damaged;
+	bool is_moving, emergency, is_damaged, has_driver;
 	int speed, max_speed, positionY;
 
 	Piloto *condutor = nullptr;
@@ -54,11 +54,12 @@ public:
 	//devolve o piloto do carro
 	Piloto &getPiloto();
 
+
 	//estabelece o condutor do carro
 	void setPiloto(Piloto* condutor);
 
 	//fornece energia ao carro
-	void manivela(int n);
+	void manivela(double n);
 
 	//devolve detalhes do carro
 	string getAsString() const;
@@ -72,8 +73,18 @@ public:
 	//estabelece a posição do carro;
 	void setPosition(double x, int y);
 
+	bool hasDriver();
+
 	int getSpeed() const;
 
-	void passatempo(int* tempo, double comprimento, double const comprimentoPista);
+	void passatempo(double comprimento, double const comprimentoPista);
+
+	bool operator== (Carro* carro);
+
+	//comando carregatudo
+	void carregaMax();
+
+	void nullifyPiloto();
+
 };
 

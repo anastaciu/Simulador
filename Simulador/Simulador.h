@@ -10,6 +10,8 @@
 #include <algorithm>
 #include <iostream>
 #include <iterator>
+#include "MessageLog.h"
+#include "FileLoader.h"
 
 
 using namespace std;
@@ -21,9 +23,11 @@ private:
 	DGV dgv;
 	int fase;
 	Campeonato campeonato;
+	MessageLog log;
+	FileLoader fileLoader;
 
 public:
-	//construtor
+	//construtores
 	Simulador();
 	~Simulador();
 
@@ -39,6 +43,7 @@ public:
 	//Devolve referência para a DGV
 	DGV& getDGV();
 
+	//Devolve campeonato em curso
 	Campeonato& getCampeonato();
 
 	//Adiciona autódromo com verificação de nome
@@ -71,14 +76,47 @@ public:
 	//chama a função entranocarro da classe DGV
 	bool entraNoCarro(vector<string>* arguments);
 
+	//comando entranocarro
+	void entranocarro(vector<string>* arguments);
+
 	//chama a função entranocarro da classe DGV
 	bool saiDoCarro(vector<string>* arguments);
+
+	//comando saidocarro
+	void saidocarro(vector<string>* arguments);
 	
 	//comando passatempo
 	bool passaTempo(vector<string>* arguments);
 	
+	//coloca os carros no autódromo
 	bool addCarrosToAutodromo(int* i);
 
+	//coloca autódromos no campeonato
 	bool addAutodromosToCampeonato(int fase, vector<string>* arguments);
+
+	//comando cria
+	void cria(vector<string>* arguments);
+
+	//comando apaga
+	void apaga(vector<string>* arguments);
+
+	//comando carregaP
+	void carregaP(vector<string>* arguments);
+
+	//comando carregaC
+	void carregaC(vector<string>* arguments);
+
+	//comando carregaA
+	void carregaA(vector<string>* arguments);
+
+	//carrega ficheiro de autodromos
+	bool autodromosDoFicheiro(string file_name);
+
+	//comando carregatudo
+	void carregatudo(int* it);
+
+	//comando carregabat
+	void carregabat(vector<string>* arguments, int it);
+
 };
 

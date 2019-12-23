@@ -7,6 +7,9 @@ Simulador::Simulador() : fase(1)
 
 Simulador::~Simulador()
 {
+	for (Autodromo* a : autodromos) {
+		delete a;
+	}
 	autodromos.clear();
 }
 
@@ -118,6 +121,7 @@ bool Simulador::apagaObjeto(vector<string>* arguments)
 	it = autodromos.begin();
 	while (it != autodromos.end()) {
 		if (arguments->at(1) == (*it)->getName()) {
+			delete *it;
 			it = autodromos.erase(it);
 			return true;
 		}
@@ -150,9 +154,26 @@ bool Simulador::entraNoCarro(vector<string>* arguments)
 	return dgv.entraNoCarro(arguments);
 }
 
+void Simulador::entranocarro(vector<string>* arguments)
+{
+	if (entraNoCarro(arguments)) {
+		throw log.entrou();
+	}
+	else
+		throw log.getError() + log.getBadArgumentError();
+}
+
 bool Simulador::saiDoCarro(vector<string>* arguments)
 {
 	return dgv.saiDoCarro(arguments);
+}
+
+void Simulador::saidocarro(vector<string>* arguments) {
+	if (saiDoCarro(arguments)) {
+		throw log.saiu();
+	}
+	else
+		throw log.getError() + log.getBadArgumentError();
 }
 
 bool Simulador::passaTempo(vector<string>* arguments)
@@ -176,9 +197,9 @@ bool Simulador::addCarrosToAutodromo(int* i) {
 			c->setPosition(x, y++);
 			if (y >= campeonato.getAutodromosCampeonato().at(*i)->getGaragem().getHeight()) {
 				x++;
-				y = 0;				
+				y = 0;
 			}
-		}		
+		}
 	}
 	return isValid;
 }
@@ -188,17 +209,122 @@ bool Simulador::addAutodromosToCampeonato(int fase, vector<string>* arguments)
 	bool isValid = false;
 	if (arguments->size() < 1)
 		return isValid;
-	for (Autodromo* a : autodromos) {
-		for (string s : *arguments) {
+	for (string s : *arguments) {
+		for (Autodromo* a : autodromos) {
 			if (s == a->getName()) {
 				campeonato.getAutodromosCampeonato().push_back(a);
-				this->fase = fase;
+				if (this->fase != fase)
+					this->fase = fase;
 				if (!isValid)
 					isValid = true;
+				break;
 			}
 		}
 	}
 	return isValid;
+}
+
+void Simulador::cria(vector<string>* arguments)
+{
+	try {
+		if (adicionaObjecto(arguments))
+			throw log.getElememtCreatedMsg();
+		else
+			throw log.getError() + log.getBadArgumentError();
+	}
+	catch (exception e) {
+		throw log.getError() + log.getBadArgumentError();
+	}
+}
+
+void Simulador::apaga(vector<string>* arguments)
+{
+	try {
+		if (removeObjecto(arguments)) {
+			throw log.getDeletedMessage();
+		}
+		else
+			throw log.getError() + log.notFound();
+	}
+	catch (exception e) {
+		throw log.getError() + log.getArgumentError();
+	}
+}
+
+void Simulador::carregaP(vector<string>* arguments)
+{
+	if (fileLoader.getFileArgs(arguments->at(0), getDGV())) {
+		throw log.getFileRead() + arguments->at(0);
+	}
+	else
+		throw log.getError() + log.getFileError();
+}
+
+void Simulador::carregaC(vector<string>* arguments)
+{
+	if (fileLoader.getFileArgs(dgv.getCars(), arguments->at(0))) {
+		throw log.getFileRead() + arguments->at(0);
+	}
+	else
+		throw log.getError() + log.getFileError();
+}
+
+void Simulador::carregaA(vector<string>* arguments)
+{
+	try {
+		if (autodromosDoFicheiro(arguments->at(0))) {
+			throw log.getFileRead() + arguments->at(0);
+		}
+		else
+			throw log.getError() + log.dadosIncorretos();
+	}
+	catch (exception) {
+		throw log.getError() + log.getFileError();
+	}
+}
+
+bool Simulador::autodromosDoFicheiro(string file_name)
+{
+	vector<string> args = fileLoader.getFileLines(file_name);
+	string word;
+	if (args.empty()) {
+		return false;
+	}
+	vector<string> argmts;
+	int pistas, comprimento;
+	for (string str : args) {
+		argmts.clear();
+		stringstream ss(str);
+		while (ss >> word) {
+			argmts.push_back(word);
+		}
+		stringstream arg1(argmts.at(0));
+		arg1 >> pistas;
+		stringstream arg2(argmts.at(1));
+		arg2 >> comprimento;
+		if (comprimento < 1 || pistas < 1) {
+			return false;
+		}
+		Autodromo* autodromo = new Autodromo(argmts.at(2), pistas, comprimento);
+		addAutodromo(autodromo);
+	}
+	return true;
+}
+
+void Simulador::carregatudo(int* it)
+{
+	campeonato.getAutodromosCampeonato().at(*it)->carregaTudo();
+}
+
+void Simulador::carregabat(vector<string>* arguments, int it)
+{
+	exception e;
+	double energia;
+	stringstream ss(arguments->at(1));
+	ss >> energia;
+	if (!campeonato.getAutodromosCampeonato().at(it)->carregabat(energia, arguments->at(0)) || energia <= 0) {
+		throw log.getError() + log.getBadArgumentError();
+	}
 }
 
 

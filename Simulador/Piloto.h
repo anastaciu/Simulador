@@ -12,7 +12,7 @@ class Piloto
 private:
 	string name;	
 	int pontos, position;
-	bool first, last;
+	bool first, last, has_car;
 	Carro* carro = nullptr;
 public:	
 	Piloto(string name);
@@ -31,7 +31,8 @@ public:
 	int getPosition() const;
 	bool getLast() const;
 	bool getFirst() const;
-
+	void nullifyCarro();
+	bool hasCar();
 
 };
 

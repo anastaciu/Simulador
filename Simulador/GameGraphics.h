@@ -30,5 +30,7 @@ public:
 	void printAutodromoName(string name);
 	void printBackground();
 	void setScreenSize();
+	void listaCarros(Simulador& Simulador, int* it);
+	void printPassatempo(Autodromo& autodromo, int* tempo);
 };
 

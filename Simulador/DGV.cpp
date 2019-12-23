@@ -1,4 +1,5 @@
 #include "DGV.h"
+#include <iostream>
 
 DGV::DGV()
 {
@@ -13,19 +14,21 @@ DGV::~DGV()
 	for (Piloto* p : pilotos) {
 		delete p;
 	}
+	carros.clear();
+	pilotos.clear();
 }
 
-vector<Carro*> &DGV::getCars()
+vector<Carro*>& DGV::getCars()
 {
 	return carros;
 }
 
-vector<Piloto*> &DGV::getPilotos()
+vector<Piloto*>& DGV::getPilotos()
 {
 	return pilotos;
 }
 
-void DGV::operator += (Piloto &piloto)
+void DGV::operator += (Piloto& piloto)
 {
 	pilotos.push_back(&piloto);
 }
@@ -47,7 +50,7 @@ string DGV::random_string(size_t length)
 	return str;
 }
 
-bool DGV::isNameValid(Piloto &piloto)
+bool DGV::isNameValid(Piloto& piloto)
 {
 	for (Piloto* p : pilotos) {
 		if (*p == &piloto) {
@@ -72,7 +75,7 @@ void DGV::addPiloto(Piloto* piloto)
 	else
 	{
 		*this += *piloto;
-	}	
+	}
 }
 
 bool DGV::entraNoCarro(vector<string>* arguments)
@@ -183,6 +186,11 @@ bool DGV::apagaObjeto(vector<Piloto*>& pilotos, vector<string>* arguments)
 	str << arguments->back();
 	while (it != pilotos.end()) {
 		if (str.str() == (*it)->getName()) {
+			if (!(&(*it)->getCarro() == nullptr)) {
+				(*it)->getCarro().nullifyPiloto();
+				(*it)->getCarro().setId(tolower((*it)->getCarro().getId().at(0)));
+			}
+			delete* it;
 			it = pilotos.erase(it);
 			return true;
 		}
@@ -198,7 +206,10 @@ bool DGV::apagaObjeto(vector<string>* arguments)
 	vector<Carro*>::iterator it;
 	it = carros.begin();
 	while (it != carros.end()) {
-		if (arguments->at(1) == (*it)->getId()) {
+		if (tolower(arguments->at(1).at(0)) == tolower((*it)->getId().at(0))) {
+			if (!(&(*it)->getPiloto() == nullptr))
+				(*it)->getPiloto().nullifyCarro();
+			delete* it;
 			it = carros.erase(it);
 			return true;
 		}

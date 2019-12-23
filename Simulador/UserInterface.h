@@ -34,7 +34,21 @@ public:
 	void deleteExcessArgs(int command_position, vector<string>& arguments);
 	bool startSimulador(vector<string>* arguments, int* tempo);
 	void abortStart();
-	int passatempo(int* tempo);
+	int passaTempo(int* tempo);
 	bool corrida();
+
+	void printAll();
+
+	//comando lista fase 2
+	void listaFase2(bool* token_pos);
+
+	//comando lista
+	void lista();
+
+	//comando campeonato
+	void campeonato(vector<string>* arguments, int* tempo);
+
+	//comando listacarros
+	void listacarros(bool* passa_tempo);
 };
 

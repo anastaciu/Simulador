@@ -6,7 +6,7 @@ char Carro::id_global = 'a';
 const string Carro::MODELO_BASE = "modelo base";
 
 Carro::Carro(int v_max, double energy, double capacity, string marca, string modelo) : marca(marca), modelo(modelo), max_speed(v_max), capacity(capacity), pedals(), is_moving(false),
-emergency(false), in_garage(false), is_damaged(false), speed(0), positionX(0), positionY(0)
+emergency(false), has_driver(false), is_damaged(false), speed(0), positionX(0), positionY(0)
 {
 	id = id_global > 'z' ? '?' : id_global++;
 	this->energy = energy;
@@ -16,7 +16,7 @@ emergency(false), in_garage(false), is_damaged(false), speed(0), positionX(0), p
 }
 
 Carro::Carro(int v_max, double energy, double capacity, string marca) : marca(marca), max_speed(v_max), capacity(capacity), modelo(MODELO_BASE), pedals(), is_moving(false),
-emergency(false), in_garage(false), is_damaged(false), speed(0), positionX(0), positionY(0)
+emergency(false), has_driver(false), is_damaged(false), speed(0), positionX(0), positionY(0)
 {
 	id = id_global > 'z' ? '?' : id_global++;
 	this->energy = energy;
@@ -74,7 +74,7 @@ void Carro::setPiloto(Piloto* condutor)
 	this->condutor = condutor;
 }
 
-void Carro::manivela(int n)
+void Carro::manivela(double n)
 {
 	if (energyLimitsInbound() && n > 0) {
 		this->energy += n;
@@ -108,12 +108,17 @@ void Carro::setPosition(double x, int y)
 	this->positionY = y;
 }
 
+bool Carro::hasDriver()
+{
+	return has_driver;
+}
+
 int Carro::getSpeed() const
 {
 	return speed;
 }
 
-void Carro::passatempo(int* tempo, double comprimento, double const comprimentoPista)
+void Carro::passatempo(double comprimento, double const comprimentoPista)
 {
 	int i = 5;
 	exception e;
@@ -124,6 +129,22 @@ void Carro::passatempo(int* tempo, double comprimento, double const comprimentoP
 		}
 	}
 }
+
+bool Carro::operator== (Carro* carro)
+{
+	return this->id == carro->id;
+}
+
+void Carro::carregaMax()
+{
+	this->energy = this->capacity;
+}
+
+void Carro::nullifyPiloto()
+{
+	condutor = nullptr;
+}
+
 
 
 

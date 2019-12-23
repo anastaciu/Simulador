@@ -28,3 +28,21 @@ void Garagem::addCarroToGaragem(Carro* carro)
 {
 	carros.push_back(carro);
 }
+
+void Garagem::carregaTudo()
+{
+	for (Carro* c : carros) {
+		c->carregaMax();
+	}
+}
+
+bool Garagem::carregaBat(double energia, string carro)
+{
+	for (Carro* c : carros) {
+		if (carro == c->getId()) {
+			c->manivela(energia);
+			return true;
+		}
+	}
+	return false;
+}

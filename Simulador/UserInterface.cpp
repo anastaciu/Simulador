@@ -31,7 +31,7 @@ void UserInterface::start()
 	} while (sair != EXIT_POSITION);
 }
 
-int UserInterface::executionCicle(bool* passaTempo) {
+int UserInterface::executionCicle(bool* token_pos) {
 	string word, command;
 	exception e;
 	vector<string> arguments;
@@ -54,67 +54,28 @@ int UserInterface::executionCicle(bool* passaTempo) {
 		if (checkCommandFase1(command_position)) {
 			switch (command_position) {
 			case 0:
-				try {
-					if (Simulador.adicionaObjecto(&arguments))
-						throw log.getElememtCreatedMsg();
-					else
-						throw log.getError() + log.getBadArgumentError();
-				}
-				catch (exception e) {
-					throw log.getError() + log.getBadArgumentError();
-				}
+				Simulador.cria(&arguments);
 				break;
 			case 1:
-				try {
-					if (Simulador.removeObjecto(&arguments)) {
-						throw log.getDeletedMessage();
-					}
-					else
-						throw log.getError() + log.notFound();
-				}
-				catch (exception e) {
-					throw log.getError() + log.getArgumentError();
-				}
-				break;
+				Simulador.apaga(&arguments);
+				break; 
 			case 2:
-				if (fileLoader.getFileArgs(arguments.at(0), Simulador.getDGV())) {
-					throw log.getFileRead() + arguments.at(0);
-				}
-				else
-					throw log.getError() + log.getFileError();
+				Simulador.carregaP(&arguments);
 				break;
 			case 3:
-				if (fileLoader.getFileArgs(Simulador.getDGV().getCars(), arguments.at(0))) {
-					throw log.getFileRead() + arguments.at(0);
-				}
-				else
-					throw log.getError() + log.getFileError();
+				Simulador.carregaC(&arguments);
 				break;
 			case 4:
-				if (fileLoader.getFileArgs(Simulador, arguments.at(0))) {
-					throw log.getFileRead() + arguments.at(0);
-				}
-				else
-					throw log.getError() + log.getFileError();
+				Simulador.carregaA(&arguments);
 				break;
 			case 5:
-				if (Simulador.entraNoCarro(&arguments)) {
-					throw log.entrou();
-				}
-				else
-					throw log.getError() + log.getBadArgumentError();
+				Simulador.entranocarro(&arguments);
 				break;
 			case 6:
-				if (Simulador.saiDoCarro(&arguments)) {
-					throw log.saiu();
-				}
-				else
-					throw log.getError() + log.getBadArgumentError();
+				Simulador.saidocarro(&arguments);
 				break;
 			case 7:
-				if (!graphics.listaElementos(Simulador)) {
-					throw log.getError() + log.listaErros();
-				}
+				lista();
 				break;
 			case 8:
 				break;
@@ -123,44 +84,24 @@ int UserInterface::executionCicle(bool* passaTempo) {
 			case 10:
 				break;
 			case 11:
-				try {					
-					if (!startSimulador(&arguments, &tempo)) {
-						abortStart();
-						throw log.getError() + log.erroCamp();
-					}
-				}
-				catch (exception e) {
-					abortStart();
-				}
+				campeonato(&arguments, &tempo);
 				break;
 			}
 			return command_position;
 		}
 		else if (checkCommandFase2(command_position)) {
 			switch (command_position) {
-			case 5:
-				if (Simulador.entraNoCarro(&arguments)) {
-					throw log.entrou();
-				}
-				else
-					throw log.getError() + log.getBadArgumentError();
-				break;
-			case 6:
-				if (Simulador.saiDoCarro(&arguments)) {
-					throw log.saiu();
-				}
-				else
-					throw log.getError() + log.getBadArgumentError();
-				break;
 			case 7:
-				if (!graphics.listaElementosFase2(Simulador, it)) {
-					throw log.getError() + log.listaErros();
-				}
+				listaFase2(token_pos);
+				break;
 			case 12:
+				listacarros(token_pos);
 				break;
 			case 13:
+				Simulador.carregabat(&arguments, *it);
 				break;
 			case 14:
+				Simulador.carregatudo(it);
 				break;
 			case 15:
 				break;
@@ -173,8 +114,8 @@ int UserInterface::executionCicle(bool* passaTempo) {
 			case 19: {
 				stringstream ss(arguments.at(0));
 				ss >> tempo;
-				command_position = passatempo(&tempo);
-				*passaTempo = !*passaTempo;
+				command_position = passaTempo(&tempo);
+				*token_pos = !*token_pos;
 			}
 				break;
 			case 20:
@@ -223,7 +164,7 @@ bool UserInterface::checkCommandFase1(int position)
 bool UserInterface::checkCommandFase2(int position)
 {
 	int comandTreshold = 11;
-	if (position > comandTreshold&& Simulador.getSimFase() == 2 || position == 5 || position == 6 || position == 7 || position == 21) {
+	if (position > comandTreshold&& Simulador.getSimFase() == 2 || position == 7 || position == 21) {
 		return true;
 	}
 	return false;
@@ -253,14 +194,11 @@ void UserInterface::abortStart()
 	throw log.getError() + log.erroCamp();
 }
 
-int UserInterface::passatempo(int* tempo)
+int UserInterface::passaTempo(int* tempo)
 {
 	int sair = 19;
-	if (*tempo > 0)
-		graphics.printTempo(Simulador.getCampeonato().getAutodromosCampeonato().at(*it)->getPista().getPistas() + 7, tempo);
-	else {
+	if(tempo <= 0)
 		throw log.getError() + log.getBadArgumentError();
-	}
 	try {
 		while (Simulador.getCampeonato().passaTempo(tempo, it)) {
 			graphics.printAll(*Simulador.getCampeonato().getAutodromosCampeonato().at(*it), tempo);
@@ -272,8 +210,7 @@ int UserInterface::passatempo(int* tempo)
 			sair = graphics.endRace();
 		else {
 			corrida();
-		}
-		
+		}		
 	}
 	return sair;
 }
@@ -285,6 +222,53 @@ bool UserInterface::corrida()
 	graphics.printAll(*Simulador.getCampeonato().getAutodromosCampeonato().at(*it), &tempo);
 	return add_carros;
 }
+
+void UserInterface::printAll()
+{
+	int tempo = 0;
+	graphics.printAll(*Simulador.getCampeonato().getAutodromosCampeonato().at(*it), &tempo);
+}
+
+
+
+void UserInterface::listaFase2(bool* token_pos)
+{
+
+	printAll();
+	if (!graphics.listaElementosFase2(Simulador, it)) {
+		throw log.getError() + log.listaErros();
+	}
+	*token_pos = !*token_pos;
+}
+
+void UserInterface::lista()
+{
+	if (!graphics.listaElementos(Simulador)) {
+		throw log.getError() + log.listaErros();
+	}
+}
+
+void UserInterface::campeonato(vector<string>* arguments, int* tempo)
+{
+	try {
+		if (!startSimulador(arguments, tempo)) {
+			abortStart();
+			throw log.getError() + log.erroCamp();
+		}
+	}
+	catch (exception e) {
+		abortStart();
+	}
+}
+
+void UserInterface::listacarros(bool* passa_tempo)
+{
+	printAll();
+	graphics.listaCarros(Simulador, it);	
+	*passa_tempo = !*passa_tempo;
+}
+
+
 
 
 

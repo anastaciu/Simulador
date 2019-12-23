@@ -36,6 +36,9 @@ public:
 
 	bool passaTempo(int* tempo);
 
+	void carregaTudo();
+
+	bool carregabat(double energia, string carro);
 
 };
 

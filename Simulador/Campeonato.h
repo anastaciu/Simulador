@@ -6,12 +6,12 @@
 
 class Campeonato
 {
-private:
+private:	
 	vector<Autodromo*> autodromos_campeonat;
 
 public:
 	vector<Autodromo*>& getAutodromosCampeonato();
-
+	~Campeonato();
 	//comando passatempo
 	bool passaTempo(int* tempo, int *i);
 

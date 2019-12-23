@@ -48,6 +48,19 @@ bool Autodromo::passaTempo(int* tempo)
 	}
 }
 
+void Autodromo::carregaTudo()
+{
+	pista.carregaTudo();
+	garagem.carregaTudo();
+}
+
+bool Autodromo::carregabat(double energia, string carro)
+{
+	return garagem.carregaBat(energia, carro) || pista.carregaBat(energia, carro);
+}
+
+
+
 
 
 

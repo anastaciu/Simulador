@@ -15,5 +15,7 @@ public:
 	int getHeight() const;
 	vector<Carro*>& getCarrosGaragem();
 	void addCarroToGaragem(Carro* carro);
+	void carregaTudo();
+	bool carregaBat(double energia, string carro);
 };
 

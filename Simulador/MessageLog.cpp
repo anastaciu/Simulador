@@ -96,5 +96,15 @@ string MessageLog::erroCamp() const
 	return ERRO_SIMULADOR;
 }
 
+string MessageLog::dadosIncorretos() const
+{
+	return DADOS_INCORRETOS;
+}
+
+string MessageLog::energyError() const
+{
+	return ENERGY_ERROR;
+}
+
 
 

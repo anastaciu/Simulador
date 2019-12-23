@@ -6,7 +6,7 @@
 
 
 
-Piloto::Piloto(string name) : name(name), position(0), first(false), last(false)
+Piloto::Piloto(string name) : name(name), position(0), first(false), last(false), has_car(false)
 {
 	this->name = name;
 }
@@ -79,6 +79,17 @@ bool Piloto::getFirst() const
 {
 	return first;
 }
+
+void Piloto::nullifyCarro()
+{
+	this->carro = nullptr;
+}
+
+bool Piloto::hasCar()
+{
+	return has_car;
+}
+
 
 
 

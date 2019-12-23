@@ -35,7 +35,7 @@ bool Pista::passatempo(int* tempo)
 	while ((*tempo)--) {		
 		for (Carro* c : this->carros) {
 			try {
-				c->passatempo(tempo, normalizedLength, COMPRIMENTO_PISTA);				
+				c->passatempo(normalizedLength, COMPRIMENTO_PISTA);				
 			}
 			catch (exception e) {	
 				setPontos();
@@ -56,7 +56,7 @@ const double Pista::getComprimentoNormal()
 
 bool Pista::sortCarrosByPosition(Carro* p1, Carro* p2)
 {
-		return p1->getXPosition() > p2->getXPosition();
+	return p1->getXPosition() > p2->getXPosition();
 }
 
 void Pista::setPontos()
@@ -94,5 +94,23 @@ void Pista::setPilotosPosition()
 			(*it)->getPiloto().setPosition(i++, false, false);
 		}
 	}
+}
+
+void Pista::carregaTudo()
+{
+	for (Carro* c : carros) {
+		c->carregaMax();
+	}
+}
+
+bool Pista::carregaBat(double energia, string carro)
+{
+	for (Carro* c : carros) {
+		if (carro == c->getId()) {
+			c->manivela(energia);
+			return true;
+		}
+	}
+	return false;
 }
 

@@ -25,5 +25,7 @@ public:
 	void setPontos();
 	void setFirstAndLast();
 	void setPilotosPosition();
+	void carregaTudo();
+	bool carregaBat(double energia, string carro);
 };
 

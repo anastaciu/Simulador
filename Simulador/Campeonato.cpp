@@ -3,6 +3,14 @@
 #include "Consola.h"
 
 
+Campeonato::~Campeonato()
+{
+	for (Autodromo* a : autodromos_campeonat) {
+		delete a;
+	}
+	autodromos_campeonat.clear();
+}
+
 vector<Autodromo*>& Campeonato::getAutodromosCampeonato()
 {
 	return autodromos_campeonat;

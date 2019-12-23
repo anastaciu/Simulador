@@ -1,7 +1,7 @@
 #include "FileLoader.h"
 
-
 vector<string> FileLoader::getFileLines(string file_name) {
+	exception e;
 	vector<string> lines;
 	ifstream file(file_name);
 	string temp;
@@ -10,33 +10,16 @@ vector<string> FileLoader::getFileLines(string file_name) {
 			lines.push_back(temp);
 		}
 	}
+	else {
+		throw e;
+	}
 	file.close();
 	return lines;
 }
 
-bool FileLoader::getFileArgs(Simulador& Simulador, string file_name)
+vector<string> FileLoader::getFileArgs(string file_name)
 {
-	string word;
-	vector<string> args = getFileLines(file_name);
-	if (args.empty()) {
-		return false;
-	}
-	vector<string> argmts;
-	int pistas, comprimento;
-	for (string str : args) {
-		argmts.clear();
-		stringstream ss(str);
-		while (ss >> word) {
-			argmts.push_back(word);
-		}
-		stringstream arg1(argmts.at(0));
-		arg1 >> pistas;
-		stringstream arg2(argmts.at(1));
-		arg2 >> comprimento;
-		Autodromo* autodromo = new Autodromo(argmts.at(2), pistas, comprimento);
-		Simulador.addAutodromo(autodromo);
-	}
-	return true;
+	return getFileLines(file_name);
 }
 
 bool FileLoader::getFileArgs(string file_name, DGV& dgv)

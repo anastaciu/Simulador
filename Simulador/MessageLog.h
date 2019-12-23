@@ -24,6 +24,8 @@ private:
 	const string SAIU = "Piloto saiu do carro";
 	const string CONTINUAR = "Prima qualquer tecla para continuar...";
 	const string ERRO_SIMULADOR = "Nao e possivel iniciar Simulador, itens em falta...";
+	const string DADOS_INCORRETOS = "Dados do ficheiro invalidos...";
+	const string ENERGY_ERROR = "O carro não existe ou não está no autódromo...";
 
 
 public:
@@ -48,5 +50,7 @@ public:
 	string continuar() const;
 	string getFase1() const;
 	string erroCamp() const;
+	string dadosIncorretos() const;
+	string energyError() const;
 };
 
