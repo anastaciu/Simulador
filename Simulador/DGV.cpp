@@ -186,7 +186,7 @@ bool DGV::apagaObjeto(vector<Piloto*>& pilotos, vector<string>* arguments)
 	str << arguments->back();
 	while (it != pilotos.end()) {
 		if (str.str() == (*it)->getName()) {
-			if (!(&(*it)->getCarro() == nullptr)) {
+			if (&(*it)->getCarro() != nullptr) {
 				(*it)->getCarro().nullifyPiloto();
 				(*it)->getCarro().setId(tolower((*it)->getCarro().getId().at(0)));
 			}
@@ -207,7 +207,7 @@ bool DGV::apagaObjeto(vector<string>* arguments)
 	it = carros.begin();
 	while (it != carros.end()) {
 		if (tolower(arguments->at(1).at(0)) == tolower((*it)->getId().at(0))) {
-			if (!(&(*it)->getPiloto() == nullptr))
+			if (&(*it)->getPiloto() != nullptr)
 				(*it)->getPiloto().nullifyCarro();
 			delete* it;
 			it = carros.erase(it);

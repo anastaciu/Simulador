@@ -5,9 +5,6 @@
 
 Campeonato::~Campeonato()
 {
-	for (Autodromo* a : autodromos_campeonat) {
-		delete a;
-	}
 	autodromos_campeonat.clear();
 }
 

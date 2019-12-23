@@ -23,3 +23,7 @@ string Fast::getPilotDetais() const
 	os << "Piloto: " << this->getName() << " (rapido)" << endl;
 	return os.str();
 }
+
+void Fast::passatempo()
+{
+}

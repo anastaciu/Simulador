@@ -23,3 +23,7 @@ string Slow::getPilotDetais() const
 	os << "Piloto: " << this->getName() << " (surpresa)" << endl;
 	return os.str();
 }
+
+void Slow::passatempo()
+{
+}
