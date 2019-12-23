@@ -6,7 +6,7 @@ Garagem::Garagem(int width, int height): width(width), height(height)
 
 Garagem::~Garagem()
 {
-
+	carros.clear();
 }
 
 int Garagem::getWidth() const

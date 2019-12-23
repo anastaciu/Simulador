@@ -6,7 +6,7 @@
 
 
 
-Piloto::Piloto(string name) : name(name), position(0), first(false), last(false), has_car(false)
+Piloto::Piloto(string name) : name(name), position(0), first(false), last(false)
 {
 	this->name = name;
 }
@@ -85,10 +85,6 @@ void Piloto::nullifyCarro()
 	this->carro = nullptr;
 }
 
-bool Piloto::hasCar()
-{
-	return has_car;
-}
 
 
 

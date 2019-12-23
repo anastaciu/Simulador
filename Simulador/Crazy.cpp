@@ -19,5 +19,14 @@ string Crazy::getPilotDetais() const
 	return os.str();
 }
 
+void Crazy::passatempo()
+{
+}
+
+void Crazy::setLag()
+{
+	lag = randomIntGenerator(1, 5);
+}
+
 
 

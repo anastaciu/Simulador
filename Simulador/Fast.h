@@ -9,5 +9,6 @@ public:
 
 	string getAsString() const override;
 	string getPilotDetais() const override;
+	void passatempo() override;
 };
 

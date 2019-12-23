@@ -7,6 +7,7 @@ Pista::Pista(int pistas, int comprimento) : pistas(pistas), comprimento(comprime
 
 Pista::~Pista()
 {
+	carros.clear();
 }
 
 int Pista::getPistas() const
