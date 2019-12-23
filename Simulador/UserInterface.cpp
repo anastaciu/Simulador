@@ -104,6 +104,7 @@ int UserInterface::executionCicle(bool* token_pos) {
 				Simulador.carregatudo(it);
 				break;
 			case 15:
+				nextRace();
 				break;
 			case 16:
 				break;
@@ -120,6 +121,7 @@ int UserInterface::executionCicle(bool* token_pos) {
 				break;
 			case 20:
 				break;
+			case 21:
 			default:
 				break;
 			}
@@ -221,6 +223,23 @@ bool UserInterface::corrida()
 	bool add_carros = Simulador.addCarrosToAutodromo(it);
 	graphics.printAll(*Simulador.getCampeonato().getAutodromosCampeonato().at(*it), &tempo);
 	return add_carros;
+}
+
+bool UserInterface::corrida(int* it)
+{
+	if (*it < Simulador.getCampeonato().getAutodromosCampeonato().size() - 1) {
+		(*it)++;
+		corrida();
+		return true;
+	}
+	return false;
+}
+
+void UserInterface::nextRace()
+{
+	if (!corrida(it)) {
+		throw log.getError() + log.ultimaCorrida();
+	}
 }
 
 void UserInterface::printAll()

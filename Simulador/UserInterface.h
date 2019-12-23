@@ -36,6 +36,8 @@ public:
 	void abortStart();
 	int passaTempo(int* tempo);
 	bool corrida();
+	bool corrida(int* it);
+	void nextRace();
 
 	void printAll();
 

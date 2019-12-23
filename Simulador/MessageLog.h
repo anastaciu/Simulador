@@ -25,7 +25,8 @@ private:
 	const string CONTINUAR = "Prima qualquer tecla para continuar...";
 	const string ERRO_SIMULADOR = "Nao e possivel iniciar Simulador, itens em falta...";
 	const string DADOS_INCORRETOS = "Dados do ficheiro invalidos...";
-	const string ENERGY_ERROR = "O carro não existe ou não está no autódromo...";
+	const string ENERGY_ERROR = "O carro nao existe ou nao estano autodromo...";
+	const string ULTIMA_PISTA = "Nao ha mais corridas...";
 
 
 public:
@@ -52,5 +53,6 @@ public:
 	string erroCamp() const;
 	string dadosIncorretos() const;
 	string energyError() const;
+	string ultimaCorrida() const;
 };
 

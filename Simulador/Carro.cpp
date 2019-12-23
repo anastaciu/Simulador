@@ -6,7 +6,7 @@ char Carro::id_global = 'a';
 const string Carro::MODELO_BASE = "modelo base";
 
 Carro::Carro(int v_max, double energy, double capacity, string marca, string modelo) : marca(marca), modelo(modelo), max_speed(v_max), capacity(capacity), pedals(), is_moving(false),
-emergency(false), has_driver(false), is_damaged(false), speed(0), positionX(0), positionY(0)
+emergency(false), is_damaged(false), speed(0), positionX(0), positionY(0)
 {
 	id = id_global > 'z' ? '?' : id_global++;
 	this->energy = energy;
@@ -16,7 +16,7 @@ emergency(false), has_driver(false), is_damaged(false), speed(0), positionX(0), 
 }
 
 Carro::Carro(int v_max, double energy, double capacity, string marca) : marca(marca), max_speed(v_max), capacity(capacity), modelo(MODELO_BASE), pedals(), is_moving(false),
-emergency(false), has_driver(false), is_damaged(false), speed(0), positionX(0), positionY(0)
+emergency(false), is_damaged(false), speed(0), positionX(0), positionY(0)
 {
 	id = id_global > 'z' ? '?' : id_global++;
 	this->energy = energy;
@@ -87,7 +87,7 @@ void Carro::manivela(double n)
 string Carro::getAsString() const
 {
 	ostringstream os;
-	os << "Carro: " << id << ", " << marca << " " << modelo << ", Velocidade Maxima: " << max_speed << ", Capacidade Maxima: " 
+	os << "Carro: " << id << ", " << marca << " " << modelo << ", Velocidade Maxima: " << max_speed << ", Capacidade Maxima: "
 		<< capacity << ", Energia: " << energy << (condutor ? ", " + condutor->getPilotDetais() : "\n");
 	return os.str();
 }
@@ -108,14 +108,14 @@ void Carro::setPosition(double x, int y)
 	this->positionY = y;
 }
 
-bool Carro::hasDriver()
-{
-	return has_driver;
-}
-
 int Carro::getSpeed() const
 {
 	return speed;
+}
+
+void Carro::setSpeed(int speed)
+{
+	this->speed = speed;
 }
 
 void Carro::passatempo(double comprimento, double const comprimentoPista)
@@ -123,7 +123,7 @@ void Carro::passatempo(double comprimento, double const comprimentoPista)
 	int i = 5;
 	exception e;
 	if (condutor != nullptr) {
-		setPosition(positionX + (comprimento * ++i) , positionY);
+		setPosition(positionX + (comprimento * ++i), positionY);
 		if (getXPosition() > comprimentoPista) {
 			throw e;
 		}
@@ -143,6 +143,18 @@ void Carro::carregaMax()
 void Carro::nullifyPiloto()
 {
 	condutor = nullptr;
+}
+
+void Carro::accelerate(bool accelerator)
+{
+	if (!pedals.getBrakeState())
+		this->pedals.setAccelerator(accelerator);
+}
+
+void Carro::brake(bool brake)
+{
+	if (!pedals.getAcceleratorState())
+		this->pedals.setBrake(brake);
 }
 
 

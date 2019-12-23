@@ -106,5 +106,10 @@ string MessageLog::energyError() const
 	return ENERGY_ERROR;
 }
 
+string MessageLog::ultimaCorrida() const
+{
+	return ULTIMA_PISTA;
+}
+
 
 

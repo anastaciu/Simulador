@@ -15,68 +15,51 @@ private:
 	string marca, modelo;
 	double energy, capacity, positionX;
 	Pedals pedals;
-	bool is_moving, emergency, is_damaged, has_driver;
+	bool is_moving, emergency, is_damaged;
 	int speed, max_speed, positionY;
 
 	Piloto *condutor = nullptr;
 
 public:
-	//construtor
+	//construtor com modelo
 	Carro(int v_max, double energy, double capacity, string marca, string modelo);
-
-	//construtor
+	//construtor sem modelo
 	Carro(int v_max, double energy, double capacity, string marca);
-
 	//Destrutor
 	~Carro();
-
 	//Devolve id do carro
 	string getId();
-
 	//Estabelece o id do carro
 	void setId(char id);
-
 	//Devolve marca do carro
 	string getBrand() const;
-
 	//devolve modelo do carro
 	string getModel() const;
-
 	//devolve energia do carro
 	double getEnergy() const;
-
 	//devolve energia máxima
 	double getMaxEnergy() const;
-
 	//verifica se a energia fornecida ao carro não ultrapassa o limite
 	bool energyLimitsInbound() const;
-
 	//devolve o piloto do carro
 	Piloto &getPiloto();
-
-
 	//estabelece o condutor do carro
 	void setPiloto(Piloto* condutor);
-
 	//fornece energia ao carro
 	void manivela(double n);
-
 	//devolve detalhes do carro
 	string getAsString() const;
-
 	//devolve a posição x do carro
 	double getXPosition() const;
-
 	// devolve a posição Y do carro
 	int getYPosition() const;
-
 	//estabelece a posição do carro;
 	void setPosition(double x, int y);
-
-	bool hasDriver();
-
+	//devolve a velocidade atual do carro
 	int getSpeed() const;
-
+	//define velocidade do carro
+	void setSpeed(int speed);
+	//comando passatempo
 	void passatempo(double comprimento, double const comprimentoPista);
 
 	bool operator== (Carro* carro);
@@ -86,5 +69,8 @@ public:
 
 	void nullifyPiloto();
 
+	void accelerate(bool accelerator);
+
+	void brake(bool brake);
 };
 
