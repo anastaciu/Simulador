@@ -189,7 +189,8 @@ bool Simulador::addCarrosToAutodromo(int* i) {
 		if (&c->getPiloto() != nullptr && campeonato.getAutodromosCampeonato().at(*i)->getPista().getPistas() > j) {
 			campeonato.getAutodromosCampeonato().at(*i)->getPista().addCarroPista(c);
 			c->getPiloto().setPosition(0, false, false);
-			c->setSpeed(0);
+			c->getPiloto().setLag();
+			c->setSpeedManually(0);
 			c->setPosition(0, j++);
 			if (!isValid)
 				isValid = !isValid;

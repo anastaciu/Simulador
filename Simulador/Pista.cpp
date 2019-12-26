@@ -1,7 +1,7 @@
 #include "Pista.h"
 #include <iostream>
 
-Pista::Pista(int pistas, int comprimento) : pistas(pistas), comprimento(comprimento)
+Pista::Pista(int pistas, int comprimento) : pistas(pistas), comprimento(comprimento), tempo(0)
 {
 }
 
@@ -32,17 +32,18 @@ void Pista::addCarroPista(Carro* carro)
 
 bool Pista::passatempo(int* tempo)
 {
-	double normalizedLength = COMPRIMENTO_PISTA / comprimento;
-	while ((*tempo)--) {		
-		for (Carro* c : this->carros) {
-			try {
-				c->passatempo(normalizedLength, COMPRIMENTO_PISTA);				
+	int it = 0;
+	while ((*tempo)--) {
+		plusOneSecond();
+		for (Carro* c : this->carros) {			
+			try {			
+				c->passatempo(comprimento, COMPRIMENTO_PISTA, this->tempo);
 			}
 			catch (exception e) {	
 				setPontos();
 				throw e;
 			}
-		}		
+		}	
 		setFirstAndLast();
 		setPilotosPosition();
 		return true;
@@ -76,8 +77,9 @@ void Pista::setFirstAndLast()
 {
 	vector<Carro*>::iterator it;
 	if (carros.size() > 1) {
-		sort(carros.begin(), carros.end(), sortCarrosByPosition);		
+		sort(carros.begin(), carros.end(), sortCarrosByPosition);
 		it = carros.end() - 1;
+		(*it)->getPiloto().setPrevPosition();
 		(*it)->getPiloto().setPosition(static_cast<int>(carros.size()), false, true);
 	}
 	if (carros.size() > 0) {
@@ -92,6 +94,7 @@ void Pista::setPilotosPosition()
 	vector<Carro*>::iterator it;
 	if (carros.size() > 2) {
 		for (it = carros.begin() + 1; it != carros.end() - 1; it++) {
+			(*it)->getPiloto().setPrevPosition();
 			(*it)->getPiloto().setPosition(i++, false, false);
 		}
 	}
@@ -113,5 +116,15 @@ bool Pista::carregaBat(double energia, string carro)
 		}
 	}
 	return false;
+}
+
+int Pista::getTempo() const
+{
+	return tempo;
+}
+
+void Pista::plusOneSecond()
+{
+	this->tempo++;
 }
 

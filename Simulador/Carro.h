@@ -58,9 +58,9 @@ public:
 	//devolve a velocidade atual do carro
 	int getSpeed() const;
 	//define velocidade do carro
-	void setSpeed(int speed);
+	void setSpeed();
 	//comando passatempo
-	void passatempo(double comprimento, double const comprimentoPista);
+	void passatempo(double comprimento, double const comprimentoPista, int tempo);
 
 	bool operator== (Carro* carro);
 
@@ -69,8 +69,16 @@ public:
 
 	void nullifyPiloto();
 
-	void accelerate(bool accelerator);
+	void accelerate();
 
-	void brake(bool brake);
+	void brake();
+
+	void stopBraking();
+
+	void stopAccelerating();
+
+	void gastaEnergia();
+
+	void setSpeedManually(int speed);
 };
 

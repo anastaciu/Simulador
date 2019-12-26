@@ -3,27 +3,31 @@
 
 Slow::Slow(string name): Piloto(name)
 {
+	this->tipo = "surpresa";
 }
 
 Slow::~Slow()
 {
 }
 
-
-string Slow::getAsString() const
-{
-	ostringstream os;
-	os << "Piloto: " << this->getName() << " (surpresa)" << (&this->getCarro() != nullptr ? ", Carro: " + this->getCarro().getId() + ", " + this->getCarro().getBrand() + " " + this->getCarro().getModel() : "") << endl;
-	return os.str();
-}
-
-string Slow::getPilotDetais() const
-{
-	ostringstream os;
-	os << "Piloto: " << this->getName() << " (surpresa)" << endl;
-	return os.str();
-}
-
 void Slow::passatempo()
 {
+}
+
+void Slow::setLag()
+{
+}
+
+int Slow::getLag() const
+{
+	return 0;
+}
+
+void Slow::iterateLag()
+{
+}
+
+bool Slow::getDamageProb()
+{
+	return false;
 }

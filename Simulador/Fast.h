@@ -6,9 +6,10 @@ class Fast : public Piloto
 public:
 	Fast(string name);
 	~Fast();
-
-	string getAsString() const override;
-	string getPilotDetais() const override;
 	void passatempo() override;
+	void setLag() override;
+	int getLag() const override;
+	void iterateLag() override;
+	bool getDamageProb() override;
 };
 

@@ -8,7 +8,7 @@ using namespace std;
 class Pista
 {
 private:
-	int pistas, comprimento;
+	int pistas, comprimento, tempo;
 	vector<Carro*> carros;
 	const double COMPRIMENTO_PISTA = 160.0;
 
@@ -27,5 +27,7 @@ public:
 	void setPilotosPosition();
 	void carregaTudo();
 	bool carregaBat(double energia, string carro);
+	int getTempo() const;
+	void plusOneSecond();
 };
 

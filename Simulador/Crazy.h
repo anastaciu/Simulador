@@ -4,16 +4,17 @@
 using namespace std;
 
 class Crazy : public Piloto
-{
-	int lag;
+{ 
+	bool lost_position_flag;
+	int lost_position_accelerate;
 
 public:
 	Crazy(string name);
-	string getAsString() const override;
-	string getPilotDetais() const override;
 	void passatempo() override;
-	void setLag();
-	
+	void setLag() override;
+	int getLag() const override;
+	void iterateLag() override;
+	bool getDamageProb() override;
 	
 };
 

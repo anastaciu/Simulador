@@ -32,7 +32,7 @@ private:
 public:
 	MessageLog();
 	MessageLog(const MessageLog& orig);
-	virtual ~MessageLog();
+	~MessageLog();
 	string getNoCommandError() const;
 	string getCommandToken() const;
 	string getArgumentError() const;
