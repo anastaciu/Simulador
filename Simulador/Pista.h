@@ -29,5 +29,7 @@ public:
 	bool carregaBat(double energia, string carro);
 	int getTempo() const;
 	void plusOneSecond();
+	void removeCrazyIfProb();
+
 };
 

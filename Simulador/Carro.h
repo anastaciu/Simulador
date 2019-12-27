@@ -11,74 +11,44 @@ class Carro
 private:
 	static const string MODELO_BASE;
 	static char id_global;
-	string id;
-	string marca, modelo;
+	string id, marca, modelo;
 	double energy, capacity, positionX;
 	Pedals pedals;
 	bool is_moving, emergency, is_damaged;
 	int speed, max_speed, positionY;
-
 	Piloto *condutor = nullptr;
 
 public:
-	//construtor com modelo
 	Carro(int v_max, double energy, double capacity, string marca, string modelo);
-	//construtor sem modelo
 	Carro(int v_max, double energy, double capacity, string marca);
-	//Destrutor
 	~Carro();
-	//Devolve id do carro
+	Pedals getPedals() const;
 	string getId();
-	//Estabelece o id do carro
 	void setId(char id);
-	//Devolve marca do carro
 	string getBrand() const;
-	//devolve modelo do carro
 	string getModel() const;
-	//devolve energia do carro
 	double getEnergy() const;
-	//devolve energia máxima
 	double getMaxEnergy() const;
-	//verifica se a energia fornecida ao carro não ultrapassa o limite
 	bool energyLimitsInbound() const;
-	//devolve o piloto do carro
 	Piloto &getPiloto();
-	//estabelece o condutor do carro
 	void setPiloto(Piloto* condutor);
-	//fornece energia ao carro
 	void manivela(double n);
-	//devolve detalhes do carro
 	string getAsString() const;
-	//devolve a posição x do carro
 	double getXPosition() const;
-	// devolve a posição Y do carro
 	int getYPosition() const;
-	//estabelece a posição do carro;
 	void setPosition(double x, int y);
-	//devolve a velocidade atual do carro
 	int getSpeed() const;
-	//define velocidade do carro
 	void setSpeed();
-	//comando passatempo
 	void passatempo(double comprimento, double const comprimentoPista, int tempo);
-
 	bool operator== (Carro* carro);
-
-	//comando carregatudo
 	void carregaMax();
-
 	void nullifyPiloto();
-
 	void accelerate();
-
 	void brake();
-
 	void stopBraking();
-
 	void stopAccelerating();
-
 	void gastaEnergia();
-
 	void setSpeedManually(int speed);
+	void resetPedals();
 };
 

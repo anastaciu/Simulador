@@ -29,6 +29,11 @@ Carro::~Carro()
 {
 }
 
+Pedals Carro::getPedals() const
+{
+	return this->pedals;
+}
+
 string Carro::getId()
 {
 	return id;
@@ -115,10 +120,10 @@ int Carro::getSpeed() const
 
 void Carro::setSpeed()
 {
-	if (this->pedals.getAcceleratorState()) {
+	if (this->pedals.getAcceleratorState() && speed < max_speed) {
 		speed += 1;
 	}
-	if (this->pedals.getBrakeState()) {
+	if (this->pedals.getBrakeState() && speed > 0) {
 		speed -= 1;
 	}
 }
@@ -128,13 +133,11 @@ void Carro::passatempo(double comprimento, double const comprimentoPista, int te
 	int i = 5;
 	exception e;
 	if (condutor != nullptr) {
-
-		if (condutor->getLag() <= 0 && energy > 0) {
-		}
-
-		getPiloto().iterateLag();
-
-		setPosition(positionX + ((comprimentoPista/comprimento) * ++i), positionY);
+		resetPedals();
+		getPiloto().passatempo();
+		setSpeed();
+		gastaEnergia();
+		setPosition(positionX + ((comprimentoPista / comprimento) * speed), positionY);
 		if (getXPosition() > comprimentoPista) {
 			throw e;
 		}
@@ -178,8 +181,6 @@ void Carro::stopAccelerating()
 	this->pedals.setAccelerator(false);
 }
 
-
-
 void Carro::gastaEnergia()
 {
 	if (energy > 0 && speed > 0)
@@ -189,6 +190,12 @@ void Carro::gastaEnergia()
 void Carro::setSpeedManually(int speed)
 {
 	this->speed = speed;
+}
+
+void Carro::resetPedals()
+{
+	stopAccelerating();
+	stopBraking();
 }
 
 

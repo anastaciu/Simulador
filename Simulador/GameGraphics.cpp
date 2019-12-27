@@ -106,7 +106,7 @@ void GameGraphics::printCarros(Autodromo& autodromo)
 	Consola::setTextColor(Consola::PRETO);
 	for (Carro* c : autodromo.getPista().getCarrosPista()) {
 		Consola::gotoxy(static_cast<int>(trunc(c->getXPosition())) + 4,  c->getYPosition() + 6);
-		cout << c->getId() << " " << c->getPiloto().getPosition() << " " << c->getPiloto().getPontos() << " " << autodromo.getPista().getTempo();
+		cout << c->getId() << " " << c->getPiloto().getPosition() << " " << c->getPiloto().getPontos() << " " << c->getSpeed() << " " << c->getEnergy() << " " << c->getPedals().getAcceleratorState() << " " << c->getPedals().getBrakeState();
 	}
 	for (Carro* c : autodromo.getGaragem().getCarrosGaragem()) {		
 		Consola::gotoxy(4 + static_cast<int>(trunc(c->getXPosition())), autodromo.getPista().getPistas() + 10 + c->getYPosition());

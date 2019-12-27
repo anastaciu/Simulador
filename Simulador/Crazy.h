@@ -14,7 +14,7 @@ public:
 	void setLag() override;
 	int getLag() const override;
 	void iterateLag() override;
-	bool getDamageProb() override;
-	
+	bool getDamageProb() override;	
+	int randomLagGenerator(int start, int finish);
 };
 

@@ -1,6 +1,7 @@
 #include "Pista.h"
 #include <iostream>
 
+
 Pista::Pista(int pistas, int comprimento) : pistas(pistas), comprimento(comprimento), tempo(0)
 {
 }
@@ -32,18 +33,19 @@ void Pista::addCarroPista(Carro* carro)
 
 bool Pista::passatempo(int* tempo)
 {
-	int it = 0;
+	vector<Carro*>::iterator it;
 	while ((*tempo)--) {
 		plusOneSecond();
-		for (Carro* c : this->carros) {			
-			try {			
+		for (Carro* c : this->carros) {
+			try {
 				c->passatempo(comprimento, COMPRIMENTO_PISTA, this->tempo);
 			}
-			catch (exception e) {	
+			catch (exception e) {
 				setPontos();
 				throw e;
 			}
-		}	
+		} 
+		removeCrazyIfProb();
 		setFirstAndLast();
 		setPilotosPosition();
 		return true;
@@ -127,4 +129,17 @@ void Pista::plusOneSecond()
 {
 	this->tempo++;
 }
+
+void Pista::removeCrazyIfProb()
+{	
+	vector<Carro*>::iterator it;
+	it = carros.begin();
+	while (it != carros.end()) {
+		if ((*it)->getPiloto().getDamageProb()) {
+			it = carros.erase(it);
+		}
+		else it++;
+	}
+}
+
 
