@@ -9,8 +9,6 @@ public:
 	~Slow();
 	void passatempo() override;
 	void setLag() override;
-	int getLag() const override;
-	void iterateLag() override;
 	bool getDamageProb() override;
 };
 

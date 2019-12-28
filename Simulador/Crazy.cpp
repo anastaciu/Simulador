@@ -2,14 +2,14 @@
 #include "Carro.h"
 #include <random>
 
-Crazy::Crazy(string name) : Piloto(name), lost_position_flag(false), lost_position_accelerate(0)
+Crazy::Crazy(string name) : Piloto(name), lost_position_accelerate(0)
 {
 	this->tipo = "crazy";
 }
 
 void Crazy::passatempo()
 {
-	if (lag == 0)
+	if (lag == 0 && getCarro().getEnergy() > 0)
 	{
 		if (getLast()) {
 			getCarro().brake();
@@ -17,18 +17,16 @@ void Crazy::passatempo()
 		if (!getFirst() && !getLast()) {
 			getCarro().accelerate();
 		}
-		if (getFirst()) {
-			getCarro().stopBraking();
-			getCarro().stopAccelerating();
-		}
-		if (position < prev_position && !getLast()) {
-			lost_position_flag = true;
+		if (position > prev_position && !getLast()) {
 			lost_position_accelerate = 2;
 		}
-		if (lost_position_accelerate--) {
+		if (lost_position_accelerate > 0) {
+			lost_position_accelerate--;
 			getCarro().accelerate();
-			if (lost_position_accelerate == 0)
-				lost_position_flag = false;
+		}
+	
+		if (getFirst()) {
+			getCarro().stopAccelerating();
 		}
 	}
 	else {
@@ -42,21 +40,9 @@ void Crazy::setLag()
 	lag = randomLagGenerator(1, 5);
 }
 
-int Crazy::getLag() const
-{
-	return lag;
-}
-
-void Crazy::iterateLag()
-{
-	if (lag > 0) {
-		lag--;
-	}
-}
-
 bool Crazy::getDamageProb()
 { 
-	return  (randomIntGenerator(1, 100) < 6);
+	return (randomIntGenerator(1, 100) < 6);
 }
 
 int Crazy::randomLagGenerator(int start, int finish)

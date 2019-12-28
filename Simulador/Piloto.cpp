@@ -6,9 +6,8 @@
 
 
 
-Piloto::Piloto(string name) : name(name), position(0), first(false), last(false), lag(0), prev_position(0)
+Piloto::Piloto(string name) : name(name), position(0), first(false), last(false), lag(0), prev_position(0), pontos(0)
 {
-	this->name = name;
 }
 
 Piloto::~Piloto()
@@ -64,6 +63,15 @@ string Piloto::getPilotDetais() const
 	return os.str();
 }
 
+string Piloto::gerDriverDetails() const
+{
+	ostringstream os;
+	os << "Piloto: " << this->getName() << " (" << tipo << ")";
+	return os.str();
+}
+
+
+
 int Piloto::randomIntGenerator(int start, int finish)
 {
 	thread_local static mt19937 rand_gen{ random_device{}() };
@@ -99,10 +107,17 @@ void Piloto::nullifyCarro()
 	this->carro = nullptr;
 }
 
+int Piloto::getLag()
+{
+	return lag;
+}
+
 void Piloto::setPrevPosition()
 {
 	prev_position = position;
 }
+
+
 
 
 

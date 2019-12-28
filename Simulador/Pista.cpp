@@ -137,6 +137,8 @@ void Pista::removeCrazyIfProb()
 	while (it != carros.end()) {
 		if ((*it)->getPiloto().getDamageProb()) {
 			it = carros.erase(it);
+			if (it != carros.end())
+				it = carros.erase(it);
 		}
 		else it++;
 	}

@@ -31,6 +31,7 @@ public:
 	virtual int getPontos() const;
 	virtual string getAsString() const;
 	virtual string getPilotDetais() const;
+	virtual string gerDriverDetails() const;
 	virtual int randomIntGenerator(int start, int finish);
 	virtual void setPosition(int position, bool first, bool last);
 	virtual int getPosition() const;
@@ -39,11 +40,9 @@ public:
 	virtual void nullifyCarro();
 	virtual void passatempo() = 0;
 	virtual void setLag() = 0;
-	virtual int getLag() const = 0;
-	virtual void iterateLag() = 0;
+	virtual int getLag();
 	virtual bool getDamageProb() = 0;
 	virtual void setPrevPosition();
-
 
 };
 

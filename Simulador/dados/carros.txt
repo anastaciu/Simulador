@@ -1,5 +1,5 @@
-10 10.7 9.5 opel kadet
-29 11.5 11.7 audi rs6
-13 34.4 45 bmw m3
-67 45.5 30.4 renault zoe
-134 34 56 nissan leaf
+10 5 5 opel kadet
+29 6.5 6.1 audi rs6
+13 13.4 10.3 bmw m3
+67 5.5 5.4 renault zoe
+134 4.9 4.7 nissan leaf

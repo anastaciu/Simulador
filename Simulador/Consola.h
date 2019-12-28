@@ -18,7 +18,8 @@ Nov 2018 - Pequenos melhoramentos nos comentários
 #ifndef __CONSOLA_H__
 #define __CONSOLA_H__
 
-#include <windows.h>
+#include <windows.h>                     
+#include <stdio.h>
 
 class Consola {
 

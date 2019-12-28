@@ -16,9 +16,7 @@ Nov 2018 - Pequenos melhoramentos nos comentários
 /* --> ver comentários em consola.h */
 
 #pragma once
-#include "consola.h"                      
-#include <windows.h>
-#include <stdio.h>
+#include "Consola.h"                      
 
 // Definição das variáveis estáticas
 HANDLE Consola::hconsola = GetStdHandle(STD_OUTPUT_HANDLE);

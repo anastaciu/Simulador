@@ -27,6 +27,7 @@ public:
 	void setId(char id);
 	string getBrand() const;
 	string getModel() const;
+	int getMaxSpeed() const;
 	double getEnergy() const;
 	double getMaxEnergy() const;
 	bool energyLimitsInbound() const;
@@ -50,5 +51,7 @@ public:
 	void gastaEnergia();
 	void setSpeedManually(int speed);
 	void resetPedals();
+	string getRaceDetails();
+	void semEnergia();
 };
 

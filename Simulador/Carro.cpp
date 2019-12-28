@@ -54,6 +54,11 @@ string Carro::getModel() const
 	return modelo;
 }
 
+int Carro::getMaxSpeed() const
+{
+	return max_speed;
+}
+
 double Carro::getEnergy() const
 {
 	return energy;
@@ -132,9 +137,10 @@ void Carro::passatempo(double comprimento, double const comprimentoPista, int te
 {
 	int i = 5;
 	exception e;
-	if (condutor != nullptr) {
+	if (condutor != nullptr) {		
 		resetPedals();
-		getPiloto().passatempo();
+		semEnergia();
+		getPiloto().passatempo();		
 		setSpeed();
 		gastaEnergia();
 		setPosition(positionX + ((comprimentoPista / comprimento) * speed), positionY);
@@ -161,14 +167,14 @@ void Carro::nullifyPiloto()
 
 void Carro::accelerate()
 {
-	if (!pedals.getBrakeState())
-		this->pedals.setAccelerator(true);
+	this->pedals.setBrake(false);
+	this->pedals.setAccelerator(true);
 }
 
 void Carro::brake()
 {
-	if (!pedals.getAcceleratorState())
-		this->pedals.setBrake(true);
+	this->pedals.setAccelerator(false);
+	this->pedals.setBrake(true);
 }
 
 void Carro::stopBraking()
@@ -185,6 +191,8 @@ void Carro::gastaEnergia()
 {
 	if (energy > 0 && speed > 0)
 		energy -= 0.1 * speed;
+	if (energy < 0)
+		energy = 0;
 }
 
 void Carro::setSpeedManually(int speed)
@@ -198,6 +206,22 @@ void Carro::resetPedals()
 	stopBraking();
 }
 
+string Carro::getRaceDetails()
+{
+	ostringstream lag;
+	lag << condutor->getLag();
+	ostringstream os;
+	os << " " << this->getPiloto().getPosition() << " - " << condutor->gerDriverDetails() << ", Pontos: " << condutor->getPontos() << ", Carro: " << this->getId() << ", Velocidade: "
+		<< this->getSpeed() << ", Acelerador: " << this->getPedals().getAcceleratorState()
+		<< ", Travao: " << this->getPedals().getBrakeState() << ", Energia: " << this->energy << "/" << this->capacity << (getPiloto().getLag() > 0 ? ", Atraso:" : "") << (getPiloto().getLag() > 0 ? lag.str() : "");
+	return os.str();
+}
 
+void Carro::semEnergia()
+{
+	if (energy == 0) {
+		brake();
+	}
+}
 
 

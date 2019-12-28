@@ -12,18 +12,14 @@ Slow::~Slow()
 
 void Slow::passatempo()
 {
+	if (this->getCarro().getEnergy() > 0) {
+		if (this->getCarro().getSpeed() < this->getCarro().getMaxSpeed() / 2) {
+			this->getCarro().accelerate();
+		}
+	}
 }
 
 void Slow::setLag()
-{
-}
-
-int Slow::getLag() const
-{
-	return 0;
-}
-
-void Slow::iterateLag()
 {
 }
 

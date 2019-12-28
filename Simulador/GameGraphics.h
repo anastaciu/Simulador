@@ -32,5 +32,6 @@ public:
 	void setScreenSize();
 	void listaCarros(Simulador& Simulador, int* it);
 	void printPassatempo(Autodromo& autodromo, int* tempo);
+	void printRaceDetails(Autodromo autodromo);
 };
 
