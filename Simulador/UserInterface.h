@@ -15,7 +15,7 @@ class UserInterface
 private:
 	const int MAX_ARGS = 100;
 	const vector<string> COMMANDS = {"cria", "apaga", "carregaP", "carregaC", "carregaA", "entranocarro", "saidocarro", "lista", "savedgv", "loaddgv", "deldgv", "campeonato", "listacarros", "carregabat", "carregatudo", "corrida", "acidente", "stop", "destroi", "passatempo", "log", "sair",};
-	const vector<int> COMMANDS_ARGS = { 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 2, 0, 0, 1, 1, 1, 1, 0, 0 };
+	const vector<int> COMMANDS_ARGS = { 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 2, 0, 0, 1, 0, 1, 1, 0, 0 };
 	const MessageLog log;
 	Simulador Simulador;
 	GameGraphics graphics;

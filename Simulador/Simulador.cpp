@@ -121,7 +121,7 @@ bool Simulador::apagaObjeto(vector<string>* arguments)
 	it = autodromos.begin();
 	while (it != autodromos.end()) {
 		if (arguments->at(1) == (*it)->getName()) {
-			delete *it;
+			delete* it;
 			it = autodromos.erase(it);
 			return true;
 		}
@@ -190,7 +190,7 @@ bool Simulador::addCarrosToAutodromo(int* i) {
 			campeonato.getAutodromosCampeonato().at(*i)->getPista().addCarroPista(c);
 			c->getPiloto().setPosition(0, false, false);
 			c->getPiloto().setLag();
-			c->setSpeedManually(0);
+			c->resetCarro();
 			c->setPosition(0, j++);
 			if (!isValid)
 				isValid = !isValid;
@@ -329,6 +329,8 @@ void Simulador::carregatudo(int* it)
 
 void Simulador::carregabat(vector<string>* arguments, int it)
 {
+	if (arguments->empty())
+		throw log.getError() + log.getBadArgumentError();
 	exception e;
 	double energia;
 	stringstream ss(arguments->at(1));
@@ -338,15 +340,67 @@ void Simulador::carregabat(vector<string>* arguments, int it)
 	}
 }
 
-bool Simulador::entraNoCarroFase2(vector<string>* arguments, int it)
+void Simulador::entraNoCarroFase2(vector<string>* arguments, int it)
 {
-	return campeonato.getAutodromosCampeonato().at(it)->entraNocarro(arguments);
+	if (arguments->empty())
+		throw log.getError() + log.getBadArgumentError();
+	if (!campeonato.getAutodromosCampeonato().at(it)->entraNocarro(arguments)) {
+		throw log.getError() + log.getBadArgumentError();
+	}
 }
 
-bool Simulador::saiDoCarroFase2(vector<string>* arguments, int it)
+void Simulador::saiDoCarroFase2(vector<string>* arguments, int it)
 {
-	return campeonato.getAutodromosCampeonato().at(it)->saiDoCarro(arguments);
+	if (arguments->empty())
+		throw log.getError() + log.getBadArgumentError();
+	if (!campeonato.getAutodromosCampeonato().at(it)->saiDoCarro(arguments))
+		throw log.getError() + log.getBadArgumentError();
+
+
+
+
 }
+
+void Simulador::stop(vector<string>* arguments, int it)
+{
+	if (arguments->empty())
+		throw log.getError() + "merda";
+	ostringstream str;
+	copy(arguments->begin(), arguments->end() - 1, ostream_iterator<string>(str, " "));
+	str << arguments->back();
+	if (!campeonato.getAutodromosCampeonato().at(it)->getPista().stop(str.str())) {
+		cout << str.str();
+		throw log.getError() + log.getBadArgumentError();
+	}
+}
+
+void Simulador::destroi(vector<string>* arguments, int it)
+{
+	
+	if (arguments->empty())
+		throw log.getError() + log.getBadArgumentError();
+	char id = arguments->at(0).at(0);
+	if (campeonato.getAutodromosCampeonato().at(it)->destroi(id)) {
+		vector<Carro*>::iterator it = dgv.getCars().begin();
+		while (it < dgv.getCars().end()) {
+			if (tolower(id) == tolower((*it)->getId().at(0))) {
+				if(&(*it)->getPiloto() != nullptr)
+					(*it)->getPiloto().setCarro(nullptr);
+				delete *it;
+				it = dgv.getCars().erase(it);				
+			}
+			else
+				it++;
+		}
+	}
+	else {
+		throw log.getError() + log.getBadArgumentError();
+	}
+}
+
+
+
+
 
 
 

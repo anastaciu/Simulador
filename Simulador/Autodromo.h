@@ -4,6 +4,7 @@
 #include <iterator>
 #include "Pista.h"
 #include "Garagem.h"
+#include "DGV.h"
 
 
 using namespace std;
@@ -36,5 +37,6 @@ public:
 	bool saiDoCarro(vector<string>* arguments);
 	bool addCarroToPista(char id);
 	bool addCarroToGaragem(char id);
+	bool destroi(char id);
 };
 

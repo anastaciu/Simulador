@@ -115,8 +115,10 @@ int UserInterface::executionCicle(bool* token_pos) {
 			case 16:
 				break;
 			case 17:
+				Simulador.stop(&arguments, *it);
 				break;
 			case 18:
+				Simulador.destroi(&arguments, *it);
 				break;
 			case 19: {
 				stringstream ss(arguments.at(0));
@@ -180,7 +182,7 @@ bool UserInterface::checkCommandFase2(int position)
 
 void UserInterface::deleteExcessArgs(int command_position, vector<string>& arguments)
 {
-	if (command_position != 0 && command_position != 1 && command_position != 5 && command_position != 6 && command_position != 11)
+	if (command_position != 0 && command_position != 1 && command_position != 5 && command_position != 6 && command_position != 11 && command_position != 17)
 		while ((int)arguments.size() > COMMANDS_ARGS[command_position]) {
 			arguments.pop_back();
 		}

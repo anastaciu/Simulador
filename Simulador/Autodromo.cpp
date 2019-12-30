@@ -1,4 +1,5 @@
 #include "Autodromo.h"
+#include <iostream>
 
 
 
@@ -109,6 +110,7 @@ bool Autodromo::entraNocarro(vector<string>* arguments)
 			ostringstream str;
 			copy(arguments->begin() + 1, arguments->end() - 1, ostream_iterator<string>(str, " "));
 			str << arguments->back();
+			cout << str.str();
 			for (Piloto* p : this->pilotos) {
 				if (str.str() == p->getName() && &p->getCarro() == nullptr) {
 					for (Carro* c : this->garagem.getCarrosGaragem()) {
@@ -133,7 +135,7 @@ bool Autodromo::saiDoCarro(vector<string>* arguments)
 		if (arguments->size() == 1 && arguments->at(0).length() == 1) {
 			for (Carro* c : pista.getCarrosPista()) {
 				int id = arguments->at(0).at(0);
-				if ((id == tolower(c->getId().at(0)) || id == c->getId().at(0)) && &c->getPiloto() != nullptr && &c->getPiloto().getCarro() != nullptr) {
+				if ((id == tolower(c->getId().at(0)) || id == c->getId().at(0)) && &c->getPiloto() != nullptr && &c->getPiloto().getCarro() != nullptr && tempo == 0) {
 					c->setId(tolower(c->getId().at(0)));
 					c->getPiloto().setCarro(nullptr);
 					c->setPiloto(nullptr);
@@ -175,6 +177,35 @@ bool Autodromo::addCarroToGaragem(char id)
 			garagem.addCarroToGaragem(c);
 			c->setPosition((*it2)->getXPosition(), (*it2)->getYPosition() + 1);
 			it = pista.getCarrosPista().erase(it);
+			return true;
+		}
+		else
+			it++;
+	}
+	return false;
+}
+
+bool Autodromo::destroi(char id)
+{
+	vector<Carro*>::iterator it = pista.getCarrosPista().begin();
+	while (it < pista.getCarrosPista().end()) {
+		if (tolower(id) == tolower((*it)->getId().at(0))) {
+			(*it)->getPiloto().setCarro(nullptr);
+			(*it)->setPiloto(nullptr);
+			it = pista.getCarrosPista().erase(it);
+			return true;
+		}
+		else
+			it++;
+	}
+	it = garagem.getCarrosGaragem().begin();
+	while (it < garagem.getCarrosGaragem().end()) {
+		if (tolower(id) == tolower((*it)->getId().at(0))) {
+			if (&(*it)->getPiloto() != nullptr) {
+				(*it)->getPiloto().setCarro(nullptr);
+				(*it)->setPiloto(nullptr);
+			}
+			it = garagem.getCarrosGaragem().erase(it);
 			return true;
 		}
 		else

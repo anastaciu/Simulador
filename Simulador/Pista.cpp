@@ -112,4 +112,17 @@ void Pista::removeCrazyIfProb()
 	}
 }
 
+bool Pista::stop(string piloto)
+{
+	for (Carro* c : carros) {
+		if (&c->getPiloto() != nullptr) {
+			if (piloto == c->getPiloto().getName()) {
+				c->setStop(true); 
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 

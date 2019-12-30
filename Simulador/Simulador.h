@@ -59,8 +59,10 @@ public:
 	bool autodromosDoFicheiro(string file_name);
 	void carregatudo(int* it);
 	void carregabat(vector<string>* arguments, int it);
-	bool entraNoCarroFase2(vector<string>* arguments, int it);
-	bool saiDoCarroFase2(vector<string>* arguments, int it);
+	void entraNoCarroFase2(vector<string>* arguments, int it);
+	void saiDoCarroFase2(vector<string>* arguments, int it);
+	void stop(vector<string>* arguments, int it);
+	void destroi(vector<string>* arguments, int it);
 
 };
 

@@ -220,7 +220,7 @@ void GameGraphics::printRaceDetails(Autodromo autodromo) {
 	Consola::setTextColor(Consola::AZUL);
 	Consola::setBackgroundColor(Consola::BRANCO_CLARO);
 	for (Carro* c : autodromo.getPista().getCarrosPista()) {
-		cout << c->getRaceDetails() <<", Distancia: " << c->getDistance() << "/" << c->getXPosition()<< endl;
+		cout << c->getRaceDetails() << endl;
 	}
 }
 

@@ -14,7 +14,7 @@ private:
 	string id, marca, modelo;
 	double energy, capacity, positionX;
 	Pedals pedals;
-	bool is_moving, emergency, is_damaged;
+	bool is_moving, emergency, is_damaged, stop;
 	int speed, max_speed, positionY, distancia;
 	Piloto *condutor = nullptr;
 
@@ -23,6 +23,8 @@ public:
 	Carro(int v_max, double energy, double capacity, string marca);
 	~Carro();
 	Pedals getPedals() const;
+	bool getStop() const;
+	void setStop(bool stop);
 	string getId();
 	void setId(char id);
 	string getBrand() const;
