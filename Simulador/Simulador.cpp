@@ -39,7 +39,7 @@ void Simulador::addAutodromo(Autodromo* autodromo)
 
 bool Simulador::setFase(int fase, vector<string>* arguments, int* i)
 {
-	return addAutodromosToCampeonato(fase, arguments) && addCarrosToAutodromo(i);
+	return addAutodromosToCampeonato(fase, arguments) && addCarrosToAutodromo(i) && addPilotosToAutodromo(i);
 }
 
 void Simulador::setFaseAbort(int fase)
@@ -176,9 +176,9 @@ void Simulador::saidocarro(vector<string>* arguments) {
 		throw log.getError() + log.getBadArgumentError();
 }
 
-bool Simulador::passaTempo(vector<string>* arguments)
+bool Simulador::passaTempo(int* tempo, int* i)
 {
-	return true;
+	return campeonato.passaTempo(tempo, i);
 }
 
 
@@ -205,6 +205,14 @@ bool Simulador::addCarrosToAutodromo(int* i) {
 		}
 	}
 	return isValid;
+}
+
+bool Simulador::addPilotosToAutodromo(int* i)
+{
+	for (Piloto* p : dgv.getPilotos()) {
+		campeonato.getAutodromosCampeonato().at(*i)->getPilotos().push_back(p);
+	}
+	return true;
 }
 
 bool Simulador::addAutodromosToCampeonato(int fase, vector<string>* arguments)
@@ -325,10 +333,22 @@ void Simulador::carregabat(vector<string>* arguments, int it)
 	double energia;
 	stringstream ss(arguments->at(1));
 	ss >> energia;
-	if (!campeonato.getAutodromosCampeonato().at(it)->carregabat(energia, arguments->at(0)) || energia <= 0) {
+	if (!campeonato.getAutodromosCampeonato().at(it)->carregabat(energia, arguments->at(0).at(0)) || energia <= 0) {
 		throw log.getError() + log.getBadArgumentError();
 	}
 }
+
+bool Simulador::entraNoCarroFase2(vector<string>* arguments, int it)
+{
+	return campeonato.getAutodromosCampeonato().at(it)->entraNocarro(arguments);
+}
+
+bool Simulador::saiDoCarroFase2(vector<string>* arguments, int it)
+{
+	return campeonato.getAutodromosCampeonato().at(it)->saiDoCarro(arguments);
+}
+
+
 
 
 

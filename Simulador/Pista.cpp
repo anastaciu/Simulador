@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-Pista::Pista(int pistas, int comprimento) : pistas(pistas), comprimento(comprimento), tempo(0)
+Pista::Pista(int pistas, int comprimento) : pistas(pistas), comprimento(comprimento)
 {
 }
 
@@ -29,28 +29,6 @@ vector<Carro*>& Pista::getCarrosPista()
 void Pista::addCarroPista(Carro* carro)
 {
 		carros.push_back(carro);
-}
-
-bool Pista::passatempo(int* tempo)
-{
-	vector<Carro*>::iterator it;
-	while ((*tempo)--) {
-		plusOneSecond();
-		for (Carro* c : this->carros) {
-			try {
-				c->passatempo(comprimento, COMPRIMENTO_PISTA, this->tempo);
-			}
-			catch (exception e) {
-				setPontos();
-				throw e;
-			}
-		} 
-		removeCrazyIfProb();
-		setFirstAndLast();
-		setPilotosPosition();
-		return true;
-	}
-	return false;
 }
 
 const double Pista::getComprimentoNormal()
@@ -109,25 +87,15 @@ void Pista::carregaTudo()
 	}
 }
 
-bool Pista::carregaBat(double energia, string carro)
+bool Pista::carregaBat(double energia, char carro)
 {
 	for (Carro* c : carros) {
-		if (carro == c->getId()) {
+		if (tolower(carro) == tolower(c->getId().at(0))) {
 			c->manivela(energia);
 			return true;
 		}
 	}
 	return false;
-}
-
-int Pista::getTempo() const
-{
-	return tempo;
-}
-
-void Pista::plusOneSecond()
-{
-	this->tempo++;
 }
 
 void Pista::removeCrazyIfProb()

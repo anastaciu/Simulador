@@ -15,7 +15,7 @@ private:
 	double energy, capacity, positionX;
 	Pedals pedals;
 	bool is_moving, emergency, is_damaged;
-	int speed, max_speed, positionY;
+	int speed, max_speed, positionY, distancia;
 	Piloto *condutor = nullptr;
 
 public:
@@ -40,6 +40,8 @@ public:
 	void setPosition(double x, int y);
 	int getSpeed() const;
 	void setSpeed();
+	bool getEmergency() const;
+	void setEmergency(bool emergency);
 	void passatempo(double comprimento, double const comprimentoPista, int tempo);
 	bool operator== (Carro* carro);
 	void carregaMax();
@@ -53,5 +55,7 @@ public:
 	void resetPedals();
 	string getRaceDetails();
 	void semEnergia();
+	int getDistance() const;
+	void resetCarro();
 };
 

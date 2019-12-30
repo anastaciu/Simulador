@@ -91,6 +91,12 @@ int UserInterface::executionCicle(bool* token_pos) {
 		}
 		else if (checkCommandFase2(command_position)) {
 			switch (command_position) {
+			case 5:
+				Simulador.entraNoCarroFase2(&arguments, *it);
+				break;
+			case 6:
+				Simulador.saiDoCarroFase2(&arguments, *it);
+				break;
 			case 7:
 				listaFase2(token_pos);
 				break;
@@ -166,7 +172,7 @@ bool UserInterface::checkCommandFase1(int position)
 bool UserInterface::checkCommandFase2(int position)
 {
 	int comandTreshold = 11;
-	if (position > comandTreshold&& Simulador.getSimFase() == 2 || position == 7 || position == 21) {
+	if (position > comandTreshold&& Simulador.getSimFase() == 2 || position == 5 || position == 6 || position == 7 || position == 21) {
 		return true;
 	}
 	return false;
@@ -202,7 +208,7 @@ int UserInterface::passaTempo(int* tempo)
 	if(tempo <= 0)
 		throw log.getError() + log.getBadArgumentError();
 	try {
-		while (Simulador.getCampeonato().passaTempo(tempo, it)) {
+		while (Simulador.passaTempo(tempo, it)) {
 			graphics.printAll(*Simulador.getCampeonato().getAutodromosCampeonato().at(*it), tempo);
 		}
 	}
@@ -252,7 +258,6 @@ void UserInterface::printAll()
 
 void UserInterface::listaFase2(bool* token_pos)
 {
-
 	printAll();
 	if (!graphics.listaElementosFase2(Simulador, it)) {
 		throw log.getError() + log.listaErros();

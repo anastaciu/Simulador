@@ -16,6 +16,6 @@ public:
 	vector<Carro*>& getCarrosGaragem();
 	void addCarroToGaragem(Carro* carro);
 	void carregaTudo();
-	bool carregaBat(double energia, string carro);
+	bool carregaBat(double energia, char carro);
 };
 

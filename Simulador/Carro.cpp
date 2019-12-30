@@ -6,7 +6,7 @@ char Carro::id_global = 'a';
 const string Carro::MODELO_BASE = "modelo base";
 
 Carro::Carro(int v_max, double energy, double capacity, string marca, string modelo) : marca(marca), modelo(modelo), max_speed(v_max), capacity(capacity), pedals(), is_moving(false),
-emergency(false), is_damaged(false), speed(0), positionX(0), positionY(0)
+emergency(false), is_damaged(false), speed(0), positionX(0), positionY(0), distancia(0)
 {
 	id = id_global > 'z' ? '?' : id_global++;
 	this->energy = energy;
@@ -16,7 +16,7 @@ emergency(false), is_damaged(false), speed(0), positionX(0), positionY(0)
 }
 
 Carro::Carro(int v_max, double energy, double capacity, string marca) : marca(marca), max_speed(v_max), capacity(capacity), modelo(MODELO_BASE), pedals(), is_moving(false),
-emergency(false), is_damaged(false), speed(0), positionX(0), positionY(0)
+emergency(false), is_damaged(false), speed(0), positionX(0), positionY(0), distancia(0)
 {
 	id = id_global > 'z' ? '?' : id_global++;
 	this->energy = energy;
@@ -75,7 +75,7 @@ bool Carro::energyLimitsInbound() const
 }
 
 Piloto& Carro::getPiloto()
-{
+{ 
 	return *condutor;
 }
 
@@ -133,6 +133,16 @@ void Carro::setSpeed()
 	}
 }
 
+bool Carro::getEmergency() const
+{
+	return emergency;
+}
+
+void Carro::setEmergency(bool emergency)
+{
+	this->emergency = emergency;
+}
+
 void Carro::passatempo(double comprimento, double const comprimentoPista, int tempo)
 {
 	int i = 5;
@@ -144,6 +154,7 @@ void Carro::passatempo(double comprimento, double const comprimentoPista, int te
 		setSpeed();
 		gastaEnergia();
 		setPosition(positionX + ((comprimentoPista / comprimento) * speed), positionY);
+		distancia += speed;
 		if (getXPosition() > comprimentoPista) {
 			throw e;
 		}
@@ -222,6 +233,19 @@ void Carro::semEnergia()
 	if (energy == 0) {
 		brake();
 	}
+}
+
+int Carro::getDistance() const
+{
+	return distancia;
+}
+
+void Carro::resetCarro()
+{
+	speed = 0;
+	stopBraking();
+	stopAccelerating();	
+
 }
 
 

@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <sstream>
+#include <iterator>
 #include "Pista.h"
 #include "Garagem.h"
 
@@ -13,32 +14,27 @@ private:
 	string name;
 	Garagem garagem;
 	Pista pista;
+	int tempo, it;
+	vector<Piloto*> pilotos;
 
 public:
-	//construtor
 	Autodromo(string name, int pistas, int comprimento);
-
-	//compara Autódromos por nome
 	bool operator == (Autodromo& autodromo);
-
-	//Estabelece o nome dos autodrómos
+	vector<Piloto*>& getPilotos();
 	void setName(string name);
-
-	//Devolve o nome do autódromo
 	string getName();
-
-	//devolve uma string com os detalhes do autódromo
 	string getAsString() const;
-
 	Pista& getPista();
-
 	Garagem& getGaragem();
-
 	bool passaTempo(int* tempo);
-
 	void carregaTudo();
-
-	bool carregabat(double energia, string carro);
-
+	bool carregabat(double energia, char carro);
+	void removeCrazyIfProb();
+	int getTempo() const;
+	void plusOneSecond();
+	bool entraNocarro(vector<string>* arguments);
+	bool saiDoCarro(vector<string>* arguments);
+	bool addCarroToPista(char id);
+	bool addCarroToGaragem(char id);
 };
 

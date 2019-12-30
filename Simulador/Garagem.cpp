@@ -36,10 +36,10 @@ void Garagem::carregaTudo()
 	}
 }
 
-bool Garagem::carregaBat(double energia, string carro)
+bool Garagem::carregaBat(double energia, char carro)
 {
 	for (Carro* c : carros) {
-		if (carro == c->getId()) {
+		if (tolower(carro) == tolower(c->getId().at(0))) {
 			c->manivela(energia);
 			return true;
 		}

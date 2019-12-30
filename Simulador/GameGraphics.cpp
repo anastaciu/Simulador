@@ -90,7 +90,7 @@ void GameGraphics::printPista(Pista& pista)
 {
 	Consola::setTextColor(Consola::BRANCO_CLARO);
 	Consola::setBackgroundColor(Consola::PRETO);	
-		for (int j = 4; j < pista.getComprimentoNormal() + 4; j++) {
+		for (int j = 4; j < pista.getComprimentoNormal() + 7; j++) {
 			for (int i = 6; i < pista.getPistas() + 6; i++) {
 			Consola::gotoxy(j, i);
 			cout << "_";
@@ -220,7 +220,7 @@ void GameGraphics::printRaceDetails(Autodromo autodromo) {
 	Consola::setTextColor(Consola::AZUL);
 	Consola::setBackgroundColor(Consola::BRANCO_CLARO);
 	for (Carro* c : autodromo.getPista().getCarrosPista()) {
-		cout << c->getRaceDetails() << endl;
+		cout << c->getRaceDetails() <<", Distancia: " << c->getDistance() << "/" << c->getXPosition()<< endl;
 	}
 }
 

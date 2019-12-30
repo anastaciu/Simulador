@@ -1,7 +1,8 @@
 #include "Autodromo.h"
 
 
-Autodromo::Autodromo(string name, int pistas, int comprimento) : name(name), pista(pistas, comprimento), garagem(80, 15)
+
+Autodromo::Autodromo(string name, int pistas, int comprimento) : name(name), pista(pistas, comprimento), garagem(80, 15), tempo(0), it(0)
 {
 	
 }
@@ -9,6 +10,11 @@ Autodromo::Autodromo(string name, int pistas, int comprimento) : name(name), pis
 bool Autodromo::operator==(Autodromo& autodromo)
 {
 	return this->name == autodromo.name;
+}
+
+vector<Piloto*>& Autodromo::getPilotos()
+{
+	return pilotos;
 }
 
 void Autodromo::setName(string name)
@@ -40,12 +46,24 @@ Garagem& Autodromo::getGaragem()
 
 bool Autodromo::passaTempo(int* tempo)
 {
-	try {
-		return pista.passatempo(tempo);
-	}
-	catch (exception e) {
-		throw e;
-	}
+		vector<Carro*>::iterator it;
+		while ((*tempo)--) {
+			plusOneSecond();
+			for (Carro* c : pista.getCarrosPista()) {
+				try {
+					c->passatempo(pista.getComprimento(), pista.getComprimentoNormal(), this->tempo);
+				}
+				catch (exception e) {
+					pista.setPontos();
+					throw e;
+				}
+			}
+			removeCrazyIfProb();
+			pista.setFirstAndLast();
+			pista.setPilotosPosition();
+			return true;
+		}
+		return false;
 }
 
 void Autodromo::carregaTudo()
@@ -54,11 +72,116 @@ void Autodromo::carregaTudo()
 	garagem.carregaTudo();
 }
 
-bool Autodromo::carregabat(double energia, string carro)
+bool Autodromo::carregabat(double energia, char carro)
 {
 	return garagem.carregaBat(energia, carro) || pista.carregaBat(energia, carro);
 }
 
+void Autodromo::removeCrazyIfProb()
+{
+	vector<Carro*>::iterator it;
+	it = pista.getCarrosPista().begin();
+	while (it != pista.getCarrosPista().end()) {
+		if ((*it)->getPiloto().getDamageProb() && (*it)->getSpeed() > 0) {				
+			it = pista.getCarrosPista().erase(it);			
+			if (it != pista.getCarrosPista().end()) {
+				it = pista.getCarrosPista().erase(it);
+			}
+		}
+		else it++;
+	}
+}
+
+
+int Autodromo::getTempo() const
+{
+	return tempo;
+}
+
+void Autodromo::plusOneSecond()
+{
+	this->tempo++;
+}
+
+bool Autodromo::entraNocarro(vector<string>* arguments)
+{
+		if (arguments->size() > 1) {
+			ostringstream str;
+			copy(arguments->begin() + 1, arguments->end() - 1, ostream_iterator<string>(str, " "));
+			str << arguments->back();
+			for (Piloto* p : this->pilotos) {
+				if (str.str() == p->getName() && &p->getCarro() == nullptr) {
+					for (Carro* c : this->garagem.getCarrosGaragem()) {
+						if (tolower(c->getId().at(0)) == tolower(arguments->at(0).at(0)) && &c->getPiloto() == nullptr && tempo == 0) {
+							c->setPiloto(p);
+							p->setCarro(c);
+							c->setId(toupper(c->getId().at(0)));
+							addCarroToPista(c->getId().at(0));
+							return true;
+						}
+					}
+				}
+			}
+
+		}
+		return false;
+}
+
+bool Autodromo::saiDoCarro(vector<string>* arguments)
+{
+	if (!arguments->empty()) {
+		if (arguments->size() == 1 && arguments->at(0).length() == 1) {
+			for (Carro* c : pista.getCarrosPista()) {
+				int id = arguments->at(0).at(0);
+				if ((id == tolower(c->getId().at(0)) || id == c->getId().at(0)) && &c->getPiloto() != nullptr && &c->getPiloto().getCarro() != nullptr) {
+					c->setId(tolower(c->getId().at(0)));
+					c->getPiloto().setCarro(nullptr);
+					c->setPiloto(nullptr);
+					addCarroToGaragem(id);
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
+
+bool Autodromo::addCarroToPista(char id) {
+	bool isValid = false;
+	vector<Carro*>::iterator it = garagem.getCarrosGaragem().begin();
+	for (Carro* c : garagem.getCarrosGaragem()) {
+		if (&c->getPiloto() != nullptr && tolower(c->getId().at(0)) == tolower(id) && pista.getPistas() > pista.getCarrosPista().size()) {
+			pista.addCarroPista(c);				
+			c->getPiloto().setPosition(0, false, false);
+			c->getPiloto().setLag();
+			c->setSpeedManually(0);
+			c->setPosition(0, static_cast<int>(pista.getCarrosPista().size() - 1));
+			it = garagem.getCarrosGaragem().erase(it);
+			return true;
+		}
+		if(it < garagem.getCarrosGaragem().end())
+			it++;
+	}
+	return false;
+}
+
+bool Autodromo::addCarroToGaragem(char id)
+{
+	__int64 size = static_cast<__int64>(garagem.getHeight()) * static_cast<__int64>(garagem.getWidth());
+	vector<Carro*>::iterator it = pista.getCarrosPista().begin();
+	vector<Carro*>::iterator it2 = garagem.getCarrosGaragem().end() - 1;
+	for (Carro* c : pista.getCarrosPista()) {
+		if (&c->getPiloto() == nullptr && tolower(c->getId().at(0)) == tolower(id) && size > static_cast<__int64>(garagem.getCarrosGaragem().size())) {
+			garagem.addCarroToGaragem(c);
+			c->setPosition((*it2)->getXPosition(), (*it2)->getYPosition() + 1);
+			it = pista.getCarrosPista().erase(it);
+			return true;
+		}
+		else
+			it++;
+	}
+	return false;
+}
 
 
 

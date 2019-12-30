@@ -2,14 +2,16 @@
 #include "Carro.h"
 #include <vector>
 #include <algorithm>
+#include <list>
 
 using namespace std;
 
 class Pista
 {
 private:
-	int pistas, comprimento, tempo;
+	int pistas, comprimento;
 	vector<Carro*> carros;
+	list<string> log;
 	const double COMPRIMENTO_PISTA = 160.0;
 
 public:
@@ -19,16 +21,13 @@ public:
 	int getComprimento() const;
 	vector<Carro*>& getCarrosPista();
 	void addCarroPista(Carro* carro);
-	bool passatempo(int* tempo);
 	const double getComprimentoNormal();
 	static bool sortCarrosByPosition(Carro* p1, Carro* p2);
 	void setPontos();
 	void setFirstAndLast();
 	void setPilotosPosition();
 	void carregaTudo();
-	bool carregaBat(double energia, string carro);
-	int getTempo() const;
-	void plusOneSecond();
+	bool carregaBat(double energia, char carro);
 	void removeCrazyIfProb();
 
 };

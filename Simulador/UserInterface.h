@@ -38,19 +38,10 @@ public:
 	bool corrida();
 	bool corrida(int* it);
 	void nextRace();
-
 	void printAll();
-
-	//comando lista fase 2
 	void listaFase2(bool* token_pos);
-
-	//comando lista
 	void lista();
-
-	//comando campeonato
 	void campeonato(vector<string>* arguments, int* tempo);
-
-	//comando listacarros
 	void listacarros(bool* passa_tempo);
 };
 
