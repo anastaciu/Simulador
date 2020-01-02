@@ -10,6 +10,11 @@ Fast::~Fast()
 {
 }
 
+Piloto* Fast::duplica() const
+{
+	return new Fast(*this);
+}
+
 void Fast::passatempo()
 {
 	if (getCarro().getEnergy() > 0) {

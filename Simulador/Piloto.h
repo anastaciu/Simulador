@@ -42,6 +42,7 @@ public:
 	virtual void setLag() = 0;
 	virtual int getLag();
 	virtual bool getDamageProb() = 0;
+	virtual Piloto* duplica() const = 0;
 	virtual void setPrevPosition();
 
 };

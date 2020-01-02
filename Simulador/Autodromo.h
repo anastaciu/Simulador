@@ -7,6 +7,7 @@
 #include "DGV.h"
 
 
+
 using namespace std;
 
 class Autodromo
@@ -38,5 +39,6 @@ public:
 	bool addCarroToPista(char id);
 	bool addCarroToGaragem(char id);
 	bool destroi(char id);
+	Piloto* acidente(char id);
 };
 

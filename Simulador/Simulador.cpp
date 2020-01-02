@@ -398,6 +398,68 @@ void Simulador::destroi(vector<string>* arguments, int it)
 	}
 }
 
+void Simulador::acidente(vector<string>* arguments, int it)
+{
+	Piloto* p;
+	char id = arguments->at(0).at(0);
+	if ((p = campeonato.getAutodromosCampeonato().at(it)->acidente(id)) != nullptr) {
+		vector<Piloto*>::iterator itp = dgv.getPilotos().begin();
+		while (itp < dgv.getPilotos().end()) {
+			if (p == *itp) {
+				delete* itp;
+				itp = dgv.getPilotos().erase(itp);
+			}
+			else itp++;
+		}
+	}
+	vector<Carro*>::iterator itc = dgv.getCars().begin();
+	while (itc < dgv.getCars().end()) {
+		if (tolower(id) == tolower((*itc)->getId().at(0))) {
+			delete *itc;
+			itc = dgv.getCars().erase(itc);
+			break;
+		}
+		else itc++;
+	}
+}
+
+void Simulador::saveDGV(vector<string>* arguments)
+{
+	DGV savedDGV = dgv;
+	savedDGV.setName(arguments->at(0));
+	savedDGVs.push_back(savedDGV);
+	cout << savedDGV.getPilotos().at(0)->getName();
+	cout << savedDGVs.at(0).getPilotos().at(0)->getName();
+	cout << savedDGV.getName();
+	
+}
+
+void Simulador::loadDGV(vector<string>* arguments)
+{
+	for (DGV dgvs : savedDGVs) {
+		if (dgvs.getName() == arguments->at(0)) {
+			cout << dgvs.getName();
+			this->dgv = DGV(dgvs);
+			throw log.getElememtCreatedMsg();
+		}				
+	}
+	throw log.getError() + log.getArgumentError();
+}
+
+void Simulador::delDGV(vector<string>* arguments)
+{
+	vector<DGV>::iterator it = savedDGVs.begin();
+	while(it < savedDGVs.end()){
+		if (arguments->at(0) == (*it).getName()) {
+			(*it).~DGV();
+			it = savedDGVs.erase(it);
+		}
+		else
+			it++;
+	}
+}
+
+
 
 
 

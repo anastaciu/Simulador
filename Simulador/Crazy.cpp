@@ -7,6 +7,11 @@ Crazy::Crazy(string name) : Piloto(name), lost_position_accelerate(0)
 	this->tipo = "crazy";
 }
 
+Piloto* Crazy::duplica() const
+{
+	return new Crazy(*this);
+}
+
 void Crazy::passatempo()
 {
 	if (lag == 0 && getCarro().getEnergy() > 0)

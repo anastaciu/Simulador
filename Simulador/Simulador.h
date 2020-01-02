@@ -19,6 +19,7 @@ using namespace std;
 class Simulador
 {
 private:
+	vector<DGV> savedDGVs;
 	vector<Autodromo*> autodromos;
 	DGV dgv;
 	int fase;
@@ -63,6 +64,10 @@ public:
 	void saiDoCarroFase2(vector<string>* arguments, int it);
 	void stop(vector<string>* arguments, int it);
 	void destroi(vector<string>* arguments, int it);
+	void acidente(vector<string>* arguments, int it);
+	void saveDGV(vector<string>* arguments);
+	void loadDGV(vector<string>* arguments);
+	void delDGV(vector<string>* arguments);
 
 };
 

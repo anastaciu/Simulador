@@ -13,12 +13,15 @@ using namespace std;
 class DGV
 {
 private:
+	string nome;
 	vector<Piloto*> pilotos;
 	vector<Carro*> carros;
 
 public:
-	DGV();
-	~DGV();
+	DGV() = default;
+	DGV(const DGV& orig);
+	virtual ~DGV();
+	DGV& operator = (const DGV& orig);
 	vector<Carro*> &getCars();
 	vector<Piloto*> &getPilotos();
 	void addPiloto(Piloto* piloto);
@@ -33,5 +36,7 @@ public:
 	bool apagaObjeto(vector<Piloto*>& pilotos, vector<string>* arguments);
 	bool entraNoCarro(vector<string>* arguments);
 	bool saiDoCarro(vector<string>* arguments);
+	void setName(string name);
+	string getName() const;	
 };
 

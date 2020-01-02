@@ -59,5 +59,6 @@ public:
 	void semEnergia();
 	int getDistance() const;
 	void resetCarro();
+	Carro* duplica() const;
 };
 

@@ -78,10 +78,13 @@ int UserInterface::executionCicle(bool* token_pos) {
 				lista();
 				break;
 			case 8:
+				Simulador.saveDGV(&arguments);
 				break;
 			case 9:
+				Simulador.loadDGV(&arguments);
 				break;
 			case 10:
+				Simulador.delDGV(&arguments);
 				break;
 			case 11:
 				campeonato(&arguments, &tempo);
@@ -113,6 +116,7 @@ int UserInterface::executionCicle(bool* token_pos) {
 				nextRace();
 				break;
 			case 16:
+				Simulador.acidente(&arguments, *it);
 				break;
 			case 17:
 				Simulador.stop(&arguments, *it);

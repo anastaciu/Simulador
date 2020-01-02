@@ -10,6 +10,11 @@ Slow::~Slow()
 {
 }
 
+Piloto* Slow::duplica() const
+{
+	return new Slow(*this);
+}
+
 void Slow::passatempo()
 {
 	if (this->getCarro().getEnergy() > 0) {

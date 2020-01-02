@@ -1,9 +1,9 @@
 #include "DGV.h"
 #include <iostream>
 
-DGV::DGV()
+DGV::DGV(const DGV& orig)
 {
-
+	*this = orig;
 }
 
 DGV::~DGV()
@@ -16,6 +16,35 @@ DGV::~DGV()
 	}
 	carros.clear();
 	pilotos.clear();
+}
+
+DGV& DGV::operator=(const DGV& orig)
+{
+	if(this == &orig){
+		return *this;
+	}
+	for (Carro* c : carros) {
+		delete c;
+	}
+	for(Piloto* p: pilotos){
+		delete p;
+	}
+	carros.clear();
+	pilotos.clear();
+	nome = orig.nome;
+	for (int i = 0; i < orig.pilotos.size(); i++) {
+		Piloto* p = orig.pilotos.at(i)->duplica();
+		p->setCarro(nullptr);
+		pilotos.push_back(p);
+	}
+	for (int i = 0; i < orig.carros.size(); i++) {
+		Carro* c = orig.carros.at(i)->duplica();
+		c->setPiloto(nullptr);
+		carros.push_back(c);
+	}
+
+
+	return *this;
 }
 
 vector<Carro*>& DGV::getCars()
@@ -128,6 +157,16 @@ bool DGV::saiDoCarro(vector<string>* arguments)
 
 	}
 	return false;
+}
+
+void DGV::setName(string name)
+{
+	this->nome = name;
+}
+
+string DGV::getName() const
+{
+	return this->nome;
 }
 
 bool DGV::criaObjecto(vector<string>* arguments)

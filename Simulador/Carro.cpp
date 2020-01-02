@@ -257,4 +257,9 @@ void Carro::resetCarro()
 
 }
 
+Carro* Carro::duplica() const
+{
+	return new Carro(*this);
+}
+
 
