@@ -31,7 +31,7 @@ public:
 	virtual int getPontos() const;
 	virtual string getAsString() const;
 	virtual string getPilotDetais() const;
-	virtual string gerDriverDetails() const;
+	virtual string getDriverDetails() const;
 	virtual int randomIntGenerator(int start, int finish);
 	virtual void setPosition(int position, bool first, bool last);
 	virtual int getPosition() const;

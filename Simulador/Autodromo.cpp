@@ -1,9 +1,6 @@
 #include "Autodromo.h"
-#include <iostream>
 
-
-
-Autodromo::Autodromo(string name, int pistas, int comprimento) : name(name), pista(pistas, comprimento), garagem(80, 15), tempo(0), it(0)
+Autodromo::Autodromo(string name, int pistas, int comprimento) : name(name), pista(pistas, comprimento), garagem(80, 15), tempo(0), it(0), finish(3)
 {
 
 }
@@ -47,15 +44,18 @@ Garagem& Autodromo::getGaragem()
 
 bool Autodromo::passaTempo(int* tempo)
 {
+	exception e;
 	vector<Carro*>::iterator it;
 	while ((*tempo)--) {
 		plusOneSecond();
+		finish = 3;
 		for (Carro* c : pista.getCarrosPista()) {
-			try {
-				c->passatempo(pista.getComprimento(), pista.getComprimentoNormal(), this->tempo);
+			if (c->passatempo(pista.getComprimento(), pista.getComprimentoNormal(), this->tempo)) {
+				finish--;
 			}
-			catch (exception e) {
+			if (finish <= 0) {
 				pista.setPontos();
+				sort(pilotos.begin(), pilotos.end(), sortPilotosByPosition);
 				throw e;
 			}
 		}
@@ -84,6 +84,7 @@ void Autodromo::removeCrazyIfProb()
 	it = pista.getCarrosPista().begin();
 	while (it != pista.getCarrosPista().end()) {
 		if ((*it)->getPiloto().getDamageProb() && (*it)->getSpeed() > 0) {
+			log.push_back("   Probabilidade de dano positiva para " + (*it)->getPiloto().getName() + " no carro " + (*it)->getId() + " - " + currentTime());
 			it = pista.getCarrosPista().erase(it);
 			if (it != pista.getCarrosPista().end()) {
 				it = pista.getCarrosPista().erase(it);
@@ -110,7 +111,6 @@ bool Autodromo::entraNocarro(vector<string>* arguments)
 		ostringstream str;
 		copy(arguments->begin() + 1, arguments->end() - 1, ostream_iterator<string>(str, " "));
 		str << arguments->back();
-		cout << str.str();
 		for (Piloto* p : this->pilotos) {
 			if (str.str() == p->getName() && &p->getCarro() == nullptr) {
 				for (Carro* c : this->garagem.getCarrosGaragem()) {
@@ -248,6 +248,26 @@ Piloto* Autodromo::acidente(char id)
 			it++;
 	}
 	return p;
+}
+
+vector<string> Autodromo::getLog()
+{
+	return log;
+}
+
+const string Autodromo::currentTime()
+{
+	time_t now = time(0);
+	struct tm timeStruct;
+	char dataProb[80];
+	localtime_s(&timeStruct, &now);
+	strftime(dataProb, sizeof(dataProb), "%d-%m-%Y, %X", &timeStruct);
+	return dataProb;
+}
+
+bool Autodromo::sortPilotosByPosition(Piloto* p1, Piloto* p2)
+{
+		return p1->getPontos() > p2->getPontos();
 }
 
 

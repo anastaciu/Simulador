@@ -28,10 +28,13 @@ void Crazy::passatempo()
 		if (lost_position_accelerate > 0) {
 			lost_position_accelerate--;
 			getCarro().accelerate();
-		}
-	
+		}	
 		if (getFirst()) {
 			getCarro().stopAccelerating();
+		}
+		if (getCarro().getEnergy() == 0) {
+			getCarro().resetCarro();
+			getCarro().setEmergency(true);
 		}
 	}
 	else {

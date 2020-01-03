@@ -132,6 +132,7 @@ int UserInterface::executionCicle(bool* token_pos) {
 			}
 				break;
 			case 20:
+				printEventLog(token_pos);
 				break;
 			case 21:
 			default:
@@ -232,7 +233,10 @@ int UserInterface::passaTempo(int* tempo)
 bool UserInterface::corrida()
 {
 	int tempo = 0;
-	bool add_carros = Simulador.addCarrosToAutodromo(it);
+	bool add_carros = Simulador.addCarrosToAutodromo(it) && Simulador.addPilotosToAutodromo(it);
+	sort(Simulador.getCampeonato().getAutodromosCampeonato().at(*it)->getPilotos().begin(),
+		Simulador.getCampeonato().getAutodromosCampeonato().at(*it)->getPilotos().end(),
+		Simulador.getCampeonato().getAutodromosCampeonato().at(*it)->sortPilotosByPosition);
 	graphics.printAll(*Simulador.getCampeonato().getAutodromosCampeonato().at(*it), &tempo);
 	return add_carros;
 }
@@ -259,6 +263,7 @@ void UserInterface::printAll()
 	int tempo = 0;
 	graphics.printAll(*Simulador.getCampeonato().getAutodromosCampeonato().at(*it), &tempo);
 }
+
 
 
 
@@ -293,9 +298,41 @@ void UserInterface::campeonato(vector<string>* arguments, int* tempo)
 
 void UserInterface::listacarros(bool* passa_tempo)
 {
-	printAll();
+	printAllNoRaceDetais();
 	graphics.listaCarros(Simulador, it);	
 	*passa_tempo = !*passa_tempo;
+}
+
+void UserInterface::printEventLog(bool* passa_tempo)
+{
+	if (Simulador.getCampeonato().getAutodromosCampeonato().at(*it)->getLog().empty())
+		throw log.getError() + log.listaErros();
+	printAllNoRaceDetais();
+	graphics.printEventLog(*Simulador.getCampeonato().getAutodromosCampeonato().at(*it));
+	*passa_tempo = !*passa_tempo;
+}
+
+int UserInterface::startMainMenu()
+{
+	do {
+		graphics.mainMenu();
+		switch (Consola::getch()) {
+		case 's':
+		case 'S':
+			return 0;
+		case 'n':
+		case 'N':
+			Consola::clrscr();
+			start();
+			break;
+		}
+	} while (true);
+}
+
+void UserInterface::printAllNoRaceDetais()
+{
+	int tempo = 0;
+	graphics.printAllNoRaceDetais(*Simulador.getCampeonato().getAutodromosCampeonato().at(*it), &tempo);
 }
 
 

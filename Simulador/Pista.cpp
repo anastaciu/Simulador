@@ -1,7 +1,6 @@
 #include "Pista.h"
 #include <iostream>
 
-
 Pista::Pista(int pistas, int comprimento) : pistas(pistas), comprimento(comprimento)
 {
 }
@@ -124,5 +123,6 @@ bool Pista::stop(string piloto)
 	}
 	return false;
 }
+
 
 

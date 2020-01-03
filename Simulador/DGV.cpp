@@ -42,8 +42,6 @@ DGV& DGV::operator=(const DGV& orig)
 		c->setPiloto(nullptr);
 		carros.push_back(c);
 	}
-
-
 	return *this;
 }
 

@@ -5,7 +5,7 @@
 char Carro::id_global = 'a';
 const string Carro::MODELO_BASE = "modelo base";
 
-Carro::Carro(int v_max, double energy, double capacity, string marca, string modelo) : marca(marca), modelo(modelo), max_speed(v_max), capacity(capacity), pedals(), is_moving(false),
+Carro::Carro(int v_max, double energy, double capacity, string marca, string modelo) : marca(marca), modelo(modelo), max_speed(v_max), capacity(capacity), pedals(),
 emergency(false), is_damaged(false), speed(0), positionX(0), positionY(0), distancia(0), stop(false)
 {
 	id = id_global > 'z' ? '?' : id_global++;
@@ -15,7 +15,7 @@ emergency(false), is_damaged(false), speed(0), positionX(0), positionY(0), dista
 	}
 }
 
-Carro::Carro(int v_max, double energy, double capacity, string marca) : marca(marca), max_speed(v_max), capacity(capacity), modelo(MODELO_BASE), pedals(), is_moving(false),
+Carro::Carro(int v_max, double energy, double capacity, string marca) : marca(marca), max_speed(v_max), capacity(capacity), modelo(MODELO_BASE), pedals(),
 emergency(false), is_damaged(false), speed(0), positionX(0), positionY(0), distancia(0), stop(false)
 {
 	id = id_global > 'z' ? '?' : id_global++;
@@ -153,10 +153,8 @@ void Carro::setEmergency(bool emergency)
 	this->emergency = emergency;
 }
 
-void Carro::passatempo(double comprimento, double const comprimentoPista, int tempo)
+bool Carro::passatempo(int comprimento, double const comprimentoPista, int tempo)
 {
-	int i = 5;
-	exception e;
 	if (condutor != nullptr) {		
 		resetPedals();
 		semEnergia();
@@ -166,9 +164,12 @@ void Carro::passatempo(double comprimento, double const comprimentoPista, int te
 		setPosition(positionX + ((comprimentoPista / comprimento) * speed), positionY);
 		distancia += speed;
 		if (distancia >= comprimento) {
-			throw e;
+			setPosition(comprimentoPista, positionY);
+			distancia = comprimento;
+			return true;
 		}
 	}
+	return false;
 }
 
 bool Carro::operator== (Carro* carro)
@@ -232,7 +233,7 @@ string Carro::getRaceDetails()
 	ostringstream lag;
 	lag << condutor->getLag();
 	ostringstream os;
-	os << "  " << this->getPiloto().getPosition() << " - Carro " << getPiloto().getCarro().getId() << "/" << condutor->getName() <<", " << condutor->getPontos() <<" pontos, " << speed << " m/s, " << this->energy << "/" << this->capacity << " mAh, " << distancia << " m" << (getPiloto().getLag() > 0 ? ", Atraso:" : "") << (getPiloto().getLag() > 0 ? lag.str() : "");
+	os << "  " << this->getPiloto().getPosition() << " - Carro " << getPiloto().getCarro().getId() << "/" << condutor->getName() <<", " << speed << " m/s, " << this->energy << "/" << this->capacity << " mAh, " << distancia << " m" << (getPiloto().getLag() > 0 ? ", Atraso: " : "") << (getPiloto().getLag() > 0 ? lag.str() : "");
 	return os.str();
 }
 
@@ -250,7 +251,9 @@ int Carro::getDistance() const
 
 void Carro::resetCarro()
 {
+	emergency = false;
 	speed = 0;
+	stop = false;
 	distancia = 0;
 	stopBraking();
 	stopAccelerating();	

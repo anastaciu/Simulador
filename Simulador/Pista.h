@@ -11,7 +11,6 @@ class Pista
 private:
 	int pistas, comprimento;
 	vector<Carro*> carros;
-	list<string> log;
 	const double COMPRIMENTO_PISTA = 160.0;
 
 public:
@@ -30,6 +29,5 @@ public:
 	bool carregaBat(double energia, char carro);
 	void removeCrazyIfProb();
 	bool stop(string piloto);
-
 };
 

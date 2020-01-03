@@ -1,11 +1,12 @@
 
 #include "UserInterface.h"
 #include "GameGraphics.h"
-#include "Pista.h"
+#include "Consola.h"
+
 
 
 int main()
-{	
+{
 	UserInterface simulator;
-	simulator.start();
+	simulator.startMainMenu();
 }

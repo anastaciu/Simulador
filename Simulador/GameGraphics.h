@@ -33,5 +33,8 @@ public:
 	void listaCarros(Simulador& Simulador, int* it);
 	void printPassatempo(Autodromo& autodromo, int* tempo);
 	void printRaceDetails(Autodromo autodromo);
+	void printEventLog(Autodromo autodromo);
+	void mainMenu();
+	void printAllNoRaceDetais(Autodromo& autodromo, int* tempo);
 };
 

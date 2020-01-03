@@ -43,5 +43,8 @@ public:
 	void lista();
 	void campeonato(vector<string>* arguments, int* tempo);
 	void listacarros(bool* passa_tempo);
+	void printEventLog(bool* passa_tempo);
+	int startMainMenu();
+	void printAllNoRaceDetais();
 };
 

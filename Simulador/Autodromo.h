@@ -2,6 +2,7 @@
 #include <string>
 #include <sstream>
 #include <iterator>
+#include <ctime>
 #include "Pista.h"
 #include "Garagem.h"
 #include "DGV.h"
@@ -16,8 +17,9 @@ private:
 	string name;
 	Garagem garagem;
 	Pista pista;
-	int tempo, it;
+	int tempo, it, finish;
 	vector<Piloto*> pilotos;
+	vector<string> log;
 
 public:
 	Autodromo(string name, int pistas, int comprimento);
@@ -40,5 +42,8 @@ public:
 	bool addCarroToGaragem(char id);
 	bool destroi(char id);
 	Piloto* acidente(char id);
+	vector<string> getLog();
+	const string currentTime();
+	static bool sortPilotosByPosition(Piloto* p1, Piloto* p2);
 };
 

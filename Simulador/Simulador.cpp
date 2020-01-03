@@ -427,11 +427,7 @@ void Simulador::saveDGV(vector<string>* arguments)
 {
 	DGV savedDGV = dgv;
 	savedDGV.setName(arguments->at(0));
-	savedDGVs.push_back(savedDGV);
-	cout << savedDGV.getPilotos().at(0)->getName();
-	cout << savedDGVs.at(0).getPilotos().at(0)->getName();
-	cout << savedDGV.getName();
-	
+	savedDGVs.push_back(savedDGV);	
 }
 
 void Simulador::loadDGV(vector<string>* arguments)
@@ -458,6 +454,8 @@ void Simulador::delDGV(vector<string>* arguments)
 			it++;
 	}
 }
+
+
 
 
 

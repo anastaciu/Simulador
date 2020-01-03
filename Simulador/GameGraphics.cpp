@@ -219,11 +219,49 @@ void GameGraphics::printRaceDetails(Autodromo autodromo) {
 	Consola::gotoxy(0, autodromo.getPista().getPistas() + autodromo.getGaragem().getHeight() + 11);
 	Consola::setTextColor(Consola::AZUL);
 	Consola::setBackgroundColor(Consola::BRANCO_CLARO);
+	cout << "   Classificacao da corrida" << endl;
 	for (Carro* c : autodromo.getPista().getCarrosPista()) {
-		cout << c->getRaceDetails() << endl;
+		cout << "  " << c->getRaceDetails() << endl;
+	}
+	
+	cout << endl;
+	int i = 0;	
+	Consola::setTextColor(Consola::VERDE);
+	cout << "   Classificacao geral" << endl;	
+	for (Piloto* p : autodromo.getPilotos()) {
+		cout << "    " << ++i << " - " << p->getDriverDetails();
 	}
 }
 
+void GameGraphics::printEventLog(Autodromo autodromo)
+{
+	Consola::gotoxy(0, autodromo.getPista().getPistas() + autodromo.getGaragem().getHeight() + 11);
+	Consola::setTextColor(Consola::VERMELHO);
+	for (string logs : autodromo.getLog()) {
+		cout << "    " << logs << endl;
+	}
+}
+
+void GameGraphics::mainMenu()
+{
+	Consola::clrscr();
+	Consola::gotoxy(2, 2);
+	cout << "N - Novo Jogo";
+	Consola::gotoxy(2, 3);
+	cout << "S - Sair";
+	Consola::gotoxy(2, 4);
+	cout << "> ";
+}
+
+void GameGraphics::printAllNoRaceDetais(Autodromo& autodromo, int* tempo) {
+	printBackground();
+	setScreenSize();
+	printPista(autodromo.getPista());
+	printGarage(autodromo);
+	printCarros(autodromo);
+	printAutodromoName(autodromo.getName());
+	printTempo(autodromo.getPista().getPistas() + 7, tempo);
+}
 
 
 

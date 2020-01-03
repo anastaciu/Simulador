@@ -63,10 +63,10 @@ string Piloto::getPilotDetais() const
 	return os.str();
 }
 
-string Piloto::gerDriverDetails() const
+string Piloto::getDriverDetails() const
 {
 	ostringstream os;
-	os << "Piloto: " << this->getName() << " (" << tipo << ")";
+	os << this->getName() << " (" << tipo << ") " << this->pontos << " pontos" << endl;
 	return os.str();
 }
 
