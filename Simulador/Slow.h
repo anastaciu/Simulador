@@ -17,5 +17,6 @@ public:
 	bool getFastProb() override;
 	bool getSlowProb() override;
 	int randomEmergencyGenerator(int start, int finish);
+	string getProbLog() const override;
 };
 

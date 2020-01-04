@@ -63,6 +63,7 @@ bool Autodromo::passaTempo(int* tempo)
 			}
 		}
 		pilotIfProb();
+		removeStop();
 		pista.setFirstAndLast();
 		pista.setPilotosPosition();		
 		return true;
@@ -73,35 +74,32 @@ bool Autodromo::passaTempo(int* tempo)
 void Autodromo::carregaTudo()
 {
 	pista.carregaTudo();
-	garagem.carregaTudo();
 }
 
 bool Autodromo::carregabat(double energia, char carro)
 {
-	return garagem.carregaBat(energia, carro) || pista.carregaBat(energia, carro);
+	return pista.carregaBat(energia, carro);
 }
 
 void Autodromo::pilotIfProb()
 {
 	for(int i = 0; i < pista.getCarrosPista().size(); i++){
 		if (pista.getCarrosPista().at(i)->getPiloto().getCrazyProb() && pista.getCarrosPista().at(i)->getSpeed() > 0) {
-			Log::addLog(name + ": Probabilidade de 5% de dano positiva para " + pista.getCarrosPista().at(i)->getPiloto().getName() + " no carro "
-				+ pista.getCarrosPista().at(i)->getId() + " - " + currentTime());
+			Log::addLog(name + pista.getCarrosPista().at(i)->getPiloto().getProbLog()+ pista.getCarrosPista().at(i)->getId() + " - " + currentTime());
 			pista.getCarrosPista().erase(pista.getCarrosPista().begin() + i);
 			if (pista.getCarrosPista().begin() + i < pista.getCarrosPista().end() - 1) {
 				pista.getCarrosPista().erase(pista.getCarrosPista().begin() + i + 1);
 			}
 		}
-		if (pista.getCarrosPista().at(i)->getPiloto().getSlowProb() && pista.getCarrosPista().at(i)->getPiloto().getFirst()) {
+		if (pista.getCarrosPista().at(i)->getPiloto().getSlowProb() && pista.getCarrosPista().at(i)->getPiloto().getFirst() && pista.getCarrosPista().at(i)->getSpeed() > 0) {
 			pista.getCarrosPista().at(i)->setEmergency(true);
-			Log::addLog(name + ": Probabilidade de 10% de emergencia positiva para " + pista.getCarrosPista().at(i)->getPiloto().getName() + " no carro "
-				+ pista.getCarrosPista().at(i)->getId() + " - " + currentTime());
+			Log::addLog(name + pista.getCarrosPista().at(i)->getPiloto().getProbLog() + pista.getCarrosPista().at(i)->getId() + " - " + currentTime());
 		}
-
-
+		if (pista.getCarrosPista().at(i)->getPiloto().getFastProb() && pista.getCarrosPista().at(i)->getSpeed() > 0) {
+			Log::addLog(name + pista.getCarrosPista().at(i)->getPiloto().getProbLog() + pista.getCarrosPista().at(i)->getId() + " - " + currentTime());
+		}
 	}
 }
-
 
 int Autodromo::getTempo() const
 {
@@ -113,25 +111,20 @@ void Autodromo::plusOneSecond()
 	this->tempo++;
 }
 
-bool Autodromo::entraNocarro(vector<string>* arguments)
+bool Autodromo::entraNocarro(string name, char id)
 {
-	if (arguments->size() > 1) {
-		ostringstream str;
-		copy(arguments->begin() + 1, arguments->end() - 1, ostream_iterator<string>(str, " "));
-		str << arguments->back();
-		for (Piloto* p : this->pilotos) {
-			if (str.str() == p->getName() && &p->getCarro() == nullptr) {
-				for (Carro* c : this->garagem.getCarrosGaragem()) {
-					if (tolower(c->getId().at(0)) == tolower(arguments->at(0).at(0)) && &c->getPiloto() == nullptr && tempo == 0) {
-						if (addCarroToPista(c->getId().at(0))) {
-							c->setPiloto(p);
-							p->setCarro(c);
-							c->setId(toupper(c->getId().at(0)));
-							c->getPiloto().setPosition(0, false, false);
-							c->getPiloto().setLag();
-							c->setSpeedManually(0);
-							return true;
-						}
+	for (Piloto* p : this->pilotos) {
+		if (name == p->getName() && &p->getCarro() == nullptr) {
+			for (Carro* c : this->garagem.getCarrosGaragem()) {
+				if (tolower(c->getId().at(0)) == tolower(id) && &c->getPiloto() == nullptr && tempo == 0) {
+					if (addCarroToPista(c->getId().at(0))) {
+						c->setPiloto(p);
+						p->setCarro(c);
+						c->setId(toupper(c->getId().at(0)));
+						c->getPiloto().setPosition(0, false, false);
+						c->getPiloto().setLag();
+						c->setSpeedManually(0);
+						return true;
 					}
 				}
 			}
@@ -154,6 +147,20 @@ bool Autodromo::saiDoCarro(char id)
 	return false;
 }
 
+bool Autodromo::stopPiloto(char id)
+{
+	for (Carro* c : pista.getCarrosPista()) {
+		if (tolower(id) == tolower(c->getId().at(0)) && &c->getPiloto() != nullptr && &c->getPiloto().getCarro() != nullptr) {
+			c->setId(tolower(c->getId().at(0)));
+			c->getPiloto().setCarro(nullptr);
+			c->setPiloto(nullptr);
+			addCarroToGaragem(id);
+			return true;
+		}
+	}
+	return false;
+}
+
 bool Autodromo::emergency(char id, Piloto* piloto, Carro* carro)
 {
 		if (piloto != nullptr && &piloto->getCarro() != nullptr) {
@@ -164,6 +171,18 @@ bool Autodromo::emergency(char id, Piloto* piloto, Carro* carro)
 			return true;
 		}
 	return false;
+}
+
+void Autodromo::removeStop()
+{	
+	vector<Piloto*>::iterator it = pilotos.begin();
+	for (Carro* c : pista.getCarrosPista()) {
+		if (c->getStop() && c->getSpeed() == 0) {		
+			*it = &c->getPiloto();
+			stopPiloto(c->getId().at(0));
+			pilotos.erase(it);
+		}
+	}
 }
 
 bool Autodromo::addCarroToPista(char id) {
@@ -244,10 +263,20 @@ Piloto* Autodromo::acidente(char id)
 {
 	Piloto* p = nullptr;
 	vector<Carro*>::iterator it = pista.getCarrosPista().begin();
+	vector<Piloto*>::iterator itp = pilotos.begin();
 	while (it < pista.getCarrosPista().end()) {
 		if (tolower(id) == tolower((*it)->getId().at(0))) {
-			p = &(*it)->getPiloto();
+			p = &(*it)->getPiloto(); 
+			while (itp < pilotos.end()) {
+				if (*itp == p) {
+					itp = pilotos.erase(itp);
+					break;
+				}
+				else
+					itp++;
+			}
 			it = pista.getCarrosPista().erase(it);
+			return p;
 		}
 		else
 			it++;
@@ -257,7 +286,7 @@ Piloto* Autodromo::acidente(char id)
 		if (tolower(id) == tolower((*it)->getId().at(0))) {
 			if (&(*it)->getPiloto() != nullptr) {
 				p = &(*it)->getPiloto();
-				vector<Piloto*>::iterator itp = pilotos.begin();
+				itp = pilotos.begin();
 				while (itp < pilotos.end()) {
 					if (*itp == p) {
 						itp = pilotos.erase(itp);
@@ -265,10 +294,10 @@ Piloto* Autodromo::acidente(char id)
 					}
 					else
 						itp++;
-				}
-				return p;
+				}			
 			}
 			it = garagem.getCarrosGaragem().erase(it);
+			return p;
 		}
 		else
 			it++;

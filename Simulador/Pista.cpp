@@ -88,27 +88,15 @@ void Pista::carregaTudo()
 
 bool Pista::carregaBat(double energia, char carro)
 {
+	bool carrega = false;
 	for (Carro* c : carros) {
 		if (tolower(carro) == tolower(c->getId().at(0))) {
 			c->manivela(energia);
-			return true;
+			if(!carrega)
+				carrega = true;
 		}
 	}
-	return false;
-}
-
-void Pista::removeCrazyIfProb()
-{	
-	vector<Carro*>::iterator it;
-	it = carros.begin();
-	while (it != carros.end()) {
-		if ((*it)->getPiloto().getCrazyProb()) {
-			it = carros.erase(it);
-			if (it != carros.end())
-				it = carros.erase(it);
-		}
-		else it++;
-	}
+	return carrega;
 }
 
 bool Pista::stop(string piloto)
@@ -123,6 +111,8 @@ bool Pista::stop(string piloto)
 	}
 	return false;
 }
+
+
 
 
 

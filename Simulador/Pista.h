@@ -27,7 +27,6 @@ public:
 	void setPilotosPosition();
 	void carregaTudo();
 	bool carregaBat(double energia, char carro);
-	void removeCrazyIfProb();
-	bool stop(string piloto);
+	bool stop(string piloto);	
 };
 

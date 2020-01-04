@@ -16,7 +16,7 @@ Piloto* Slow::duplica() const
 
 void Slow::passatempo()
 {
-	if (this->getCarro().getEnergy() > 0) {
+	if (this->getCarro().getEnergy() > 0 && !getCarro().getStop()) {
 		if (this->getCarro().getSpeed() < this->getCarro().getMaxSpeed() / 2) {
 			this->getCarro().accelerate();
 		}
@@ -24,6 +24,10 @@ void Slow::passatempo()
 			getCarro().brake();
 		}		
 	}
+    if (getCarro().getStop()) {
+	   getCarro().brake();
+    }
+
 }
 
 void Slow::setLag()
@@ -51,5 +55,10 @@ int Slow::randomEmergencyGenerator(int start, int finish)
 	thread_local static uniform_int_distribution<int> generate(start, finish);
 	int value = generate(rand_gen);
 	return value;
+}
+
+string Slow::getProbLog() const
+{
+	return ": Probabilidade de 10% de emergencia positiva para " + getName() + " (" + tipo + ") " + " no carro ";
 }
 

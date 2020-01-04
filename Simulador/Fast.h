@@ -1,10 +1,11 @@
 #pragma once
 #include "Piloto.h"
+#include <random>
 
 class Fast : public Piloto
 {
 private:
-	int accelerateCounter;
+	int accelerateCounter, panic_counter;
 
 public:
 	Fast(string name);
@@ -15,5 +16,7 @@ public:
 	bool getCrazyProb() override;
 	bool getFastProb() override;
 	bool getSlowProb() override;
+	int randomPanicGenerator(int start, int finish);
+	string getProbLog() const override;
 };
 

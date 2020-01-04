@@ -1,7 +1,7 @@
 #include "Fast.h"
 #include "Carro.h"
 
-Fast::Fast(string name) : Piloto(name), accelerateCounter(3)
+Fast::Fast(string name) : Piloto(name), accelerateCounter(3), panic_counter(10)
 {
 	this->tipo = "rapido";
 }
@@ -17,7 +17,7 @@ Piloto* Fast::duplica() const
 
 void Fast::passatempo()
 {
-	if (getCarro().getEnergy() > 0) {
+	if (getCarro().getEnergy() > 0 && !getCarro().getStop()) {
 		if (getCarro().getEnergy() >= getCarro().getMaxEnergy() / 2) {
 			getCarro().accelerate();
 		}
@@ -29,6 +29,9 @@ void Fast::passatempo()
 			else
 				accelerateCounter--;
 		}
+	}
+	if (getCarro().getStop()) {
+		getCarro().brake();
 	}
 }
 
@@ -43,10 +46,33 @@ bool Fast::getCrazyProb()
 
 bool Fast::getFastProb()
 {
+	if (panic_counter == 0) {		
+		accelerateCounter = 10;
+		if (randomPanicGenerator(1, 100) < 11) {
+			getCarro().setEmergency(true);
+			return true;
+		}
+	}
+	else {
+		accelerateCounter--;
+	}
 	return false;
 }
 
 bool Fast::getSlowProb()
 {
 	return false;
+}
+
+int Fast::randomPanicGenerator(int start, int finish)
+{
+	thread_local static mt19937 rand_gen{ random_device{}() };
+	thread_local static uniform_int_distribution<int> generate(start, finish);
+	int value = generate(rand_gen);
+	return value;
+}
+
+string Fast::getProbLog() const
+{
+	return ": Probabilidade de 10% de ataque de panico para " + getName() + " (" + tipo + ") " + " no carro ";
 }

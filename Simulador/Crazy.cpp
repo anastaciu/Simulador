@@ -14,8 +14,7 @@ Piloto* Crazy::duplica() const
 
 void Crazy::passatempo()
 {
-	if (lag == 0 && getCarro().getEnergy() > 0)
-	{
+	if (lag == 0 && getCarro().getEnergy() > 0 && !getCarro().getStop()) {
 		if (getLast()) {
 			getCarro().brake();
 		}
@@ -38,8 +37,11 @@ void Crazy::passatempo()
 			lag--;
 	}
 	if (getCarro().getEnergy() == 0) {
-		getCarro().resetCarro();
 		getCarro().setEmergency(true);
+		getCarro().resetCarro();		
+	}	
+	if (getCarro().getStop()) {
+		getCarro().brake();
 	}
 }
 
@@ -69,6 +71,11 @@ int Crazy::randomLagGenerator(int start, int finish)
 	thread_local static uniform_int_distribution<int> generate(start, finish);
 	int value = generate(rand_gen);
 	return value;
+}
+
+string Crazy::getProbLog() const
+{
+	return ": Probabilidade de 5% de dano positiva para " + getName() + " (" + tipo + ") " + " no carro ";
 }
 
 

@@ -36,5 +36,6 @@ public:
 	void printEventLog(Autodromo autodromo);
 	void mainMenu();
 	void printAllNoRaceDetais(Autodromo& autodromo, int* tempo);
+	void printFinalPositions(Autodromo autodromo);
 };
 

@@ -45,6 +45,7 @@ public:
 	virtual bool getFastProb() = 0;
 	virtual bool getSlowProb() = 0;
 	virtual Piloto* duplica() const = 0;
+	virtual string getProbLog() const = 0;
 	virtual void setPrevPosition();
 	virtual string getDriverDetailsClass() const;
 

@@ -344,7 +344,10 @@ void Simulador::entraNoCarroFase2(vector<string>* arguments, int it)
 {
 	if (arguments->empty())
 		throw log.getError() + log.getBadArgumentError();
-	if (!campeonato.getAutodromosCampeonato().at(it)->entraNocarro(arguments)) {
+	ostringstream str;
+	copy(arguments->begin() + 1, arguments->end() - 1, ostream_iterator<string>(str, " "));
+	str << arguments->back();
+	if (!campeonato.getAutodromosCampeonato().at(it)->entraNocarro(str.str(), arguments->at(0).at(0))) {
 		throw log.getError() + log.getBadArgumentError();
 	}
 }
@@ -360,7 +363,7 @@ void Simulador::saiDoCarroFase2(vector<string>* arguments, int it)
 void Simulador::stop(vector<string>* arguments, int it)
 {
 	if (arguments->empty())
-		throw log.getError() + "merda";
+		throw log.getError() + log.getArgumentError();
 	ostringstream str;
 	copy(arguments->begin(), arguments->end() - 1, ostream_iterator<string>(str, " "));
 	str << arguments->back();

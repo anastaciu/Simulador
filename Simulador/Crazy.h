@@ -16,5 +16,6 @@ public:
 	bool getFastProb() override;
 	bool getSlowProb() override;
 	int randomLagGenerator(int start, int finish);
+	string getProbLog() const override;
 };
 

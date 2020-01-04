@@ -125,10 +125,11 @@ int UserInterface::executionCicle(bool* token_pos) {
 				Simulador.destroi(&arguments, *it);
 				break;
 			case 19: {
-				stringstream ss(arguments.at(0));
-				ss >> tempo;
-				command_position = passaTempo(&tempo);
-				*token_pos = !*token_pos;
+				command_position = passatempo(&arguments, token_pos);
+				//stringstream ss(arguments.at(0));
+				//ss >> tempo;
+				//command_position = passaTempo(&tempo);
+				//*token_pos = !*token_pos;
 			}
 				break;
 			case 20:
@@ -209,6 +210,9 @@ void UserInterface::abortStart()
 	throw log.getError() + log.erroCamp();
 }
 
+
+
+
 int UserInterface::passaTempo(int* tempo)
 {
 	int sair = 19;
@@ -224,10 +228,21 @@ int UserInterface::passaTempo(int* tempo)
 		if(*it >= Simulador.getCampeonato().getAutodromosCampeonato().size())
 			sair = graphics.endRace();
 		else {
+			graphics.printFinalPositions(*Simulador.getCampeonato().getAutodromosCampeonato().at((*it) - 1));
 			corrida();
 		}		
 	}
 	return sair;
+}
+
+int UserInterface::passatempo(vector<string>* arguments, bool* token_pos)
+{
+	int tempo, command_position;
+	stringstream ss(arguments->at(0));
+	ss >> tempo;
+	command_position = passaTempo(&tempo);
+	*token_pos = !*token_pos;
+	return command_position;
 }
 
 bool UserInterface::corrida()

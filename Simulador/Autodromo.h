@@ -37,7 +37,7 @@ public:
 	void pilotIfProb();
 	int getTempo() const;
 	void plusOneSecond();
-	bool entraNocarro(vector<string>* arguments);
+	bool entraNocarro(string nome, char id);
 	bool saiDoCarro(char id);
 	bool addCarroToPista(char id);
 	bool addCarroToGaragem(char id);
@@ -47,5 +47,7 @@ public:
 	const string currentTime();
 	static bool sortPilotosByPosition(Piloto* p1, Piloto* p2);
 	bool emergency(char id, Piloto* piloto, Carro* carro);
+	void removeStop();
+	bool stopPiloto(char id);
 };
 
