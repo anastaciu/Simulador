@@ -41,9 +41,12 @@ public:
 	virtual void passatempo() = 0;
 	virtual void setLag() = 0;
 	virtual int getLag();
-	virtual bool getDamageProb() = 0;
+	virtual bool getCrazyProb() = 0;
+	virtual bool getFastProb() = 0;
+	virtual bool getSlowProb() = 0;
 	virtual Piloto* duplica() const = 0;
 	virtual void setPrevPosition();
+	virtual string getDriverDetailsClass() const;
 
 };
 

@@ -353,12 +353,8 @@ void Simulador::saiDoCarroFase2(vector<string>* arguments, int it)
 {
 	if (arguments->empty())
 		throw log.getError() + log.getBadArgumentError();
-	if (!campeonato.getAutodromosCampeonato().at(it)->saiDoCarro(arguments))
+	if (!campeonato.getAutodromosCampeonato().at(it)->saiDoCarro(arguments->at(0).at(0)))
 		throw log.getError() + log.getBadArgumentError();
-
-
-
-
 }
 
 void Simulador::stop(vector<string>* arguments, int it)

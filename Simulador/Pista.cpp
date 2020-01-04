@@ -102,7 +102,7 @@ void Pista::removeCrazyIfProb()
 	vector<Carro*>::iterator it;
 	it = carros.begin();
 	while (it != carros.end()) {
-		if ((*it)->getPiloto().getDamageProb()) {
+		if ((*it)->getPiloto().getCrazyProb()) {
 			it = carros.erase(it);
 			if (it != carros.end())
 				it = carros.erase(it);

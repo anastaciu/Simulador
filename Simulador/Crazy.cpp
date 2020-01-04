@@ -32,14 +32,14 @@ void Crazy::passatempo()
 		if (getFirst()) {
 			getCarro().stopAccelerating();
 		}
-		if (getCarro().getEnergy() == 0) {
-			getCarro().resetCarro();
-			getCarro().setEmergency(true);
-		}
 	}
 	else {
 		if(lag > 0)
 			lag--;
+	}
+	if (getCarro().getEnergy() == 0) {
+		getCarro().resetCarro();
+		getCarro().setEmergency(true);
 	}
 }
 
@@ -48,9 +48,19 @@ void Crazy::setLag()
 	lag = randomLagGenerator(1, 5);
 }
 
-bool Crazy::getDamageProb()
+bool Crazy::getCrazyProb()
 { 
 	return (randomIntGenerator(1, 100) < 6);
+}
+
+bool Crazy::getFastProb()
+{
+	return false;
+}
+
+bool Crazy::getSlowProb()
+{
+	return false;
 }
 
 int Crazy::randomLagGenerator(int start, int finish)

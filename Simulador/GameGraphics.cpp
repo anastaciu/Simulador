@@ -102,13 +102,21 @@ void GameGraphics::printPista(Pista& pista)
 
 void GameGraphics::printCarros(Autodromo& autodromo)
 {
-	Consola::setBackgroundColor(Consola::AMARELO);
-	Consola::setTextColor(Consola::PRETO);
 	for (Carro* c : autodromo.getPista().getCarrosPista()) {
+		if (!c->getEmergency()) {
+			Consola::setBackgroundColor(Consola::AMARELO);
+			Consola::setTextColor(Consola::PRETO);
+		}
+		else {
+			Consola::setBackgroundColor(Consola::VERMELHO);
+			Consola::setTextColor(Consola::PRETO);
+		}
 		Consola::gotoxy(static_cast<int>(trunc(c->getXPosition())) + 4,  c->getYPosition() + 6);
 		cout << " " << c->getId() << " ";
 	}
-	for (Carro* c : autodromo.getGaragem().getCarrosGaragem()) {		
+	for (Carro* c : autodromo.getGaragem().getCarrosGaragem()) {	
+		Consola::setBackgroundColor(Consola::AMARELO);
+		Consola::setTextColor(Consola::PRETO);
 		Consola::gotoxy(4 + static_cast<int>(trunc(c->getXPosition())), autodromo.getPista().getPistas() + 10 + c->getYPosition());
 		cout << c->getId();
 	}
@@ -237,7 +245,7 @@ void GameGraphics::printEventLog(Autodromo autodromo)
 {
 	Consola::gotoxy(0, autodromo.getPista().getPistas() + autodromo.getGaragem().getHeight() + 11);
 	Consola::setTextColor(Consola::VERMELHO);
-	for (string logs : autodromo.getLog()) {
+	for (string logs : Log::getLogs()) {
 		cout << "    " << logs << endl;
 	}
 }

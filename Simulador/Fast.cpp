@@ -36,7 +36,17 @@ void Fast::setLag()
 {
 }
 
-bool Fast::getDamageProb()
+bool Fast::getCrazyProb()
+{
+	return false;
+}
+
+bool Fast::getFastProb()
+{
+	return false;
+}
+
+bool Fast::getSlowProb()
 {
 	return false;
 }

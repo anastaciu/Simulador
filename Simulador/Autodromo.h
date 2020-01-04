@@ -6,6 +6,7 @@
 #include "Pista.h"
 #include "Garagem.h"
 #include "DGV.h"
+#include "Log.h"
 
 
 
@@ -33,11 +34,11 @@ public:
 	bool passaTempo(int* tempo);
 	void carregaTudo();
 	bool carregabat(double energia, char carro);
-	void removeCrazyIfProb();
+	void pilotIfProb();
 	int getTempo() const;
 	void plusOneSecond();
 	bool entraNocarro(vector<string>* arguments);
-	bool saiDoCarro(vector<string>* arguments);
+	bool saiDoCarro(char id);
 	bool addCarroToPista(char id);
 	bool addCarroToGaragem(char id);
 	bool destroi(char id);
@@ -45,5 +46,6 @@ public:
 	vector<string> getLog();
 	const string currentTime();
 	static bool sortPilotosByPosition(Piloto* p1, Piloto* p2);
+	bool emergency(char id, Piloto* piloto, Carro* carro);
 };
 

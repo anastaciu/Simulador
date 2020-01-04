@@ -269,7 +269,7 @@ void UserInterface::printAll()
 
 void UserInterface::listaFase2(bool* token_pos)
 {
-	printAll();
+	printAllNoRaceDetais();
 	if (!graphics.listaElementosFase2(Simulador, it)) {
 		throw log.getError() + log.listaErros();
 	}
@@ -305,7 +305,7 @@ void UserInterface::listacarros(bool* passa_tempo)
 
 void UserInterface::printEventLog(bool* passa_tempo)
 {
-	if (Simulador.getCampeonato().getAutodromosCampeonato().at(*it)->getLog().empty())
+	if (Log::getLogs().empty())
 		throw log.getError() + log.listaErros();
 	printAllNoRaceDetais();
 	graphics.printEventLog(*Simulador.getCampeonato().getAutodromosCampeonato().at(*it));

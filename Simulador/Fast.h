@@ -12,6 +12,8 @@ public:
 	Piloto* duplica() const override;
 	void passatempo() override;
 	void setLag() override;
-	bool getDamageProb() override;
+	bool getCrazyProb() override;
+	bool getFastProb() override;
+	bool getSlowProb() override;
 };
 

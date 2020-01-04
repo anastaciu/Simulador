@@ -70,7 +70,12 @@ string Piloto::getDriverDetails() const
 	return os.str();
 }
 
-
+string Piloto::getDriverDetailsClass() const
+{
+	ostringstream os;
+	os << this->getName() << " (" << tipo << ") ";
+	return os.str();
+}
 
 int Piloto::randomIntGenerator(int start, int finish)
 {

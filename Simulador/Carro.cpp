@@ -96,7 +96,7 @@ void Carro::setPiloto(Piloto* condutor)
 
 void Carro::manivela(double n)
 {
-	if (energyLimitsInbound() && n > 0) {
+	if (energyLimitsInbound() && n > 0 && speed == 0 && condutor != nullptr) {
 		this->energy += n;
 	}
 	if (!energyLimitsInbound()) {
@@ -107,8 +107,8 @@ void Carro::manivela(double n)
 string Carro::getAsString() const
 {
 	ostringstream os;
-	os << "Carro: " << id << ", " << marca << " " << modelo << ", Velocidade Maxima: " << max_speed << ", Capacidade Maxima: "
-		<< capacity << ", Energia: " << energy << (condutor ? ", " + condutor->getPilotDetais() : "\n");
+	os << "Carro: " << id << ", " << marca << " " << modelo << ", Velocidade: " << speed << "/" <<  max_speed << ", Energia: " << energy
+		<< "/" << capacity << (condutor ? ", " + condutor->getPilotDetais() : "\n");
 	return os.str();
 }
 
@@ -179,7 +179,8 @@ bool Carro::operator== (Carro* carro)
 
 void Carro::carregaMax()
 {
-	this->energy = this->capacity;
+	if(condutor != nullptr)
+		this->energy = this->capacity;
 }
 
 void Carro::nullifyPiloto()
@@ -233,7 +234,7 @@ string Carro::getRaceDetails()
 	ostringstream lag;
 	lag << condutor->getLag();
 	ostringstream os;
-	os << "  " << this->getPiloto().getPosition() << " - Carro " << getPiloto().getCarro().getId() << "/" << condutor->getName() <<", " << speed << " m/s, " << this->energy << "/" << this->capacity << " mAh, " << distancia << " m" << (getPiloto().getLag() > 0 ? ", Atraso: " : "") << (getPiloto().getLag() > 0 ? lag.str() : "");
+	os << "  " << this->getPiloto().getPosition() << " - Carro " << getPiloto().getCarro().getId() << "/" << condutor->getDriverDetailsClass() <<", " << speed << " m/s, " << this->energy << "/" << this->capacity << " mAh, " << distancia << " m" << (getPiloto().getLag() > 0 ? ", Atraso: " : "") << (getPiloto().getLag() > 0 ? lag.str() : "");
 	return os.str();
 }
 

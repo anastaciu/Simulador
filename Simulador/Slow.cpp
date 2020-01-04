@@ -1,5 +1,4 @@
 #include "Slow.h"
-#include "Carro.h"
 
 Slow::Slow(string name) : Piloto(name)
 {
@@ -23,10 +22,7 @@ void Slow::passatempo()
 		}
 		if (position > prev_position) {
 			getCarro().brake();
-		}
-		if (getFirst()) {
-			getCarro().setEmergency(true);
-		}
+		}		
 	}
 }
 
@@ -34,7 +30,26 @@ void Slow::setLag()
 {
 }
 
-bool Slow::getDamageProb()
+bool Slow::getCrazyProb()
 {
 	return false;
 }
+
+bool Slow::getFastProb()
+{
+	return false;
+}
+
+bool Slow::getSlowProb()
+{
+	return randomEmergencyGenerator(1, 100) < 11;
+}
+
+int Slow::randomEmergencyGenerator(int start, int finish)
+{
+	thread_local static mt19937 rand_gen{ random_device{}() };
+	thread_local static uniform_int_distribution<int> generate(start, finish);
+	int value = generate(rand_gen);
+	return value;
+}
+
