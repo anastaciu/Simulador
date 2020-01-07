@@ -11,7 +11,7 @@ class Pista
 private:
 	int pistas, comprimento;
 	vector<Carro*> carros;
-	const double COMPRIMENTO_PISTA = 160.0;
+	const double COMPRIMENTO_PISTA = 158.0;
 
 public:
 	Pista(int pistas, int comprimento);

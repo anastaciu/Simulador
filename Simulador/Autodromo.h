@@ -7,6 +7,7 @@
 #include "Garagem.h"
 #include "DGV.h"
 #include "Log.h"
+#include "MessageLog.h"
 
 
 
@@ -20,7 +21,7 @@ private:
 	Pista pista;
 	int tempo, it, finish;
 	vector<Piloto*> pilotos;
-	vector<string> log;
+	MessageLog errorLog;
 
 public:
 	Autodromo(string name, int pistas, int comprimento);
@@ -43,11 +44,11 @@ public:
 	bool addCarroToGaragem(char id);
 	bool destroi(char id);
 	Piloto* acidente(char id);
-	vector<string> getLog();
 	const string currentTime();
 	static bool sortPilotosByPosition(Piloto* p1, Piloto* p2);
-	bool emergency(char id, Piloto* piloto, Carro* carro);
+	void removeEmergency();
 	void removeStop();
 	bool stopPiloto(char id);
+	void removeIfDamaged();
 };
 

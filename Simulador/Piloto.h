@@ -18,6 +18,8 @@ private:
 protected:
 	string tipo;
 	int lag, position, prev_position;
+	int lost_position_accelerate;
+	int accelerateCounter, panic_counter;
 
 public:	
 	Piloto(string name);
@@ -46,6 +48,7 @@ public:
 	virtual bool getSlowProb() = 0;
 	virtual Piloto* duplica() const = 0;
 	virtual string getProbLog() const = 0;
+	virtual void resetPiloto();
 	virtual void setPrevPosition();
 	virtual string getDriverDetailsClass() const;
 

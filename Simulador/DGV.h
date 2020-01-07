@@ -38,5 +38,7 @@ public:
 	bool saiDoCarro(vector<string>* arguments);
 	void setName(string name);
 	string getName() const;	
+	static bool sortPilotosByPosition(Piloto* p1, Piloto* p2);
+	void sortPilotos();
 };
 

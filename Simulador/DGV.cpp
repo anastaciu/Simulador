@@ -32,12 +32,12 @@ DGV& DGV::operator=(const DGV& orig)
 	carros.clear();
 	pilotos.clear();
 	nome = orig.nome;
-	for (int i = 0; i < orig.pilotos.size(); i++) {
+	for (size_t i = 0; i < orig.pilotos.size(); i++) {
 		Piloto* p = orig.pilotos.at(i)->duplica();
 		p->setCarro(nullptr);
 		pilotos.push_back(p);
 	}
-	for (int i = 0; i < orig.carros.size(); i++) {
+	for (size_t i = 0; i < orig.carros.size(); i++) {
 		Carro* c = orig.carros.at(i)->duplica();
 		c->setPiloto(nullptr);
 		carros.push_back(c);
@@ -115,7 +115,7 @@ bool DGV::entraNoCarro(vector<string>* arguments)
 			if (str.str() == p->getName() && &p->getCarro() == nullptr) {
 				for (Carro* c : this->carros) {
 					if (c->getId() == arguments->at(0) && &c->getPiloto() == nullptr) {
-						c->setPiloto(p);
+						c->setPiloto(p);					
 						p->setCarro(c);
 						c->setId(toupper(c->getId().at(0)));
 						return true;
@@ -165,6 +165,16 @@ void DGV::setName(string name)
 string DGV::getName() const
 {
 	return this->nome;
+}
+
+bool DGV::sortPilotosByPosition(Piloto* p1, Piloto* p2)
+{
+	return p1->getPontos() > p2->getPontos();
+}
+
+void DGV::sortPilotos()
+{
+	sort(pilotos.begin(), pilotos.end(), sortPilotosByPosition);
 }
 
 bool DGV::criaObjecto(vector<string>* arguments)

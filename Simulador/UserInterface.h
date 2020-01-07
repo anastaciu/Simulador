@@ -17,7 +17,7 @@ private:
 	const vector<string> COMMANDS = {"cria", "apaga", "carregaP", "carregaC", "carregaA", "entranocarro", "saidocarro", "lista", "savedgv", "loaddgv", "deldgv", "campeonato", "listacarros", "carregabat", "carregatudo", "corrida", "acidente", "stop", "destroi", "passatempo", "log", "sair",};
 	const vector<int> COMMANDS_ARGS = { 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 2, 0, 0, 1, 0, 1, 1, 0, 0 };
 	const MessageLog log;
-	Simulador Simulador;
+	Simulador simulador;
 	GameGraphics graphics;
 	FileLoader fileLoader;
 	int* it;
@@ -38,14 +38,20 @@ public:
 	int passatempo(vector<string>* arguments, bool* tempo);
 	bool corrida();
 	bool corrida(int* it);
-	void nextRace();
+	int nextRace();
 	void printAll();
 	void listaFase2(bool* token_pos);
 	void lista();
 	void campeonato(vector<string>* arguments, int* tempo);
 	void listacarros(bool* passa_tempo);
 	void printEventLog(bool* passa_tempo);
-	int startMainMenu();
 	void printAllNoRaceDetais();
+	void carregatudo();
+	void carregabat(vector<string>* arguments);
+	void destroi(vector<string>* arguments, bool* token_pos);
+	void acidente(vector<string>* arguments, bool* token_pos);
+	void stop(vector<string>* arguments, bool* token_pos);
+	void entraNoCarroFase2(vector<string>* arguments, bool* token_pos);
+	void saiDoCarroFase2(vector<string>* arguments, bool* token_pos);
 };
 

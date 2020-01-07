@@ -22,6 +22,7 @@ void Slow::passatempo()
 		}
 		if (position > prev_position) {
 			getCarro().brake();
+			prev_position = position;
 		}		
 	}
     if (getCarro().getStop()) {

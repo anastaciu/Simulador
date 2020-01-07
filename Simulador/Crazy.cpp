@@ -2,7 +2,7 @@
 #include "Carro.h"
 #include <random>
 
-Crazy::Crazy(string name) : Piloto(name), lost_position_accelerate(0)
+Crazy::Crazy(string name) : Piloto(name)
 {
 	this->tipo = "crazy";
 }
@@ -35,13 +35,12 @@ void Crazy::passatempo()
 	else {
 		if(lag > 0)
 			lag--;
-	}
-	if (getCarro().getEnergy() == 0) {
-		getCarro().setEmergency(true);
-		getCarro().resetCarro();		
 	}	
 	if (getCarro().getStop()) {
 		getCarro().brake();
+	}
+	if (getCarro().getEnergy() == 0) {
+		getCarro().setEmergency(true);
 	}
 }
 
@@ -52,7 +51,10 @@ void Crazy::setLag()
 
 bool Crazy::getCrazyProb()
 { 
-	return (randomIntGenerator(1, 100) < 6);
+	if (!getCarro().getDamage())
+		return (randomIntGenerator(1, 100) < 6);
+	else 
+		return false;
 }
 
 bool Crazy::getFastProb()
@@ -77,6 +79,7 @@ string Crazy::getProbLog() const
 {
 	return ": Probabilidade de 5% de dano positiva para " + getName() + " (" + tipo + ") " + " no carro ";
 }
+
 
 
 

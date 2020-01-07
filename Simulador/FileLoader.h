@@ -8,11 +8,14 @@
 #include "Crazy.h"
 #include "Slow.h"
 #include "Fast.h"
+#include "MessageLog.h"
 
 using namespace std;
 
 class FileLoader
 {
+private:
+	MessageLog log;
 public:
 	vector<string> getFileLines(string file_name);
 	vector<string> getFileArgs(string file_name);

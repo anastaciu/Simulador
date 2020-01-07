@@ -1,7 +1,7 @@
 #include "Fast.h"
 #include "Carro.h"
 
-Fast::Fast(string name) : Piloto(name), accelerateCounter(3), panic_counter(10)
+Fast::Fast(string name) : Piloto(name)
 {
 	this->tipo = "rapido";
 }
@@ -47,14 +47,13 @@ bool Fast::getCrazyProb()
 bool Fast::getFastProb()
 {
 	if (panic_counter == 0) {		
-		accelerateCounter = 10;
+		panic_counter = 9;
 		if (randomPanicGenerator(1, 100) < 11) {
-			getCarro().setEmergency(true);
 			return true;
 		}
 	}
 	else {
-		accelerateCounter--;
+		panic_counter--;
 	}
 	return false;
 }

@@ -23,11 +23,11 @@ public:
 	void printCarros(Autodromo& autodromo);
 	void printGarage(Autodromo& autodromo);
 	void printAll(Autodromo& autodromo, int *tempo);
-	int endRace();
+	int endRace(Campeonato campeonato, DGV dgv);
 	void printCommandLine(int& i, Simulador& Simulador, bool* passaTempo, int* it);
 	void printLog(string& log, Simulador &Simulador, int& i, int* it);
 	void printTempo(int posY, int *tempo);
-	void printAutodromoName(string name);
+	void printAutodromoName(Autodromo autodromo);
 	void printBackground();
 	void setScreenSize();
 	void listaCarros(Simulador& Simulador, int* it);
@@ -36,6 +36,8 @@ public:
 	void printEventLog(Autodromo autodromo);
 	void mainMenu();
 	void printAllNoRaceDetais(Autodromo& autodromo, int* tempo);
-	void printFinalPositions(Autodromo autodromo);
+	void printFinalPositions(Autodromo autodromo, DGV dgv);
+	void printRaceClassification(Autodromo autodromo);
+	void printFinalClassification(DGV dgv);
 };
 

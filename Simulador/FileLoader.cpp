@@ -1,7 +1,6 @@
 #include "FileLoader.h"
 
 vector<string> FileLoader::getFileLines(string file_name) {
-	exception e;
 	vector<string> lines;
 	ifstream file(file_name);
 	string temp;
@@ -11,7 +10,7 @@ vector<string> FileLoader::getFileLines(string file_name) {
 		}
 	}
 	else {
-		throw e;
+		throw log.getError() + log.getFileError();
 	}
 	file.close();
 	return lines;

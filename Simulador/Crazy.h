@@ -4,8 +4,7 @@
 using namespace std;
 
 class Crazy : public Piloto
-{ 
-	int lost_position_accelerate;
+{ 	
 
 public:
 	Crazy(string name);

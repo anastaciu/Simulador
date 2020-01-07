@@ -184,19 +184,27 @@ bool Simulador::passaTempo(int* tempo, int* i)
 
 bool Simulador::addCarrosToAutodromo(int* i) {
 	bool isValid = false;
+	if (dgv.getCars().size() < 2)
+		return isValid;
 	int j = 0, x = 0, y = 0;
 	for (Carro* c : dgv.getCars()) {
 		if (&c->getPiloto() != nullptr && campeonato.getAutodromosCampeonato().at(*i)->getPista().getPistas() > j) {
 			campeonato.getAutodromosCampeonato().at(*i)->getPista().addCarroPista(c);
 			c->getPiloto().setPosition(0, false, false);
-			c->getPiloto().setLag();
 			c->resetCarro();
+			c->getPiloto().resetPiloto();
 			c->setPosition(0, j++);
 			if (!isValid)
 				isValid = !isValid;
 		}
 		else {
 			campeonato.getAutodromosCampeonato().at(*i)->getGaragem().addCarroToGaragem(c);
+			c->resetCarro();
+			if (&c->getPiloto() != nullptr) {
+				c->getPiloto().setCarro(nullptr);
+				c->setPiloto(nullptr);
+				c->setId(tolower(c->getId().at(0)));
+			}
 			c->setPosition(x, y++);
 			if (y >= campeonato.getAutodromosCampeonato().at(*i)->getGaragem().getHeight()) {
 				x++;
@@ -209,7 +217,11 @@ bool Simulador::addCarrosToAutodromo(int* i) {
 
 bool Simulador::addPilotosToAutodromo(int* i)
 {
+	if (dgv.getPilotos().size() < 2)
+		return false;
 	for (Piloto* p : dgv.getPilotos()) {
+		p->resetPiloto();
+		p->setLag();
 		campeonato.getAutodromosCampeonato().at(*i)->getPilotos().push_back(p);
 	}
 	return true;
@@ -322,9 +334,9 @@ bool Simulador::autodromosDoFicheiro(string file_name)
 	return true;
 }
 
-void Simulador::carregatudo(int* it)
+void Simulador::carregatudo(int it)
 {
-	campeonato.getAutodromosCampeonato().at(*it)->carregaTudo();
+	campeonato.getAutodromosCampeonato().at(it)->carregaTudo();
 }
 
 void Simulador::carregabat(vector<string>* arguments, int it)
@@ -342,7 +354,7 @@ void Simulador::carregabat(vector<string>* arguments, int it)
 
 void Simulador::entraNoCarroFase2(vector<string>* arguments, int it)
 {
-	if (arguments->empty())
+	if (arguments->size() < 2)
 		throw log.getError() + log.getBadArgumentError();
 	ostringstream str;
 	copy(arguments->begin() + 1, arguments->end() - 1, ostream_iterator<string>(str, " "));
@@ -368,7 +380,6 @@ void Simulador::stop(vector<string>* arguments, int it)
 	copy(arguments->begin(), arguments->end() - 1, ostream_iterator<string>(str, " "));
 	str << arguments->back();
 	if (!campeonato.getAutodromosCampeonato().at(it)->getPista().stop(str.str())) {
-		cout << str.str();
 		throw log.getError() + log.getBadArgumentError();
 	}
 }
@@ -386,7 +397,8 @@ void Simulador::destroi(vector<string>* arguments, int it)
 				if(&(*it)->getPiloto() != nullptr)
 					(*it)->getPiloto().setCarro(nullptr);
 				delete *it;
-				it = dgv.getCars().erase(it);				
+				it = dgv.getCars().erase(it);		
+				break;
 			}
 			else
 				it++;
@@ -433,12 +445,11 @@ void Simulador::loadDGV(vector<string>* arguments)
 {
 	for (DGV dgvs : savedDGVs) {
 		if (dgvs.getName() == arguments->at(0)) {
-			cout << dgvs.getName();
 			this->dgv = DGV(dgvs);
 			throw log.getElememtCreatedMsg();
 		}				
 	}
-	throw log.getError() + log.getArgumentError();
+	throw log.getError() + log.getBadArgumentError();
 }
 
 void Simulador::delDGV(vector<string>* arguments)

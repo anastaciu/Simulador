@@ -15,6 +15,7 @@ vector<Autodromo*>& Campeonato::getAutodromosCampeonato()
 
 bool Campeonato::passaTempo(int *tempo, int *i)
 {
+
 	return autodromos_campeonat.at(*i)->passaTempo(tempo);
 }
 

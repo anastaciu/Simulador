@@ -82,7 +82,8 @@ void Pista::setPilotosPosition()
 void Pista::carregaTudo()
 {
 	for (Carro* c : carros) {
-		c->carregaMax();
+		if(!c->getDamage())
+			c->carregaMax();
 	}
 }
 
@@ -90,7 +91,7 @@ bool Pista::carregaBat(double energia, char carro)
 {
 	bool carrega = false;
 	for (Carro* c : carros) {
-		if (tolower(carro) == tolower(c->getId().at(0))) {
+		if (tolower(carro) == tolower(c->getId().at(0)) && !c->getDamage()) {
 			c->manivela(energia);
 			if(!carrega)
 				carrega = true;
@@ -103,7 +104,7 @@ bool Pista::stop(string piloto)
 {
 	for (Carro* c : carros) {
 		if (&c->getPiloto() != nullptr) {
-			if (piloto == c->getPiloto().getName()) {
+			if (piloto == c->getPiloto().getName() && !c->getDamage()) {
 				c->setStop(true); 
 				return true;
 			}
@@ -111,6 +112,8 @@ bool Pista::stop(string piloto)
 	}
 	return false;
 }
+
+
 
 
 

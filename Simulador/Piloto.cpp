@@ -6,7 +6,7 @@
 
 
 
-Piloto::Piloto(string name) : name(name), position(0), first(false), last(false), lag(0), prev_position(0), pontos(0)
+Piloto::Piloto(string name) : name(name), position(0), first(false), last(false), lag(0), prev_position(0), pontos(0), lost_position_accelerate(0), accelerateCounter(3), panic_counter(9)
 {
 }
 
@@ -73,7 +73,7 @@ string Piloto::getDriverDetails() const
 string Piloto::getDriverDetailsClass() const
 {
 	ostringstream os;
-	os << this->getName() << " (" << tipo << ") ";
+	os << this->getName() << " (" << tipo << ")";
 	return os.str();
 }
 
@@ -115,6 +115,14 @@ void Piloto::nullifyCarro()
 int Piloto::getLag()
 {
 	return lag;
+}
+
+void Piloto::resetPiloto()
+{
+	first = last = false;
+	lag = position = prev_position = lost_position_accelerate = 0;
+	accelerateCounter = 3;
+	panic_counter = 9;
 }
 
 void Piloto::setPrevPosition()

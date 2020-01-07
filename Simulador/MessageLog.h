@@ -23,11 +23,11 @@ private:
 	const string ENTROU = "Piloto entrou no carro";
 	const string SAIU = "Piloto saiu do carro";
 	const string CONTINUAR = "Prima qualquer tecla para continuar...";
-	const string ERRO_SIMULADOR = "Nao e possivel iniciar Simulador, itens em falta...";
+	const string ERRO_SIMULADOR = "Nao e possivel iniciar, itens em falta, pelo menos 2 carros, 2 pilotos e 1 piloto dentro do carro...";
 	const string DADOS_INCORRETOS = "Dados do ficheiro invalidos...";
 	const string ENERGY_ERROR = "O carro nao existe ou nao estano autodromo...";
 	const string ULTIMA_PISTA = "Nao ha mais corridas...";
-
+	const string POUCOS_CARROS = "Nao existem carros suficientes na pista...";
 
 public:
 	MessageLog();
@@ -54,5 +54,6 @@ public:
 	string dadosIncorretos() const;
 	string energyError() const;
 	string ultimaCorrida() const;
+	string poucosCarros() const;
 };
 

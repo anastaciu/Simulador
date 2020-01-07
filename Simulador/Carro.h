@@ -42,6 +42,8 @@ public:
 	void setPosition(double x, int y);
 	int getSpeed() const;
 	void setSpeed();
+	void setDamage(bool damage);
+	bool getDamage() const;
 	bool getEmergency() const;
 	void setEmergency(bool emergency);
 	bool passatempo(int comprimento, double const comprimentoPista, int tempo);

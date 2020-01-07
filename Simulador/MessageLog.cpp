@@ -111,5 +111,10 @@ string MessageLog::ultimaCorrida() const
 	return ULTIMA_PISTA;
 }
 
+string MessageLog::poucosCarros() const
+{
+	return POUCOS_CARROS;
+}
+
 
 

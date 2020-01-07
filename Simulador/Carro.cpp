@@ -27,6 +27,7 @@ emergency(false), is_damaged(false), speed(0), positionX(0), positionY(0), dista
 
 Carro::~Carro()
 {
+	id_global = 'a';
 }
 
 Pedals Carro::getPedals() const
@@ -99,7 +100,7 @@ void Carro::manivela(double n)
 	if (energyLimitsInbound() && n > 0 && speed == 0 && condutor != nullptr) {
 		this->energy += n;
 	}
-	if (!energyLimitsInbound()) {
+	if (!energyLimitsInbound() && n > 0 && speed == 0 && condutor != nullptr) {
 		this->energy = this->capacity;
 	}
 }
@@ -143,6 +144,16 @@ void Carro::setSpeed()
 	}
 }
 
+void Carro::setDamage(bool damage)
+{
+	this->is_damaged = true;
+}
+
+bool Carro::getDamage() const
+{
+	return is_damaged;
+}
+
 bool Carro::getEmergency() const
 {
 	return emergency;
@@ -166,7 +177,8 @@ bool Carro::passatempo(int comprimento, double const comprimentoPista, int tempo
 		if (distancia >= comprimento) {
 			setPosition(comprimentoPista, positionY);
 			distancia = comprimento;
-			return true;
+			speed = 0;
+			return true;			
 		}
 	}
 	return false;
@@ -179,7 +191,7 @@ bool Carro::operator== (Carro* carro)
 
 void Carro::carregaMax()
 {
-	if(condutor != nullptr)
+	if(condutor != nullptr && speed == 0)
 		this->energy = this->capacity;
 }
 
@@ -255,6 +267,7 @@ void Carro::resetCarro()
 	emergency = false;
 	speed = 0;
 	stop = false;
+	is_damaged = false;
 	distancia = 0;
 	stopBraking();
 	stopAccelerating();	

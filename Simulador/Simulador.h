@@ -8,7 +8,6 @@
 #include <vector>
 #include <sstream>
 #include <algorithm>
-#include <iostream>
 #include <iterator>
 #include "MessageLog.h"
 #include "FileLoader.h"
@@ -58,7 +57,7 @@ public:
 	void carregaC(vector<string>* arguments);
 	void carregaA(vector<string>* arguments);
 	bool autodromosDoFicheiro(string file_name);
-	void carregatudo(int* it);
+	void carregatudo(int it);
 	void carregabat(vector<string>* arguments, int it);
 	void entraNoCarroFase2(vector<string>* arguments, int it);
 	void saiDoCarroFase2(vector<string>* arguments, int it);

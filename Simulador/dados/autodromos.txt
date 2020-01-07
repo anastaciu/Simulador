@@ -1,5 +1,10 @@
-5 200 nurburgring
+18 350 nurburgring
 10 50 estoril
 25 250 imola
 15 160 monaco
 20 150 silverstone
+16 300 spa
+13 245 interlagos
+17 198 donigton
+19 231 monza
+8 100 suzuka

@@ -6,9 +6,7 @@ GameGraphics::GameGraphics() : screenSet(false)
 
 void GameGraphics::gameInit()
 {
-
-	Consola::resizeWindowPx(1200, 600, 320, 180);
-	Consola::setScreenSize(9000, 145);
+	setScreenSize();
 	Consola::gotoxy(44, 2);
 	Consola::setBackgroundColor(Consola::AZUL_CLARO);
 	cout << log.getTitle() << endl << endl;
@@ -40,15 +38,15 @@ bool GameGraphics::listaElementos(Simulador& Simulador) const
 	if (!Simulador.getDGV().getPilotos().empty() || !Simulador.getDGV().getCars().empty() || !Simulador.getAutodromos().empty()) {
 		Consola::setTextColor(Consola::AMARELO);
 		for (Carro* c : Simulador.getDGV().getCars()) {
-			cout << c->getAsString();
+			cout << "    " << c->getAsString();
 		}
 		Consola::setTextColor(Consola::AZUL_CLARO);
 		for (Piloto* p : Simulador.getDGV().getPilotos()) {
-			cout << p->getAsString();
+			cout << "    " << p->getAsString();
 		}
 		Consola::setTextColor(Consola::VERDE);
 		for (Autodromo* a : Simulador.getAutodromos()) {
-			cout << a->getAsString();
+			cout << "    "  << a->getAsString();
 		}
 		Consola::setTextColor(Consola::BRANCO);
 		return true;
@@ -103,26 +101,39 @@ void GameGraphics::printPista(Pista& pista)
 void GameGraphics::printCarros(Autodromo& autodromo)
 {
 	for (Carro* c : autodromo.getPista().getCarrosPista()) {
-		if (!c->getEmergency()) {
-			Consola::setBackgroundColor(Consola::AMARELO);
+		if (c->getEmergency()) {
+			Consola::setBackgroundColor(Consola::VERMELHO);
+			Consola::setTextColor(Consola::BRANCO_CLARO);
+		}
+		else if(c->getDamage()) {
+			Consola::setBackgroundColor(Consola::VERMELHO);
 			Consola::setTextColor(Consola::PRETO);
 		}
+		else if (c->getStop()) {
+			Consola::setBackgroundColor(Consola::BRANCO);
+			Consola::setTextColor(Consola::VERMELHO);
+		}
 		else {
-			Consola::setBackgroundColor(Consola::VERMELHO);
+			Consola::setBackgroundColor(Consola::AMARELO);
 			Consola::setTextColor(Consola::PRETO);
 		}
 		Consola::gotoxy(static_cast<int>(trunc(c->getXPosition())) + 4, c->getYPosition() + 6);
 		cout << " " << c->getId() << " ";
 	}
 	for (Carro* c : autodromo.getGaragem().getCarrosGaragem()) {
-		if (!c->getEmergency()) {
+		if (c->getEmergency()) {
+			Consola::setBackgroundColor(Consola::VERMELHO);
+			Consola::setTextColor(Consola::BRANCO_CLARO);
+		}
+		else if(c->getStop()){
+			Consola::setBackgroundColor(Consola::BRANCO);
+			Consola::setTextColor(Consola::VERMELHO);
+		}
+		else {
 			Consola::setBackgroundColor(Consola::AMARELO);
 			Consola::setTextColor(Consola::PRETO);
 		}
-		else {
-			Consola::setBackgroundColor(Consola::VERMELHO);
-			Consola::setTextColor(Consola::PRETO);
-		}
+
 		Consola::gotoxy(4 + static_cast<int>(trunc(c->getXPosition())), autodromo.getPista().getPistas() + 10 + c->getYPosition());
 		cout << c->getId();
 	}
@@ -140,24 +151,22 @@ void GameGraphics::printGarage(Autodromo& autodromo)
 
 void GameGraphics::printAll(Autodromo& autodromo, int* tempo) {
 	printBackground();
-	setScreenSize();
 	printPista(autodromo.getPista());
 	printGarage(autodromo);
 	printCarros(autodromo);
 	printRaceDetails(autodromo);
-	printAutodromoName(autodromo.getName());
+	printAutodromoName(autodromo);
 	printTempo(autodromo.getPista().getPistas() + 7, tempo);
 }
 
-int GameGraphics::endRace()
+int GameGraphics::endRace(Campeonato campeonato, DGV dgv)
 {
 	int sair = 21;
 	Consola::clrscr();
-	Consola::gotoxy(100, 20);
-	Consola::setBackgroundColor(Consola::AMARELO);
-	Consola::setTextColor(Consola::VERMELHO);
-	cout << "Fim da corrida, toda a gente ganhou!";
-	Consola::getch();
+	Consola::gotoxy(5, 5);
+	Consola::setBackgroundColor(Consola::AZUL);
+	Consola::setTextColor(Consola::BRANCO_CLARO);
+	printFinalClassification(dgv);
 	return sair;
 }
 
@@ -188,18 +197,18 @@ void GameGraphics::printLog(string& log, Simulador& Simulador, int& i, int* it)
 void GameGraphics::printTempo(int posY, int* tempo)
 {
 	if (*tempo > 0) {
-		Consola::setBackgroundColor(Consola::BRANCO_CLARO);
 		Consola::gotoxy(70, posY);
 		cout << "                                                                                                           ";
 		Consola::gotoxy(70, posY);
-		Consola::setTextColor(Consola::BRANCO);
+		Consola::setTextColor(Consola::BRANCO_CLARO);
 		Consola::setBackgroundColor(Consola::VERDE);
 		cout << "Tempo: " << *tempo << " seg" << " -> Prima uma tecla...";
 		Consola::getch();
+		Consola::setBackgroundColor(Consola::BRANCO_CLARO);
 	}
 }
 
-void GameGraphics::printAutodromoName(string name)
+void GameGraphics::printAutodromoName(Autodromo autodromo)
 {
 	Consola::gotoxy(66, 1);
 	Consola::setBackgroundColor(Consola::AZUL_CLARO);
@@ -212,7 +221,11 @@ void GameGraphics::printAutodromoName(string name)
 	Consola::gotoxy(72, 4);
 	Consola::setBackgroundColor(Consola::VERMELHO_CLARO);
 	Consola::setTextColor(Consola::PRETO);
-	cout << "  Autodromo: " << name << "  ";
+	cout << "  Autodromo: " << autodromo.getName() <<",  "<<  autodromo.getPista().getComprimento() << " m  ";
+	Consola::gotoxy(140, 5);
+	Consola::setBackgroundColor(Consola::VERDE);
+	Consola::setTextColor(Consola::BRANCO_CLARO);
+	cout << " Instante: " << autodromo.getTempo() << " seg ";
 	Consola::setBackgroundColor(Consola::BRANCO_CLARO);
 }
 
@@ -240,7 +253,7 @@ void GameGraphics::printRaceDetails(Autodromo autodromo) {
 	cout << endl;
 	int i = 0;
 	Consola::setTextColor(Consola::VERDE);
-	cout << "   Classificacao geral" << endl;
+	cout << "   Classificacao dos pilotos presentes" << endl;
 	for (Piloto* p : autodromo.getPilotos()) {
 		cout << "    " << ++i << " - " << p->getDriverDetails();
 	}
@@ -257,6 +270,8 @@ void GameGraphics::printEventLog(Autodromo autodromo)
 
 void GameGraphics::mainMenu()
 {
+	Consola::setBackgroundColor(Consola::PRETO);
+	Consola::setTextColor(Consola::BRANCO_CLARO);
 	Consola::clrscr();
 	Consola::gotoxy(2, 2);
 	cout << "N - Novo Jogo";
@@ -268,21 +283,20 @@ void GameGraphics::mainMenu()
 
 void GameGraphics::printAllNoRaceDetais(Autodromo& autodromo, int* tempo) {
 	printBackground();
-	setScreenSize();
 	printPista(autodromo.getPista());
 	printGarage(autodromo);
 	printCarros(autodromo);
-	printAutodromoName(autodromo.getName());
+	printAutodromoName(autodromo);
 	printTempo(autodromo.getPista().getPistas() + 7, tempo);
 }
 
-void GameGraphics::printFinalPositions(Autodromo autodromo)
+void GameGraphics::printFinalPositions(Autodromo autodromo, DGV dgv)
 {
 	Consola::setBackgroundColor(Consola::AMARELO_CLARO);	
 	Consola::clrscr();
 	Consola::gotoxy(0, 5);
 	Consola::setTextColor(Consola::AZUL);
-	cout << "Classificacao da corrida" << endl;
+	cout << "    Classificacao da corrida" << endl;
 	for (Carro* c : autodromo.getPista().getCarrosPista()) {
 		cout << "  " << c->getRaceDetails() << endl;
 	}
@@ -290,12 +304,50 @@ void GameGraphics::printFinalPositions(Autodromo autodromo)
 	int i = 0;
 	Consola::setTextColor(Consola::VERDE);
 	cout << "    Classificacao geral" << endl;
-	for (Piloto* p : autodromo.getPilotos()) {
+	for (Piloto* p : dgv.getPilotos()) {
 		cout << "    " << ++i << " - " << p->getDriverDetails();
 	}
 	Consola::setTextColor(Consola::VERMELHO);
+	cout << endl;
+	cout << "    Log" << endl;
+	for (string logs: Log::getLogs()) {
+		cout << "    " << logs << endl;
+	}
 	cout << endl << "    Prima uma tecla para continuar...";
 	Consola::getch();
+}
+
+void GameGraphics::printRaceClassification(Autodromo autodromo)
+{
+	Consola::gotoxy(0, autodromo.getPista().getPistas() + autodromo.getGaragem().getHeight() + 11);
+	Consola::setTextColor(Consola::AZUL);
+	Consola::setBackgroundColor(Consola::BRANCO_CLARO);
+	cout << "   Classificacao da corrida" << endl;
+	for (Carro* c : autodromo.getPista().getCarrosPista()) {
+		cout << "  " << c->getRaceDetails() << endl;
+	}
+}
+
+void GameGraphics::printFinalClassification(DGV dgv)
+{
+	int i = 0;
+	Consola::setTextColor(Consola::BRANCO_CLARO);
+	Consola::setBackgroundColor(Consola::AZUL);
+	Consola::clrscr();
+	cout << "    Classificacao geral final" << endl;
+	for (Piloto* p : dgv.getPilotos()) {
+		cout << "    " << ++i << " - " << p->getDriverDetails();
+	}
+	cout << endl;
+	Consola::setTextColor(Consola::AMARELO_CLARO);
+	cout << "    Log" << endl;
+	for (string logs : Log::getLogs()) {
+		cout << "    " << logs << endl;
+	}
+	cout << endl << "    Prima uma tecla para sair...";
+	Consola::getch();
+	
+
 }
 
 

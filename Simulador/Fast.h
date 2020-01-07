@@ -4,8 +4,6 @@
 
 class Fast : public Piloto
 {
-private:
-	int accelerateCounter, panic_counter;
 
 public:
 	Fast(string name);
