@@ -1,0 +1,222 @@
+#include "Simulador.h"
+
+
+Simulador::Simulador() : fase(1)
+{
+}
+
+Simulador::~Simulador()
+{
+	autodromos.clear();
+}
+
+DGV& Simulador::getDGV()
+{
+	return dgv;
+}
+
+Campeonato& Simulador::getCampeonato()
+{
+	return campeonato;
+}
+
+void Simulador::addAutodromo(Autodromo* autodromo)
+{
+	size_t str_length = 10;
+	if (!isNameValid(*autodromo)) {
+		autodromo->setName(random_string(str_length));
+		*this += autodromo;
+	}
+	else
+	{
+		*this += autodromo;
+	}
+
+}
+
+bool Simulador::setFase(int fase, vector<string>* arguments)
+{	
+	bool isValid = false;
+	if (arguments->size() < 1)
+		return isValid;
+	for (Autodromo* a : autodromos)
+		for (string s : *arguments) {
+			if (s == a->getName()) {
+				campeonato.getAutodromosCampeonato().push_back(a);
+				this->fase = fase;
+				if (!isValid)
+					isValid = true;
+			}
+		}
+	for (int i = 0; i < campeonato.getAutodromosCampeonato().size(); i++)
+		cout << campeonato.getAutodromosCampeonato().at(i)->getName();
+	system("pause");
+	addCarrosToAutodromo();
+	for (Carro* c : campeonato.getAutodromosCampeonato().at(0)->getPista().getCarrosPista())
+		cout << "mrerda: " << c->getId();
+	cout << "foda-se";
+	system("pause");
+	
+	return isValid;
+}
+
+void Simulador::setFaseAbort(int fase)
+{
+	this->fase = fase;
+	if (campeonato.getAutodromosCampeonato().size() > 0)
+		this->campeonato.getAutodromosCampeonato().clear();
+}
+
+int Simulador::getSimFase() const
+{
+	return this->fase;
+}
+
+bool Simulador::isNameValid(Autodromo& autodromo)
+{
+	for (Autodromo* a : autodromos) {
+		if (*a == autodromo) {
+			return false;
+		}
+	}
+	return true;
+}
+
+string Simulador::random_string(size_t length)
+{
+	static const string alphanum = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	thread_local static mt19937 rand_gen{ random_device{}() };
+	thread_local static uniform_int_distribution<size_t> generate(0, sizeof(alphanum) - 2);
+	string str;
+	str.reserve(length);
+	while (length--)
+		str += alphanum[generate(rand_gen)];
+	return str;
+}
+
+void Simulador::operator+= (Autodromo* autodromo)
+{
+	autodromos.push_back(autodromo);
+}
+
+vector<Autodromo*>& Simulador::getAutodromos()
+{
+	return autodromos;
+}
+
+bool Simulador::adicionaObjecto(vector<string>* arguments)
+{
+	if (!arguments->at(0).compare("c") && dgv.criaObjecto(arguments)) {
+		return true;
+	}
+	else if (!arguments->at(0).compare("a") && criaObjecto(arguments)) {
+		return true;
+	}
+	else if (!arguments->at(0).compare("p") && dgv.criaObjecto(dgv, arguments)) {
+		return true;
+	}
+	return false;
+}
+
+bool Simulador::criaObjecto(vector<string>* arguments)
+{
+	int pistas, comprimento;
+	if (arguments->size() == 4) {
+		stringstream arg1(arguments->at(1));
+		arg1 >> pistas;
+		stringstream arg2(arguments->at(2));
+		arg2 >> comprimento;
+		Autodromo* autodromo = new Autodromo(arguments->at(3), pistas, comprimento);
+		addAutodromo(autodromo);
+		return true;
+	}
+	return false;
+}
+
+bool Simulador::apagaObjeto(vector<string>* arguments)
+{
+	vector<Autodromo*>::iterator it;
+	it = autodromos.begin();
+	while (it != autodromos.end()) {
+		if (arguments->at(1) == (*it)->getName()) {
+			it = autodromos.erase(it);
+			return true;
+		}
+		else {
+			it++;
+		}
+	}
+	return false;
+}
+
+bool Simulador::removeObjecto(vector<string>* arguments)
+{
+	exception e;
+
+	if (!arguments->at(0).compare("c")) {
+		return dgv.apagaObjeto(arguments);
+	}
+	else if (!arguments->at(0).compare("a")) {
+		return apagaObjeto(arguments);
+	}
+	else if (!arguments->at(0).compare("p")) {
+		return dgv.apagaObjeto(dgv.getPilotos(), arguments);
+	}
+
+	return false;
+}
+
+bool Simulador::entraNoCarro(vector<string>* arguments)
+{
+	return dgv.entraNoCarro(arguments);
+}
+
+bool Simulador::saiDoCarro(vector<string>* arguments)
+{
+	return dgv.saiDoCarro(arguments);
+}
+
+bool Simulador::passaTempo(vector<string>* arguments)
+{
+	return true;
+}
+
+
+bool Simulador::addCarrosToAutodromo() {
+	bool isValid = false;
+	for (int i = 0, z = 0, y = 0; i < static_cast<int>(campeonato.getAutodromosCampeonato().size()); i++) {
+		for (Carro* c : dgv.getCars()) {
+			cout << c->getId() << "caralhadas" << endl;
+			if(&c->getPiloto() != nullptr)
+			cout << c->getPiloto().getAsString() << "putamadre" << endl;
+			if (&c->getPiloto() != nullptr && campeonato.getAutodromosCampeonato().at(i)->getPista().getPistas() > z) {
+				campeonato.getAutodromosCampeonato().at(i)->getPista().addCarroPista(c);
+				c->setPosition(0, z);
+				cout << c->getId() <<"caralho" << endl;
+				z++;
+				if (!isValid)
+					isValid = true;
+			}
+			else {
+				while (y < campeonato.getAutodromosCampeonato().at(i)->getGaragem().getHeight() * campeonato.getAutodromosCampeonato().at(i)->getGaragem().getWidth()) {
+					campeonato.getAutodromosCampeonato().at(i)->getGaragem().addCarroToGaragem(c);
+					y++;
+				}
+			}
+		}
+		
+	}
+	return isValid;
+}
+
+
+
+
+
+
+
+
+
+
+
+

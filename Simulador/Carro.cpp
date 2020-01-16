@@ -3,35 +3,22 @@
 
 
 char Carro::id_global = 'a';
-const string Carro::modelo_base = "modelo base";
+const string Carro::MODELO_BASE = "modelo base";
 
-Carro::Carro(double energy, double capacity, string marca, string modelo)
+Carro::Carro(int v_max, double energy, double capacity, string marca, string modelo) : marca(marca), modelo(modelo), max_speed(v_max), capacity(capacity), pedals(),
+emergency(false), is_damaged(false), speed(0), positionX(0), positionY(0), distancia(0), stop(false)
 {
-	if (id_global > 'z') {
-		id = '?';
-	} else {
-		id = id_global++;
-	}
-	this->marca = marca;
-	this->modelo = modelo;
-	this->capacity = capacity;
+	id = id_global > 'z' ? '?' : id_global++;
 	this->energy = energy;
 	if (!energyLimitsInbound()) {
 		this->energy = this->capacity;
 	}
 }
 
-Carro::Carro(double energy, double capacity, string marca)
+Carro::Carro(int v_max, double energy, double capacity, string marca) : marca(marca), max_speed(v_max), capacity(capacity), modelo(MODELO_BASE), pedals(),
+emergency(false), is_damaged(false), speed(0), positionX(0), positionY(0), distancia(0), stop(false)
 {
-	if (id_global > 'z') {
-		id = '?';
-	}
-	else {
-		id = id_global++;
-	}
-	this->marca = marca;
-	this->modelo = modelo_base;
-	this->capacity = capacity;
+	id = id_global > 'z' ? '?' : id_global++;
 	this->energy = energy;
 	if (!energyLimitsInbound()) {
 		this->energy = this->capacity;
@@ -40,11 +27,32 @@ Carro::Carro(double energy, double capacity, string marca)
 
 Carro::~Carro()
 {
+	id_global = 'a';
 }
 
-char Carro::getId() const
+Pedals Carro::getPedals() const
+{
+	return this->pedals;
+}
+
+bool Carro::getStop() const
+{
+	return stop;
+}
+
+void Carro::setStop(bool stop)
+{
+	this->stop = stop;
+}
+
+string Carro::getId()
 {
 	return id;
+}
+
+void Carro::setId(char id)
+{
+	this->id = id;
 }
 
 string Carro::getBrand() const
@@ -55,6 +63,11 @@ string Carro::getBrand() const
 string Carro::getModel() const
 {
 	return modelo;
+}
+
+int Carro::getMaxSpeed() const
+{
+	return max_speed;
 }
 
 double Carro::getEnergy() const
@@ -71,4 +84,199 @@ bool Carro::energyLimitsInbound() const
 {
 	return energy < capacity;
 }
+
+Piloto& Carro::getPiloto()
+{ 
+	return *condutor;
+}
+
+void Carro::setPiloto(Piloto* condutor)
+{
+	this->condutor = condutor;
+}
+
+void Carro::manivela(double n)
+{
+	if (energyLimitsInbound() && n > 0 && speed == 0 && condutor != nullptr) {
+		this->energy += n;
+	}
+	if (!energyLimitsInbound() && n > 0 && speed == 0 && condutor != nullptr) {
+		this->energy = this->capacity;
+	}
+}
+
+string Carro::getAsString() const
+{
+	ostringstream os;
+	os << "Carro: " << id << ", " << marca << " " << modelo << ", Velocidade: " << speed << "/" <<  max_speed << ", Energia: " << energy
+		<< "/" << capacity << (condutor ? ", " + condutor->getPilotDetais() : "\n");
+	return os.str();
+}
+
+double Carro::getXPosition() const
+{
+	return positionX;
+}
+
+int Carro::getYPosition() const
+{
+	return positionY;
+}
+
+void Carro::setPosition(double x, int y)
+{
+	this->positionX = x;
+	this->positionY = y;
+}
+
+int Carro::getSpeed() const
+{
+	return speed;
+}
+
+void Carro::setSpeed()
+{
+	if (this->pedals.getAcceleratorState() && speed < max_speed) {
+		speed += 1;
+	}
+	if (this->pedals.getBrakeState() && speed > 0) {
+		speed -= 1;
+	}
+}
+
+void Carro::setDamage(bool damage)
+{
+	this->is_damaged = true;
+}
+
+bool Carro::getDamage() const
+{
+	return is_damaged;
+}
+
+bool Carro::getEmergency() const
+{
+	return emergency;
+}
+
+void Carro::setEmergency(bool emergency)
+{
+	this->emergency = emergency;
+}
+
+bool Carro::passatempo(int comprimento, double const comprimentoPista, int tempo)
+{
+	if (condutor != nullptr) {		
+		resetPedals();
+		semEnergia();
+		getPiloto().passatempo();		
+		setSpeed();
+		gastaEnergia();
+		setPosition(positionX + ((comprimentoPista / comprimento) * speed), positionY);
+		distancia += speed;
+		if (distancia >= comprimento) {
+			setPosition(comprimentoPista, positionY);
+			distancia = comprimento;
+			speed = 0;
+			return true;			
+		}
+	}
+	return false;
+}
+
+bool Carro::operator== (Carro* carro)
+{
+	return this->id == carro->id;
+}
+
+void Carro::carregaMax()
+{
+	if(condutor != nullptr && speed == 0)
+		this->energy = this->capacity;
+}
+
+void Carro::nullifyPiloto()
+{
+	condutor = nullptr;
+}
+
+void Carro::accelerate()
+{
+	this->pedals.setBrake(false);
+	this->pedals.setAccelerator(true);
+}
+
+void Carro::brake()
+{
+	this->pedals.setAccelerator(false);
+	this->pedals.setBrake(true);
+}
+
+void Carro::stopBraking()
+{
+	this->pedals.setBrake(false);
+}
+
+void Carro::stopAccelerating()
+{
+	this->pedals.setAccelerator(false);
+}
+
+void Carro::gastaEnergia()
+{
+	if (energy > 0 && speed > 0)
+		energy -= 0.1 * speed;
+	if (energy < 0)
+		energy = 0;
+}
+
+void Carro::setSpeedManually(int speed)
+{
+	this->speed = speed;
+}
+
+void Carro::resetPedals()
+{
+	stopAccelerating();
+	stopBraking();
+}
+
+string Carro::getRaceDetails()
+{
+	ostringstream lag;
+	lag << condutor->getLag();
+	ostringstream os;
+	os << "  " << this->getPiloto().getPosition() << " - Carro " << getPiloto().getCarro().getId() << "/" << condutor->getDriverDetailsClass() <<", " << speed << " m/s, " << this->energy << "/" << this->capacity << " mAh, " << distancia << " m" << (getPiloto().getLag() > 0 ? ", Atraso: " : "") << (getPiloto().getLag() > 0 ? lag.str() : "");
+	return os.str();
+}
+
+void Carro::semEnergia()
+{
+	if (energy == 0) {
+		brake();
+	}
+}
+
+int Carro::getDistance() const
+{
+	return distancia;
+}
+
+void Carro::resetCarro()
+{
+	emergency = false;
+	speed = 0;
+	stop = false;
+	is_damaged = false;
+	distancia = 0;
+	stopBraking();
+	stopAccelerating();	
+
+}
+
+Carro* Carro::duplica() const
+{
+	return new Carro(*this);
+}
+
 

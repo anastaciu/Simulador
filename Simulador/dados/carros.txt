@@ -1,0 +1,16 @@
+10 20 50 opel kadet
+25 6.5 40 audi rs6
+13 23.4 30.3 bmw m3
+30 34.5 50.4 renault zoe
+18 40.9 40.7 nissan leaf
+10 23 43.2 kia stinger
+29 17.5 60.1 audi e-tron
+13 13.4 30.3 lexus rh450
+23 5.5 25.4 tesla roadster
+34 4.9 40.7 toyota mirai
+21 15 25 opel corsa
+29 6.5 36.1 audi rs3
+40 13.4 32.9 bmw m5
+33 55.5 45.4 renault megane
+42 41.9 30.7 ferrari f40
+50 30 40.6 porsche 918
