@@ -1,7 +1,7 @@
 
 ## Race simulator
 
-### Computer Science Degree
+### Computer Science Degree ISEC
 
 #### Object Oriented Programming
 
