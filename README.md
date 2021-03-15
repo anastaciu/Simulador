@@ -1,20 +1,23 @@
-# Simulador
-## Simulador de corridas
 
-### Race simulator
+## Race simulator
 
 ### Computer Science Degree
 
-Object Oriented Programming
+#### Object Oriented Programming
 
-Project requirements
+Project requirements:
 
 https://github.com/anastaciu/Simulador/blob/master/C%2B%2B%20Project_statement_TP%2019%2020%20EN.pdf
 
-###Licenciatura em Engenharia Informática ISEC
 
-####Programação Orientada a Objectos
+---
 
-Requisitos do projeto
+Simulador de corridas
+
+### Licenciatura em Engenharia Informática ISEC
+
+#### Programação Orientada a Objectos
+
+Requisitos do projeto:
 
 https://github.com/anastaciu/Simulador/blob/master/C%2B%2B%20Requisitos_TP.pdf
