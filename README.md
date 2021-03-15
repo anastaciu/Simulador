@@ -1,9 +1,9 @@
 # Simulador
-##Simulador de corridas
+## Simulador de corridas
 
-###Race simulator
+### Race simulator
 
-###Computer Science Degree
+### Computer Science Degree
 
 Object Oriented Programming
 
